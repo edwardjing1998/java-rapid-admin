@@ -18,13 +18,27 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>21</java.version> <!-- ✅ Java 21 is latest supported by Spring Boot 3.2.x -->
+		<java.version>21</java.version>
 	</properties>
 
 	<dependencies>
+		<!-- Exclude tomcat-embed-core -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.tomcat.embed</groupId>
+					<artifactId>tomcat-embed-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Use a newer version of tomcat-embed-core -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>10.1.39</version>
 		</dependency>
 
 		<dependency>
