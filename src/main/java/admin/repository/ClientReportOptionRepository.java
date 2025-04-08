@@ -12,4 +12,3 @@ public interface ClientReportOptionRepository extends JpaRepository<ClientReport
     @Query("SELECT s FROM SysPrinsPrefix s WHERE s.client.client = :clientId")
     List<SysPrinsPrefix> findByClientId(@Param("clientId") String clientId);
 }
-

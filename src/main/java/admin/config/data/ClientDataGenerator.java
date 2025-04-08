@@ -1,4 +1,4 @@
-package admin.config;
+package admin.config.data;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
