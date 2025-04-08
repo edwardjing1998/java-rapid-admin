@@ -41,7 +41,7 @@ public class ClientDataGenerator {
     public void generateClients() {
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 10; i++) {
             String clientId = "CLIENT" + i;
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
