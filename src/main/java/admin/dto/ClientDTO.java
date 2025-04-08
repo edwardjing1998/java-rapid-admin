@@ -16,8 +16,8 @@ public class ClientDTO {
     private String phone;
     private Boolean active;
 
-    private List<ClientReportOption> reportOptions;
-    private List<SysPrinsPrefix> sysPrinsPrefixes;
+    private List<ClientReportOptionDTO> reportOptions;
+    private List<SysPrinsPrefixDTO> sysPrinsPrefixes;
 
     // Getters and Setters
     public String getClient() {
@@ -92,19 +92,19 @@ public class ClientDTO {
         this.active = active;
     }
 
-    public List<ClientReportOption> getReportOptions() {
+    public List<ClientReportOptionDTO> getReportOptions() {
         return reportOptions;
     }
 
-    public void setReportOptions(List<ClientReportOption> reportOptions) {
+    public void setReportOptions(List<ClientReportOptionDTO> reportOptions) {
         this.reportOptions = reportOptions;
     }
 
-    public List<SysPrinsPrefix> getSysPrinsPrefixes() {
+    public List<SysPrinsPrefixDTO> getSysPrinsPrefixes() {
         return sysPrinsPrefixes;
     }
 
-    public void setSysPrinsPrefixes(List<SysPrinsPrefix> sysPrinsPrefixes) {
+    public void setSysPrinsPrefixes(List<SysPrinsPrefixDTO> sysPrinsPrefixes) {
         this.sysPrinsPrefixes = sysPrinsPrefixes;
     }
 

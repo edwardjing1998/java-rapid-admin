@@ -5,7 +5,12 @@ public class SysPrinsPrefixDTO {
     private String prefix;
     private String description;
     private String client;
-    private ClientDTO clientDTO;
+
+    public SysPrinsPrefixDTO(Long prefixId, String prefix, String description) {
+        this.prefixId = prefixId;
+        this.prefix = prefix;
+        this.description = description;
+    }
 
     public Long getPrefixId() {
         return prefixId;
@@ -37,14 +42,6 @@ public class SysPrinsPrefixDTO {
 
     public void setClient(String client) {
         this.client = client;
-    }
-
-    public ClientDTO getClientDTO() {
-        return clientDTO;
-    }
-
-    public void setClientDTO(ClientDTO clientDTO) {
-        this.clientDTO = clientDTO;
     }
 
     @Override

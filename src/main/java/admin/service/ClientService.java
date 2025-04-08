@@ -1,7 +1,11 @@
 package admin.service;
 
 import admin.dto.ClientDTO;
+import admin.dto.ClientReportOptionDTO;
+import admin.dto.SysPrinsPrefixDTO;
 import admin.model.Client;
+import admin.model.ClientReportOption;
+import admin.model.SysPrinsPrefix;
 import admin.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +17,6 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    // Manual constructor
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
@@ -30,8 +33,29 @@ public class ClientService {
             dto.setContact(client.getContact());
             dto.setPhone(client.getPhone());
             dto.setActive(client.getActive());
-            dto.setReportOptions(client.getReportOptions());
-            dto.setSysPrinsPrefixes(client.getSysPrinsPrefixes());
+
+            // Manually convert report options without client reference
+            List<ClientReportOptionDTO> reportOptionDTOs = client.getReportOptions().stream()
+                    .map(ro -> new ClientReportOptionDTO(
+                            ro.getId(),
+                            ro.getReportId(),
+                            ro.getReceiveFlag(),
+                            ro.getOutputTypeCd(),
+                            ro.getFileTypeCd(),
+                            ro.getEmailFlag(),
+                            ro.getReportPasswordTx()
+                    )).collect(Collectors.toList());
+            dto.setReportOptions(reportOptionDTOs);
+
+            // Manually convert sys prins prefixes without client reference
+            List<SysPrinsPrefixDTO> sysPrinsDTOs = client.getSysPrinsPrefixes().stream()
+                    .map(sp -> new SysPrinsPrefixDTO(
+                            sp.getPrefixId(),
+                            sp.getPrefix(),
+                            sp.getDescription()
+                    )).collect(Collectors.toList());
+            dto.setSysPrinsPrefixes(sysPrinsDTOs);
+
             return dto;
         }).collect(Collectors.toList());
     }

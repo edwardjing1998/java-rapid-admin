@@ -10,7 +10,15 @@ public class ClientReportOptionDTO {
     private Integer emailFlag;
     private String reportPasswordTx;
 
-    private ClientDTO client;
+    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag, String reportPasswordTx) {
+        this.id = id;
+        this.reportId = reportId;
+        this.receiveFlag = receiveFlag;
+        this.outputTypeCd = outputTypeCd;
+        this.fileTypeCd = fileTypeCd;
+        this.emailFlag = emailFlag;
+        this.reportPasswordTx = reportPasswordTx;
+    }
 
     public Long getId() {
         return id;
@@ -74,14 +82,6 @@ public class ClientReportOptionDTO {
 
     public void setReportPasswordTx(String reportPasswordTx) {
         this.reportPasswordTx = reportPasswordTx;
-    }
-
-    public ClientDTO getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDTO client) {
-        this.client = client;
     }
 
     @Override
