@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-client-report-options-table" author="yourname">
+
+        <createTable tableName="CLIENT_REPORT_OPTIONS">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="CLIENT_ID" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REPORT_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVE_FLAG" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OUTPUT_TYPE_CD" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FILE_TYPE_CD" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL_FLAG" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REPORT_PASSWORD_TX" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="CLIENT_REPORT_OPTIONS"
+                baseColumnNames="CLIENT_ID"
+                constraintName="fk_reportoptions_client"
+                referencedTableName="CLIENTS"
+                referencedColumnNames="client"/>
+
+    </changeSet>
+
+</databaseChangeLog>
