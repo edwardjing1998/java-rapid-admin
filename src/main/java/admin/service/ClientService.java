@@ -71,7 +71,6 @@ public class ClientService {
             List<SysPrinsPrefix> prefixes = sysPrinsPrefixRepository.findByBillingSp(client.getBillingSp());
             List<SysPrinsPrefixDTO> sysPrinsDTOs = prefixes.stream()
                     .map(sp -> new SysPrinsPrefixDTO(
-                            sp.getPrefixId(),
                             sp.getBillingSp(),
                             sp.getPrefix(),
                             sp.getAtmCashRule()

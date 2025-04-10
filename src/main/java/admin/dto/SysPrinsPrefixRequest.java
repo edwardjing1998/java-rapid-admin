@@ -1,17 +1,10 @@
+// SysPrinsPrefixRequest.java
 package admin.dto;
 
-public class SysPrinsPrefixDTO {
+public class SysPrinsPrefixRequest {
     private String billingSp;
     private String prefix;
     private String atmCashRule;
-
-    public SysPrinsPrefixDTO() {}
-
-    public SysPrinsPrefixDTO(String billingSp, String prefix, String atmCashRule) {
-        this.billingSp = billingSp;
-        this.prefix = prefix;
-        this.atmCashRule = atmCashRule;
-    }
 
     public String getBillingSp() {
         return billingSp;
