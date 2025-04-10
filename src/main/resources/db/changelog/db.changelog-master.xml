@@ -11,7 +11,7 @@
     <include file="db/changelog/create-clients-table.xml"/>
     <include file="db/changelog/create-sys-prins-prefix-table.xml"/>
     <include file="db/changelog/create-client-report-options-table.xml"/>
-
+    <include file="db/changelog/create-sys-prins-table.xml"/>
 
 </databaseChangeLog>
 

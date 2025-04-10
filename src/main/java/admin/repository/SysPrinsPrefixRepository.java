@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SysPrinsPrefixRepository extends JpaRepository<SysPrinsPrefix, Long> {
 
-    @Query("SELECT s FROM SysPrinsPrefix s WHERE s.client.client = :clientId")
-    List<SysPrinsPrefix> findByClientId(@Param("clientId") String clientId);
+    List<SysPrinsPrefix> findByBillingSp(String billingSp);
+
 }

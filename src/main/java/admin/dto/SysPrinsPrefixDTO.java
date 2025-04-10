@@ -2,14 +2,17 @@ package admin.dto;
 
 public class SysPrinsPrefixDTO {
     private Long prefixId;
+    private String billingSp;
     private String prefix;
-    private String description;
-    private String client;
+    private String atmCashRule;
 
-    public SysPrinsPrefixDTO(Long prefixId, String prefix, String description) {
+    public SysPrinsPrefixDTO() {}
+
+    public SysPrinsPrefixDTO(Long prefixId, String billingSp, String prefix, String atmCashRule) {
         this.prefixId = prefixId;
+        this.billingSp = billingSp;
         this.prefix = prefix;
-        this.description = description;
+        this.atmCashRule = atmCashRule;
     }
 
     public Long getPrefixId() {
@@ -20,6 +23,14 @@ public class SysPrinsPrefixDTO {
         this.prefixId = prefixId;
     }
 
+    public String getBillingSp() {
+        return billingSp;
+    }
+
+    public void setBillingSp(String billingSp) {
+        this.billingSp = billingSp;
+    }
+
     public String getPrefix() {
         return prefix;
     }
@@ -28,29 +39,11 @@ public class SysPrinsPrefixDTO {
         this.prefix = prefix;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAtmCashRule() {
+        return atmCashRule;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    @Override
-    public String toString() {
-        return "SysPrinsPrefixDTO{" +
-                "prefixId=" + prefixId +
-                ", prefix='" + prefix + '\'' +
-                ", description='" + description + '\'' +
-                ", client='" + client + '\'' +
-                '}';
+    public void setAtmCashRule(String atmCashRule) {
+        this.atmCashRule = atmCashRule;
     }
 }

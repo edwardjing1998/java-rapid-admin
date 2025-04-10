@@ -1,15 +1,11 @@
 package admin.config.data;
 
+import admin.model.*;
+import admin.repository.ClientRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-import admin.model.Client;
-import admin.model.ClientReportOption;
-import admin.model.SysPrinsPrefix;
-import admin.repository.ClientRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 public class ClientDataGenerator {
@@ -49,7 +45,6 @@ public class ClientDataGenerator {
             String phone = "555-" + (1000000 + random.nextInt(8999999));
             String name = "Client Name " + i;
 
-            // Generate 5 ClientReportOptions
             List<ClientReportOption> reportOptions = new ArrayList<>();
             for (int j = 1; j <= 5; j++) {
                 ClientReportOption option = new ClientReportOption();
@@ -62,17 +57,83 @@ public class ClientDataGenerator {
                 reportOptions.add(option);
             }
 
-            // Generate 10 SysPrinsPrefix
+            String billingSp = "BILL" + i;
+
             List<SysPrinsPrefix> prefixes = new ArrayList<>();
-            for (int k = 1; k <= 10; k++) {
+            for (int k = 1; k <= 5 + random.nextInt(5); k++) {
                 SysPrinsPrefix prefix = new SysPrinsPrefix();
-                prefix.setPrefixId((long) (i * 10 + k));
-                prefix.setPrefix("SP" + i + "_" + k);
-                prefix.setDescription("Prefix Desc " + k);
+                prefix.setPrefix("prefixSP" + i + "_" + k + "_" + billingSp);
+                prefix.setAtmCashRule(random.nextBoolean() ? "Destroy" : "Return");
+                prefix.setBillingSp(billingSp);
                 prefixes.add(prefix);
             }
 
-            // Create Client and link the children
+            List<SysPrin> sysPrinsList = new ArrayList<>();
+            int sysPrinCount = 2 + random.nextInt(4);
+            for (int s = 1; s <= sysPrinCount; s++) {
+                SysPrin sysPrin = new SysPrin();
+                SysPrinId sysPrinId = new SysPrinId();
+                sysPrinId.setClient(clientId);
+                sysPrinId.setSysPrin("SP" + i + s);
+                sysPrin.setId(sysPrinId);
+
+                sysPrin.setCustType("Type" + s);
+                sysPrin.setStartDate("2024-01-0" + s);
+                sysPrin.setUndeliverable("N");
+
+                sysPrin.setStatA("A" + s);
+                sysPrin.setStatB("B" + s);
+                sysPrin.setStatC("C" + s);
+                sysPrin.setStatD("D" + s);
+                sysPrin.setStatE("E" + s);
+                sysPrin.setStatF("F" + s);
+                sysPrin.setStatG("G" + s);
+                sysPrin.setStatH("H" + s);
+                sysPrin.setStatI("I" + s);
+                sysPrin.setStatJ("J" + s);
+                sysPrin.setStatK("K" + s);
+                sysPrin.setStatL("L" + s);
+                sysPrin.setStatM("M" + s);
+                sysPrin.setStatN("N" + s);
+                sysPrin.setStatO("O" + s);
+                sysPrin.setStatP("P" + s);
+                sysPrin.setStatQ("Q" + s);
+                sysPrin.setStatR("R" + s);
+                sysPrin.setStatS("S" + s);
+                sysPrin.setStatT("T" + s);
+                sysPrin.setStatU("U" + s);
+                sysPrin.setStatV("V" + s);
+                sysPrin.setStatW("W" + s);
+                sysPrin.setStatX("X" + s);
+                sysPrin.setStatY("Y" + s);
+                sysPrin.setStatZ("Z" + s);
+
+                sysPrin.setPoBox("Box" + s);
+                sysPrin.setNoRenewal("N");
+                sysPrin.setBlockCard("B");
+                sysPrin.setAddrFlag("Y");
+
+                sysPrin.setTempAway(100L + s);
+                sysPrin.setRsp("RSP" + s);
+                sysPrin.setSession("Session" + s);
+                sysPrin.setBadState("No");
+                sysPrin.setAStatRch("RCH" + s);
+                sysPrin.setNm13("NM13" + s);
+                sysPrin.setTempAwayAtts(200L + s);
+                sysPrin.setReportMethod("Email");
+                sysPrin.setContact("Contact" + s);
+                sysPrin.setPhone("555-000" + s);
+                sysPrin.setActive(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setNotes("Note" + s);
+                sysPrin.setReturnStatus("R" + s);
+                sysPrin.setDestroyStatus("D" + s);
+                sysPrin.setNonUS("N");
+
+                sysPrin.setClient(null);
+
+                sysPrinsList.add(sysPrin);
+            }
+
             Client client = new Client(
                     clientId,
                     name,
@@ -83,13 +144,22 @@ public class ClientDataGenerator {
                     "Contact " + i,
                     phone,
                     i % 2 == 0,
+                    "Fax-" + i,
+                    billingSp,
+                    i % 2,
+                    i % 3,
+                    i % 2 == 0,
+                    i % 2 == 1,
+                    i % 2,
+                    "XREF" + i,
+                    i % 2 == 0,
                     reportOptions,
-                    prefixes
+                    prefixes,
+                    sysPrinsList
             );
 
-            // Assign back-reference from children to parent
             reportOptions.forEach(opt -> opt.setClient(client));
-            prefixes.forEach(pre -> pre.setClient(client));
+            sysPrinsList.forEach(sp -> sp.setClient(client));
 
             clients.add(client);
         }

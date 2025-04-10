@@ -1,8 +1,5 @@
 package admin.dto;
 
-import admin.model.ClientReportOption;
-import admin.model.SysPrinsPrefix;
-
 import java.util.List;
 
 public class ClientDTO {
@@ -16,97 +13,86 @@ public class ClientDTO {
     private String phone;
     private Boolean active;
 
+    // New fields based on updated Client entity
+    private String faxNumber;
+    private String billingSp;
+    private Integer reportBreakFlag;
+    private Integer chLookUpType;
+    private Boolean excludeFromReport;
+    private Boolean positiveReports;
+    private Boolean subClientInd;
+    private String subClientXref;
+    private Boolean amexIssued;
+
     private List<ClientReportOptionDTO> reportOptions;
     private List<SysPrinsPrefixDTO> sysPrinsPrefixes;
 
+    // NEW: Include sysPrins
+    private List<SysPrinDTO> sysPrins;
+
     // Getters and Setters
-    public String getClient() {
-        return client;
-    }
+    public String getClient() { return client; }
+    public void setClient(String client) { this.client = client; }
 
-    public void setClient(String client) {
-        this.client = client;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
+    public String getAddr() { return addr; }
+    public void setAddr(String addr) { this.addr = addr; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
 
-    public String getAddr() {
-        return addr;
-    }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
 
-    public void setAddr(String addr) {
-        this.addr = addr;
-    }
+    public String getZip() { return zip; }
+    public void setZip(String zip) { this.zip = zip; }
 
-    public String getCity() {
-        return city;
-    }
+    public String getContact() { return contact; }
+    public void setContact(String contact) { this.contact = contact; }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
-    public String getState() {
-        return state;
-    }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+    public String getFaxNumber() { return faxNumber; }
+    public void setFaxNumber(String faxNumber) { this.faxNumber = faxNumber; }
 
-    public String getZip() {
-        return zip;
-    }
+    public String getBillingSp() { return billingSp; }
+    public void setBillingSp(String billingSp) { this.billingSp = billingSp; }
 
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
+    public Integer getReportBreakFlag() { return reportBreakFlag; }
+    public void setReportBreakFlag(Integer reportBreakFlag) { this.reportBreakFlag = reportBreakFlag; }
 
-    public String getContact() {
-        return contact;
-    }
+    public Integer getChLookUpType() { return chLookUpType; }
+    public void setChLookUpType(Integer chLookUpType) { this.chLookUpType = chLookUpType; }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
+    public Boolean getExcludeFromReport() { return excludeFromReport; }
+    public void setExcludeFromReport(Boolean excludeFromReport) { this.excludeFromReport = excludeFromReport; }
 
-    public String getPhone() {
-        return phone;
-    }
+    public Boolean getPositiveReports() { return positiveReports; }
+    public void setPositiveReports(Boolean positiveReports) { this.positiveReports = positiveReports; }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public Boolean getSubClientInd() { return subClientInd; }
+    public void setSubClientInd(Boolean subClientInd) { this.subClientInd = subClientInd; }
 
-    public Boolean getActive() {
-        return active;
-    }
+    public String getSubClientXref() { return subClientXref; }
+    public void setSubClientXref(String subClientXref) { this.subClientXref = subClientXref; }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public Boolean getAmexIssued() { return amexIssued; }
+    public void setAmexIssued(Boolean amexIssued) { this.amexIssued = amexIssued; }
 
-    public List<ClientReportOptionDTO> getReportOptions() {
-        return reportOptions;
-    }
+    public List<ClientReportOptionDTO> getReportOptions() { return reportOptions; }
+    public void setReportOptions(List<ClientReportOptionDTO> reportOptions) { this.reportOptions = reportOptions; }
 
-    public void setReportOptions(List<ClientReportOptionDTO> reportOptions) {
-        this.reportOptions = reportOptions;
-    }
+    public List<SysPrinsPrefixDTO> getSysPrinsPrefixes() { return sysPrinsPrefixes; }
+    public void setSysPrinsPrefixes(List<SysPrinsPrefixDTO> sysPrinsPrefixes) { this.sysPrinsPrefixes = sysPrinsPrefixes; }
 
-    public List<SysPrinsPrefixDTO> getSysPrinsPrefixes() {
-        return sysPrinsPrefixes;
-    }
-
-    public void setSysPrinsPrefixes(List<SysPrinsPrefixDTO> sysPrinsPrefixes) {
-        this.sysPrinsPrefixes = sysPrinsPrefixes;
-    }
+    public List<SysPrinDTO> getSysPrins() { return sysPrins; }
+    public void setSysPrins(List<SysPrinDTO> sysPrins) { this.sysPrins = sysPrins; }
 
     @Override
     public String toString() {
@@ -119,6 +105,15 @@ public class ClientDTO {
                 ", zip='" + zip + '\'' +
                 ", contact='" + contact + '\'' +
                 ", phone='" + phone + '\'' +
+                ", faxNumber='" + faxNumber + '\'' +
+                ", billingSp='" + billingSp + '\'' +
+                ", reportBreakFlag=" + reportBreakFlag +
+                ", chLookUpType=" + chLookUpType +
+                ", excludeFromReport=" + excludeFromReport +
+                ", positiveReports=" + positiveReports +
+                ", subClientInd=" + subClientInd +
+                ", subClientXref='" + subClientXref + '\'' +
+                ", amexIssued=" + amexIssued +
                 ", active=" + active +
                 '}';
     }

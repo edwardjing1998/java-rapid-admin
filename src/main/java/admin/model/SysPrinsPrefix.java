@@ -7,28 +7,30 @@ import jakarta.persistence.*;
 public class SysPrinsPrefix {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "prefix_id")
     private Long prefixId;
+
+    @Column(name = "billing_sp", nullable = false)
+    private String billingSp;
 
     @Column(name = "prefix", nullable = false)
     private String prefix;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "atm_cash_rule")
+    private String atmCashRule;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client", nullable = false)
-    private Client client;
-
+    // Constructors
     public SysPrinsPrefix() {
     }
 
-    public SysPrinsPrefix(Long prefixId, String prefix, String description, Client client) {
-        this.prefixId = prefixId;
+    public SysPrinsPrefix(String billingSp, String prefix, String atmCashRule) {
+        this.billingSp = billingSp;
         this.prefix = prefix;
-        this.description = description;
-        this.client = client;
+        this.atmCashRule = atmCashRule;
     }
+
+    // Getters and Setters
 
     public Long getPrefixId() {
         return prefixId;
@@ -36,6 +38,14 @@ public class SysPrinsPrefix {
 
     public void setPrefixId(Long prefixId) {
         this.prefixId = prefixId;
+    }
+
+    public String getBillingSp() {
+        return billingSp;
+    }
+
+    public void setBillingSp(String billingSp) {
+        this.billingSp = billingSp;
     }
 
     public String getPrefix() {
@@ -46,29 +56,11 @@ public class SysPrinsPrefix {
         this.prefix = prefix;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAtmCashRule() {
+        return atmCashRule;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    @Override
-    public String toString() {
-        return "SysPrinsPrefix{" +
-                "prefixId=" + prefixId +
-                ", prefix='" + prefix + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-        // Avoid printing client to prevent lazy loading issues / infinite loop
+    public void setAtmCashRule(String atmCashRule) {
+        this.atmCashRule = atmCashRule;
     }
 }

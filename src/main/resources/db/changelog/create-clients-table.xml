@@ -7,7 +7,6 @@
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
     <changeSet id="create-clients-table" author="yourname">
-
         <createTable tableName="CLIENTS">
             <column name="client" type="VARCHAR(255)">
                 <constraints primaryKey="true" nullable="false"/>
@@ -21,9 +20,17 @@
             <column name="zip" type="VARCHAR(20)"/>
             <column name="contact" type="VARCHAR(100)"/>
             <column name="phone" type="VARCHAR(30)"/>
+            <column name="fax_number" type="VARCHAR(30)"/>
+            <column name="billing_sp" type="VARCHAR(50)"/>
+            <column name="report_break_flag" type="INT"/>
+            <column name="chlookup_type" type="INT"/>
             <column name="active" type="BOOLEAN"/>
+            <column name="exclude_from_report" type="BOOLEAN"/>
+            <column name="positive_reports" type="BOOLEAN"/>
+            <column name="sub_client_ind" type="BOOLEAN"/>
+            <column name="sub_client_xref" type="VARCHAR(255)"/>
+            <column name="amex_issued" type="BOOLEAN"/>
         </createTable>
-
     </changeSet>
 
 </databaseChangeLog>

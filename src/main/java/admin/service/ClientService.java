@@ -2,11 +2,14 @@ package admin.service;
 
 import admin.dto.ClientDTO;
 import admin.dto.ClientReportOptionDTO;
+import admin.dto.SysPrinDTO;
 import admin.dto.SysPrinsPrefixDTO;
 import admin.model.Client;
-import admin.model.ClientReportOption;
+import admin.model.SysPrin;
 import admin.model.SysPrinsPrefix;
 import admin.repository.ClientRepository;
+import admin.repository.SysPrinRepository;
+import admin.repository.SysPrinsPrefixRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +19,15 @@ import java.util.stream.Collectors;
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final SysPrinRepository sysPrinRepository;
+    private final SysPrinsPrefixRepository sysPrinsPrefixRepository;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository,
+                         SysPrinRepository sysPrinRepository,
+                         SysPrinsPrefixRepository sysPrinsPrefixRepository) {
         this.clientRepository = clientRepository;
+        this.sysPrinRepository = sysPrinRepository;
+        this.sysPrinsPrefixRepository = sysPrinsPrefixRepository;
     }
 
     public List<ClientDTO> getAllClientsWithDetails() {
@@ -34,7 +43,18 @@ public class ClientService {
             dto.setPhone(client.getPhone());
             dto.setActive(client.getActive());
 
-            // Manually convert report options without client reference
+            // Set additional fields
+            dto.setFaxNumber(client.getFaxNumber());
+            dto.setBillingSp(client.getBillingSp());
+            dto.setReportBreakFlag(client.getReportBreakFlag());
+            dto.setChLookUpType(client.getChLookUpType());
+            dto.setExcludeFromReport(client.getExcludeFromReport());
+            dto.setPositiveReports(client.getPositiveReports());
+            dto.setSubClientInd(client.getSubClientInd());
+            dto.setSubClientXref(client.getSubClientXref());
+            dto.setAmexIssued(client.getAmexIssued());
+
+            // Convert report options
             List<ClientReportOptionDTO> reportOptionDTOs = client.getReportOptions().stream()
                     .map(ro -> new ClientReportOptionDTO(
                             ro.getId(),
@@ -47,14 +67,75 @@ public class ClientService {
                     )).collect(Collectors.toList());
             dto.setReportOptions(reportOptionDTOs);
 
-            // Manually convert sys prins prefixes without client reference
-            List<SysPrinsPrefixDTO> sysPrinsDTOs = client.getSysPrinsPrefixes().stream()
+            // Convert sys prins prefixes using repository
+            List<SysPrinsPrefix> prefixes = sysPrinsPrefixRepository.findByBillingSp(client.getBillingSp());
+            List<SysPrinsPrefixDTO> sysPrinsDTOs = prefixes.stream()
                     .map(sp -> new SysPrinsPrefixDTO(
                             sp.getPrefixId(),
+                            sp.getBillingSp(),
                             sp.getPrefix(),
-                            sp.getDescription()
+                            sp.getAtmCashRule()
                     )).collect(Collectors.toList());
             dto.setSysPrinsPrefixes(sysPrinsDTOs);
+
+            // Convert sys prins (new)
+            List<SysPrin> sysPrins = sysPrinRepository.findByIdClient(client.getClient());
+            List<SysPrinDTO> sysPrinDTOs = sysPrins.stream().map(sp -> {
+                SysPrinDTO sysDto = new SysPrinDTO();
+                sysDto.setClient(sp.getId().getClient());
+                sysDto.setSysPrin(sp.getId().getSysPrin());
+                sysDto.setCustType(sp.getCustType());
+                sysDto.setStartDate(sp.getStartDate());
+                sysDto.setUndeliverable(sp.getUndeliverable());
+                sysDto.setStatA(sp.getStatA());
+                sysDto.setStatB(sp.getStatB());
+                sysDto.setStatC(sp.getStatC());
+                sysDto.setStatD(sp.getStatD());
+                sysDto.setStatE(sp.getStatE());
+                sysDto.setStatF(sp.getStatF());
+                sysDto.setStatG(sp.getStatG());
+                sysDto.setStatH(sp.getStatH());
+                sysDto.setStatI(sp.getStatI());
+                sysDto.setStatJ(sp.getStatJ());
+                sysDto.setStatK(sp.getStatK());
+                sysDto.setStatL(sp.getStatL());
+                sysDto.setStatM(sp.getStatM());
+                sysDto.setStatN(sp.getStatN());
+                sysDto.setStatO(sp.getStatO());
+                sysDto.setStatP(sp.getStatP());
+                sysDto.setStatQ(sp.getStatQ());
+                sysDto.setStatR(sp.getStatR());
+                sysDto.setStatS(sp.getStatS());
+                sysDto.setStatT(sp.getStatT());
+                sysDto.setStatU(sp.getStatU());
+                sysDto.setStatV(sp.getStatV());
+                sysDto.setStatW(sp.getStatW());
+                sysDto.setStatX(sp.getStatX());
+                sysDto.setStatY(sp.getStatY());
+                sysDto.setStatZ(sp.getStatZ());
+                sysDto.setPoBox(sp.getPoBox());
+                sysDto.setNoRenewal(sp.getNoRenewal());
+                sysDto.setBlockCard(sp.getBlockCard());
+                sysDto.setAddrFlag(sp.getAddrFlag());
+                sysDto.setTempAway(sp.getTempAway());
+                sysDto.setRsp(sp.getRsp());
+                sysDto.setSession(sp.getSession());
+                sysDto.setBadState(sp.getBadState());
+                sysDto.setaStatRch(sp.getAStatRch());
+                sysDto.setNm13(sp.getNm13());
+                sysDto.setTempAwayAtts(sp.getTempAwayAtts());
+                sysDto.setReportMethod(sp.getReportMethod());
+                sysDto.setContact(sp.getContact());
+                sysDto.setPhone(sp.getPhone());
+                sysDto.setActive(sp.getActive());
+                sysDto.setNotes(sp.getNotes());
+                sysDto.setReturnStatus(sp.getReturnStatus());
+                sysDto.setDestroyStatus(sp.getDestroyStatus());
+                sysDto.setNonUS(sp.getNonUS());
+                return sysDto;
+            }).collect(Collectors.toList());
+
+            dto.setSysPrins(sysPrinDTOs);
 
             return dto;
         }).collect(Collectors.toList());
