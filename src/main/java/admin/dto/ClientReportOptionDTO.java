@@ -5,12 +5,15 @@ public class ClientReportOptionDTO {
     private String clientId;
     private Long reportId;
     private Boolean receiveFlag;
-    private Integer outputTypeCd;
-    private Integer fileTypeCd;
+    private String outputTypeCd;
+    private String fileTypeCd;
     private Integer emailFlag;
     private String reportPasswordTx;
 
-    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag, String reportPasswordTx) {
+    private AdminQueryListDTO reportDetails;  // ✅ New field
+
+
+    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, String outputTypeCd, String fileTypeCd, Integer emailFlag, String reportPasswordTx) {
         this.id = id;
         this.reportId = reportId;
         this.receiveFlag = receiveFlag;
@@ -52,19 +55,19 @@ public class ClientReportOptionDTO {
         this.receiveFlag = receiveFlag;
     }
 
-    public Integer getOutputTypeCd() {
+    public String getOutputTypeCd() {
         return outputTypeCd;
     }
 
-    public void setOutputTypeCd(Integer outputTypeCd) {
+    public void setOutputTypeCd(String outputTypeCd) {
         this.outputTypeCd = outputTypeCd;
     }
 
-    public Integer getFileTypeCd() {
+    public String getFileTypeCd() {
         return fileTypeCd;
     }
 
-    public void setFileTypeCd(Integer fileTypeCd) {
+    public void setFileTypeCd(String fileTypeCd) {
         this.fileTypeCd = fileTypeCd;
     }
 
@@ -82,6 +85,14 @@ public class ClientReportOptionDTO {
 
     public void setReportPasswordTx(String reportPasswordTx) {
         this.reportPasswordTx = reportPasswordTx;
+    }
+
+    public AdminQueryListDTO getReportDetails() {
+        return reportDetails;
+    }
+
+    public void setReportDetails(AdminQueryListDTO reportDetails) {
+        this.reportDetails = reportDetails;
     }
 
     @Override

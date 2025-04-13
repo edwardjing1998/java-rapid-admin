@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-client-email-table" author="Edward Jing">
+        <createTable tableName="client_email">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="Client_ID" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Report_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Email_Name_tx" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Email_Address_tx" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Carbon_Copy_Flag" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Active_Flag" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Mail_Server_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- ✅ Add foreign key constraint -->
+        <addForeignKeyConstraint
+                baseTableName="client_email"
+                baseColumnNames="Client_ID"
+                constraintName="fk_client_email_clients"
+                referencedTableName="clients"
+                referencedColumnNames="client"
+                onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>

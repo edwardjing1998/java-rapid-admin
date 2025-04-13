@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <changeSet id="create-sys-prins-table" author="yourname">
+    <changeSet id="create-sys-prins-table" author="Edward Jing">
 
         <createTable tableName="SYS_PRINS">
             <column name="client" type="VARCHAR(255)">
@@ -63,6 +63,9 @@
             <column name="RET_STAT" type="VARCHAR(255)"/>
             <column name="DES_STAT" type="VARCHAR(255)"/>
             <column name="NON_US" type="VARCHAR(255)"/>
+            <column name="SPECIAL" type="VARCHAR(50)"/>
+            <column name="PIN" type="VARCHAR(50)"/>
+            <column name="HOLD_DAYS" type="BIGINT"/>
         </createTable>
 
         <!-- Foreign key: SYS_PRINS.client → CLIENTS.client -->

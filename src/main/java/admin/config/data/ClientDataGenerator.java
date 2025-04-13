@@ -1,16 +1,19 @@
 package admin.config.data;
 
 import admin.model.*;
+import admin.repository.AdminQueryListRepository;
 import admin.repository.ClientRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
 public class ClientDataGenerator {
 
     private final ClientRepository clientRepository;
+    private final AdminQueryListRepository adminQueryListRepository;
 
     private final String[] usStates = {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -29,12 +32,22 @@ public class ClientDataGenerator {
 
     private final Random random = new Random();
 
-    public ClientDataGenerator(ClientRepository clientRepository) {
+    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository) {
         this.clientRepository = clientRepository;
+        this.adminQueryListRepository = adminQueryListRepository;
     }
 
     @PostConstruct
     public void generateClients() {
+        List<AdminQueryList> reports = new ArrayList<>();
+        for (int j = 1; j <= 5; j++) {
+            AdminQueryList report = new AdminQueryList();
+            report.setReportName("Report " + j);
+            report.setReportByClientFlag(1);
+            reports.add(report);
+        }
+        adminQueryListRepository.saveAll(reports);
+
         List<Client> clients = new ArrayList<>();
 
         for (int i = 1; i <= 10; i++) {
@@ -50,10 +63,11 @@ public class ClientDataGenerator {
                 ClientReportOption option = new ClientReportOption();
                 option.setReportId((long) j);
                 option.setReceiveFlag(j % 2 == 0);
-                option.setOutputTypeCd(1);
-                option.setFileTypeCd(1);
-                option.setEmailFlag(j % 2);
+                option.setOutputTypeCd(random.nextBoolean() ? "File" : "Print");
+                option.setFileTypeCd(random.nextBoolean() ? "Text" : "Excel");
+                option.setEmailFlag(j % 3);
                 option.setReportPasswordTx("pass" + j);
+                option.setReport(reports.get(j - 1));
                 reportOptions.add(option);
             }
 
@@ -77,9 +91,10 @@ public class ClientDataGenerator {
                 sysPrinId.setSysPrin("SP" + i + s);
                 sysPrin.setId(sysPrinId);
 
-                sysPrin.setCustType("Type" + s);
+                String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
+                sysPrin.setCustType(custTypes[random.nextInt(custTypes.length)]);
                 sysPrin.setStartDate("2024-01-0" + s);
-                sysPrin.setUndeliverable("N");
+                sysPrin.setUndeliverable(random.nextBoolean() ? "Y" : "N");
 
                 sysPrin.setStatA("A" + s);
                 sysPrin.setStatB("B" + s);
@@ -114,24 +129,55 @@ public class ClientDataGenerator {
                 sysPrin.setAddrFlag("Y");
 
                 sysPrin.setTempAway(100L + s);
-                sysPrin.setRsp("RSP" + s);
+                sysPrin.setRsp(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setSession("Session" + s);
                 sysPrin.setBadState("No");
-                sysPrin.setAStatRch("RCH" + s);
-                sysPrin.setNm13("NM13" + s);
+                sysPrin.setAStatRch(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setNm13(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAwayAtts(200L + s);
                 sysPrin.setReportMethod("Email");
                 sysPrin.setContact("Contact" + s);
                 sysPrin.setPhone("555-000" + s);
                 sysPrin.setActive(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setNotes("Note" + s);
-                sysPrin.setReturnStatus("R" + s);
-                sysPrin.setDestroyStatus("D" + s);
+                String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
+                sysPrin.setReturnStatus(returnStatuses[random.nextInt(returnStatuses.length)]);
+                String[] destroyStatuses = {"Destroy", "Return"};
+                sysPrin.setDestroyStatus(destroyStatuses[random.nextInt(destroyStatuses.length)]);
+                String[] specialStatuses = {"Destroy", "Return"};
+                sysPrin.setSpecial(specialStatuses[random.nextInt(specialStatuses.length)]);
+                String[] pinMailerStatuses = {"Destroy", "Return"};
+                sysPrin.setPinMailer(pinMailerStatuses[random.nextInt(pinMailerStatuses.length)]);
+                sysPrin.setHoldDays(10);
+
                 sysPrin.setNonUS("N");
 
-                sysPrin.setClient(null);
+                List<InvalidDelivArea> invalidAreas = new ArrayList<>();
+                for (int a = 1; a <= 5; a++) {
+                    InvalidDelivArea area = new InvalidDelivArea();
+                    area.setArea("Area " + a);
+                    area.setSysPrin(sysPrin);
+                    invalidAreas.add(area);
+                }
+                sysPrin.setInvalidDelivAreas(invalidAreas);
 
+                sysPrin.setClient(null);
                 sysPrinsList.add(sysPrin);
+            }
+
+            List<ClientEmail> emails = new ArrayList<>();
+            for (int e = 1; e <= 3 + random.nextInt(3); e++) {
+                ClientEmail email = new ClientEmail();
+                email.setClientId(clientId);
+                email.setReportId((long) (1 + random.nextInt(5)));
+                email.setEmailName("User" + e);
+                email.setEmailAddress("user" + e + "@example.com");
+                email.setCarbonCopyFlag(e % 2 == 0);
+                email.setActiveFlag(random.nextBoolean());
+                email.setMailServerId((long) random.nextInt(2));
+                email.setCreatedAt(LocalDateTime.now());
+                email.setUpdatedAt(LocalDateTime.now());
+                emails.add(email);
             }
 
             Client client = new Client(
@@ -155,11 +201,13 @@ public class ClientDataGenerator {
                     i % 2 == 0,
                     reportOptions,
                     prefixes,
-                    sysPrinsList
+                    sysPrinsList,
+                    emails
             );
 
             reportOptions.forEach(opt -> opt.setClient(client));
             sysPrinsList.forEach(sp -> sp.setClient(client));
+            emails.forEach(em -> em.setClient(client));
 
             clients.add(client);
         }

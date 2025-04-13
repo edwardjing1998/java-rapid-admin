@@ -1,15 +1,8 @@
 package admin.service;
 
-import admin.dto.ClientDTO;
-import admin.dto.ClientReportOptionDTO;
-import admin.dto.SysPrinDTO;
-import admin.dto.SysPrinsPrefixDTO;
-import admin.model.Client;
-import admin.model.SysPrin;
-import admin.model.SysPrinsPrefix;
-import admin.repository.ClientRepository;
-import admin.repository.SysPrinRepository;
-import admin.repository.SysPrinsPrefixRepository;
+import admin.dto.*;
+import admin.model.*;
+import admin.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +14,16 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private final SysPrinRepository sysPrinRepository;
     private final SysPrinsPrefixRepository sysPrinsPrefixRepository;
+    private final ClientEmailRepository clientEmailRepository;
 
     public ClientService(ClientRepository clientRepository,
                          SysPrinRepository sysPrinRepository,
-                         SysPrinsPrefixRepository sysPrinsPrefixRepository) {
+                         SysPrinsPrefixRepository sysPrinsPrefixRepository,
+                         ClientEmailRepository clientEmailRepository) {
         this.clientRepository = clientRepository;
         this.sysPrinRepository = sysPrinRepository;
         this.sysPrinsPrefixRepository = sysPrinsPrefixRepository;
+        this.clientEmailRepository = clientEmailRepository;
     }
 
     public List<ClientDTO> getAllClientsWithDetails() {
@@ -43,7 +39,6 @@ public class ClientService {
             dto.setPhone(client.getPhone());
             dto.setActive(client.getActive());
 
-            // Set additional fields
             dto.setFaxNumber(client.getFaxNumber());
             dto.setBillingSp(client.getBillingSp());
             dto.setReportBreakFlag(client.getReportBreakFlag());
@@ -54,20 +49,34 @@ public class ClientService {
             dto.setSubClientXref(client.getSubClientXref());
             dto.setAmexIssued(client.getAmexIssued());
 
-            // Convert report options
             List<ClientReportOptionDTO> reportOptionDTOs = client.getReportOptions().stream()
-                    .map(ro -> new ClientReportOptionDTO(
-                            ro.getId(),
-                            ro.getReportId(),
-                            ro.getReceiveFlag(),
-                            ro.getOutputTypeCd(),
-                            ro.getFileTypeCd(),
-                            ro.getEmailFlag(),
-                            ro.getReportPasswordTx()
-                    )).collect(Collectors.toList());
+                    .map(ro -> {
+                        AdminQueryList report = ro.getReport();
+                        AdminQueryListDTO reportDetails = null;
+                        if (report != null) {
+                            reportDetails = new AdminQueryListDTO();
+                            reportDetails.setReportId(report.getReportId());
+                            reportDetails.setReportName(report.getReportName());
+                            reportDetails.setReportByClientFlag(report.getReportByClientFlag());
+                            reportDetails.setCreatedAt(report.getCreatedAt());
+                            reportDetails.setUpdatedAt(report.getUpdatedAt());
+                        }
+
+                        ClientReportOptionDTO optionDTO = new ClientReportOptionDTO(
+                                ro.getId(),
+                                ro.getReportId(),
+                                ro.getReceiveFlag(),
+                                ro.getOutputTypeCd(),
+                                ro.getFileTypeCd(),
+                                ro.getEmailFlag(),
+                                ro.getReportPasswordTx()
+                        );
+                        optionDTO.setClientId(client.getClient());
+                        optionDTO.setReportDetails(reportDetails);
+                        return optionDTO;
+                    }).collect(Collectors.toList());
             dto.setReportOptions(reportOptionDTOs);
 
-            // Convert sys prins prefixes using repository
             List<SysPrinsPrefix> prefixes = sysPrinsPrefixRepository.findByBillingSp(client.getBillingSp());
             List<SysPrinsPrefixDTO> sysPrinsDTOs = prefixes.stream()
                     .map(sp -> new SysPrinsPrefixDTO(
@@ -77,7 +86,6 @@ public class ClientService {
                     )).collect(Collectors.toList());
             dto.setSysPrinsPrefixes(sysPrinsDTOs);
 
-            // Convert sys prins (new)
             List<SysPrin> sysPrins = sysPrinRepository.findByIdClient(client.getClient());
             List<SysPrinDTO> sysPrinDTOs = sysPrins.stream().map(sp -> {
                 SysPrinDTO sysDto = new SysPrinDTO();
@@ -120,7 +128,7 @@ public class ClientService {
                 sysDto.setRsp(sp.getRsp());
                 sysDto.setSession(sp.getSession());
                 sysDto.setBadState(sp.getBadState());
-                sysDto.setaStatRch(sp.getAStatRch());
+                sysDto.setAStatRch(sp.getAStatRch());
                 sysDto.setNm13(sp.getNm13());
                 sysDto.setTempAwayAtts(sp.getTempAwayAtts());
                 sysDto.setReportMethod(sp.getReportMethod());
@@ -131,10 +139,40 @@ public class ClientService {
                 sysDto.setReturnStatus(sp.getReturnStatus());
                 sysDto.setDestroyStatus(sp.getDestroyStatus());
                 sysDto.setNonUS(sp.getNonUS());
+                sysDto.setSpecial(sp.getSpecial());
+                sysDto.setPinMailer(sp.getPinMailer());
+                sysDto.setHoldDays(sp.getHoldDays());
+
+                List<InvalidDelivAreaDTO> areaDTOs = sp.getInvalidDelivAreas().stream().map(area -> {
+                    InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
+                    areaDto.setId(area.getId());
+                    areaDto.setArea(area.getArea());
+                    areaDto.setClient(sp.getId().getClient());
+                    areaDto.setSysPrin(sp.getId().getSysPrin());
+                    return areaDto;
+                }).collect(Collectors.toList());
+                sysDto.setInvalidDelivAreas(areaDTOs);
+
                 return sysDto;
             }).collect(Collectors.toList());
-
             dto.setSysPrins(sysPrinDTOs);
+
+            List<ClientEmail> clientEmails = clientEmailRepository.findByClientId(client.getClient());
+            List<ClientEmailDTO> emailDTOs = clientEmails.stream().map(email -> {
+                ClientEmailDTO emailDto = new ClientEmailDTO();
+                emailDto.setId(email.getId());
+                emailDto.setClientId(email.getClientId());
+                emailDto.setReportId(email.getReportId());
+                emailDto.setEmailName(email.getEmailName());
+                emailDto.setEmailAddress(email.getEmailAddress());
+                emailDto.setCarbonCopyFlag(email.getCarbonCopyFlag());
+                emailDto.setActiveFlag(email.getActiveFlag());
+                emailDto.setMailServerId(email.getMailServerId());
+                emailDto.setCreatedAt(email.getCreatedAt());
+                emailDto.setUpdatedAt(email.getUpdatedAt());
+                return emailDto;
+            }).collect(Collectors.toList());
+            dto.setClientEmail(emailDTOs);
 
             return dto;
         }).collect(Collectors.toList());

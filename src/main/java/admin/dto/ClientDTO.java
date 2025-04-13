@@ -13,7 +13,7 @@ public class ClientDTO {
     private String phone;
     private Boolean active;
 
-    // New fields based on updated Client entity
+    // Additional fields
     private String faxNumber;
     private String billingSp;
     private Integer reportBreakFlag;
@@ -26,9 +26,11 @@ public class ClientDTO {
 
     private List<ClientReportOptionDTO> reportOptions;
     private List<SysPrinsPrefixDTO> sysPrinsPrefixes;
-
-    // NEW: Include sysPrins
+    private List<ClientEmailDTO> clientEmail;
     private List<SysPrinDTO> sysPrins;
+
+    // NEW: Invalid Delivery Areas
+    private List<InvalidDelivAreaDTO> invalidDelivAreas;
 
     // Getters and Setters
     public String getClient() { return client; }
@@ -93,6 +95,17 @@ public class ClientDTO {
 
     public List<SysPrinDTO> getSysPrins() { return sysPrins; }
     public void setSysPrins(List<SysPrinDTO> sysPrins) { this.sysPrins = sysPrins; }
+
+    public List<ClientEmailDTO> getClientEmail() { return clientEmail; }
+    public void setClientEmail(List<ClientEmailDTO> clientEmail) { this.clientEmail = clientEmail; }
+
+    public List<InvalidDelivAreaDTO> getInvalidDelivAreas() {
+        return invalidDelivAreas;
+    }
+
+    public void setInvalidDelivAreas(List<InvalidDelivAreaDTO> invalidDelivAreas) {
+        this.invalidDelivAreas = invalidDelivAreas;
+    }
 
     @Override
     public String toString() {

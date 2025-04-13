@@ -1,6 +1,8 @@
 package admin.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Where;
+
 import java.util.Objects;
 
 @Entity
@@ -23,10 +25,10 @@ public class ClientReportOption {
     private Boolean receiveFlag;
 
     @Column(name = "OUTPUT_TYPE_CD", nullable = false)
-    private Integer outputTypeCd;
+    private String outputTypeCd;
 
     @Column(name = "FILE_TYPE_CD", nullable = false)
-    private Integer fileTypeCd;
+    private String fileTypeCd;
 
     @Column(name = "EMAIL_FLAG", nullable = false)
     private Integer emailFlag;
@@ -34,10 +36,18 @@ public class ClientReportOption {
     @Column(name = "REPORT_PASSWORD_TX")
     private String reportPasswordTx;
 
-    public ClientReportOption() {
-    }
+    // ✅ New association with AdminQueryList
 
-    public ClientReportOption(Long id, Client client, Long reportId, Boolean receiveFlag, Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag, String reportPasswordTx) {
+    @ManyToOne
+    @JoinColumn(name = "REPORT_ID", referencedColumnName = "report_id", insertable = false, updatable = false)
+    @Where(clause = "report_by_client_flag = 1")
+    private AdminQueryList report;
+
+    public ClientReportOption() {}
+
+    public ClientReportOption(Long id, Client client, Long reportId, Boolean receiveFlag,
+                              String outputTypeCd, String fileTypeCd, Integer emailFlag,
+                              String reportPasswordTx) {
         this.id = id;
         this.client = client;
         this.reportId = reportId;
@@ -48,8 +58,7 @@ public class ClientReportOption {
         this.reportPasswordTx = reportPasswordTx;
     }
 
-    // Getters and Setters
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -82,19 +91,19 @@ public class ClientReportOption {
         this.receiveFlag = receiveFlag;
     }
 
-    public Integer getOutputTypeCd() {
+    public String getOutputTypeCd() {
         return outputTypeCd;
     }
 
-    public void setOutputTypeCd(Integer outputTypeCd) {
+    public void setOutputTypeCd(String outputTypeCd) {
         this.outputTypeCd = outputTypeCd;
     }
 
-    public Integer getFileTypeCd() {
+    public String getFileTypeCd() {
         return fileTypeCd;
     }
 
-    public void setFileTypeCd(Integer fileTypeCd) {
+    public void setFileTypeCd(String fileTypeCd) {
         this.fileTypeCd = fileTypeCd;
     }
 
@@ -114,7 +123,27 @@ public class ClientReportOption {
         this.reportPasswordTx = reportPasswordTx;
     }
 
-    // toString
+    public AdminQueryList getReport() {
+        return report;
+    }
+
+    public void setReport(AdminQueryList report) {
+        this.report = report;
+    }
+
+    // equals, hashCode, and toString
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ClientReportOption)) return false;
+        ClientReportOption that = (ClientReportOption) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public String toString() {
@@ -127,20 +156,5 @@ public class ClientReportOption {
                 ", emailFlag=" + emailFlag +
                 ", reportPasswordTx='" + reportPasswordTx + '\'' +
                 '}';
-    }
-
-    // equals & hashCode (optional but recommended for JPA entities)
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ClientReportOption)) return false;
-        ClientReportOption that = (ClientReportOption) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

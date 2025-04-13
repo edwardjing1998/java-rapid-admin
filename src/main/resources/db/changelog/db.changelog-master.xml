@@ -9,9 +9,12 @@
 
     <include file="db/changelog/changeset-001-create-user-table.xml"/>
     <include file="db/changelog/create-clients-table.xml"/>
+    <include file="db/changelog/create-admin-query-list-table.xml"/>
     <include file="db/changelog/create-sys-prins-prefix-table.xml"/>
     <include file="db/changelog/create-client-report-options-table.xml"/>
     <include file="db/changelog/create-sys-prins-table.xml"/>
+    <include file="db/changelog/create-client-email-table.xml"/>
+    <include file="db/changelog/create-invalid-delivery-areas-table.xml"/>
 
 </databaseChangeLog>
 

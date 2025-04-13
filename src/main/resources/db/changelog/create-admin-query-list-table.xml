@@ -6,21 +6,19 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <changeSet id="create-sys-prins-prefix-table" author="Edward Jing">
-        <createTable tableName="SYS_PRINS_PREFIX">
-            <column name="prefix_id" type="BIGINT" autoIncrement="true">
+    <changeSet id="create-admin-query-list-table" author="Edward Jing">
+        <createTable tableName="admin_query_list">
+            <column name="report_id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-
-            <column name="billing_sp" type="VARCHAR(50)">
+            <column name="report_name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="prefix" type="VARCHAR(50)">
+            <column name="report_by_client_flag" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="atm_cash_rule" type="VARCHAR(50)"/>
+            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
     </changeSet>
 

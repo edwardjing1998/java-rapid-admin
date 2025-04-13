@@ -2,6 +2,9 @@ package admin.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "SYS_PRINS")
 public class SysPrin {
@@ -63,6 +66,16 @@ public class SysPrin {
     @Column(name = "RET_STAT") private String returnStatus;
     @Column(name = "DES_STAT") private String destroyStatus;
     @Column(name = "NON_US") private String nonUS;
+
+    @Column(name = "SPECIAL") private String special;
+    @Column(name = "PIN") private String pinMailer;
+
+    @Column(name = "HOLD_DAYS") private Integer holdDays;
+
+    @OneToMany(mappedBy = "sysPrin", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InvalidDelivArea> invalidDelivAreas = new ArrayList<>();
+
+
 
     // Getters and setters
     public SysPrinId getId() { return id; }
@@ -169,6 +182,24 @@ public class SysPrin {
     public void setReturnStatus(String returnStatus) { this.returnStatus = returnStatus; }
     public String getDestroyStatus() { return destroyStatus; }
     public void setDestroyStatus(String destroyStatus) { this.destroyStatus = destroyStatus; }
+
+    public String getSpecial() { return special; }
+    public void setSpecial(String special) { this.special = special; }
+
+    public Integer getHoldDays() { return holdDays; }
+    public void setHoldDays(Integer holdDays) { this.holdDays = holdDays; }
+
+    public String getPinMailer() { return pinMailer; }
+    public void setPinMailer(String pinMailer) { this.pinMailer = pinMailer; }
     public String getNonUS() { return nonUS; }
     public void setNonUS(String nonUS) { this.nonUS = nonUS; }
+
+    public List<InvalidDelivArea> getInvalidDelivAreas() {
+        return invalidDelivAreas;
+    }
+
+    public void setInvalidDelivAreas(List<InvalidDelivArea> invalidDelivAreas) {
+        this.invalidDelivAreas = invalidDelivAreas;
+    }
+
 }

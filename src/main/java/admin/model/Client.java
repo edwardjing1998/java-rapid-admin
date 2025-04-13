@@ -73,13 +73,18 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SysPrin> sysPrins = new ArrayList<>();
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClientEmail> clientEmails = new ArrayList<>();
+
+
     public Client() {}
 
     public Client(String client, String name, String addr, String city, String state, String zip,
                   String contact, String phone, Boolean active, String faxNumber, String billingSp,
                   Integer reportBreakFlag, Integer chLookUpType, Boolean excludeFromReport, Boolean positiveReports,
                   Integer subClientInd, String subClientXref, Boolean amexIssued,
-                  List<ClientReportOption> reportOptions, List<SysPrinsPrefix> sysPrinsPrefixes, List<SysPrin> sysPrins) {
+                  List<ClientReportOption> reportOptions, List<SysPrinsPrefix> sysPrinsPrefixes,
+                  List<SysPrin> sysPrins, List<ClientEmail> clientEmails) {
         this.client = client;
         this.name = name;
         this.addr = addr;
@@ -101,12 +106,8 @@ public class Client {
         this.reportOptions = reportOptions != null ? reportOptions : new ArrayList<>();
         this.sysPrinsPrefixes = sysPrinsPrefixes != null ? sysPrinsPrefixes : new ArrayList<>();
         this.sysPrins = sysPrins != null ? sysPrins : new ArrayList<>();
-
+        this.clientEmails = clientEmails != null ? clientEmails : new ArrayList<>();
     }
-
-
-
-    // Getters and setters
 
     public String getClient() { return client; }
     public void setClient(String client) { this.client = client; }
@@ -144,6 +145,9 @@ public class Client {
     public Integer getChLookUpType() { return chLookUpType; }
     public void setChLookUpType(Integer chLookUpType) { this.chLookUpType = chLookUpType; }
 
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
+
     public Boolean getExcludeFromReport() { return excludeFromReport; }
     public void setExcludeFromReport(Boolean excludeFromReport) { this.excludeFromReport = excludeFromReport; }
 
@@ -159,18 +163,17 @@ public class Client {
     public Boolean getAmexIssued() { return amexIssued; }
     public void setAmexIssued(Boolean amexIssued) { this.amexIssued = amexIssued; }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
-
     public List<ClientReportOption> getReportOptions() { return reportOptions; }
     public void setReportOptions(List<ClientReportOption> reportOptions) { this.reportOptions = reportOptions; }
 
     public List<SysPrinsPrefix> getSysPrinsPrefixes() { return sysPrinsPrefixes; }
     public void setSysPrinsPrefixes(List<SysPrinsPrefix> sysPrinsPrefixes) { this.sysPrinsPrefixes = sysPrinsPrefixes; }
 
-    // Update to Client.java (append to existing file)
     public List<SysPrin> getSysPrins() { return sysPrins; }
     public void setSysPrins(List<SysPrin> sysPrins) { this.sysPrins = sysPrins; }
+
+    public List<ClientEmail> getClientEmails() { return clientEmails; }
+    public void setClientEmails(List<ClientEmail> clientEmails) { this.clientEmails = clientEmails; }
 
     @Override
     public boolean equals(Object o) {
