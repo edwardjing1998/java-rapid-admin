@@ -30,6 +30,15 @@ public class ClientDataGenerator {
             "Denver", "Washington"
     };
 
+    private final String[] usBanks = {
+            "JPMorgan Chase", "Bank of America", "Wells Fargo", "Citigroup", "Goldman Sachs",
+            "Morgan Stanley", "U.S. Bancorp", "PNC Financial Services", "Truist Financial", "Capital One Financial",
+            "Charles Schwab", "Fifth Third Bancorp", "Ally Financial", "KeyCorp", "Regions Financial",
+            "Huntington Bancshares", "First Republic Bank", "M&T Bank Corporation", "Citizens Financial Group", "Comerica",
+            "Zions Bancorporation", "BOK Financial", "Synovus Financial", "Raymond James Financial", "SVB Financial Group",
+            "First Horizon", "East West Bancorp", "New York Community Bancorp", "Wintrust Financial", "Western Alliance Bancorporation"
+    };
+
     private final Random random = new Random();
 
     public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository) {
@@ -50,13 +59,13 @@ public class ClientDataGenerator {
 
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 1; i <= 10; i++) {
-            String clientId = "CLIENT" + i;
+        for (int i = 0; i < usBanks.length; i++) {
+            String clientId = "CLIENT" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
             String zip = String.format("%05d", 10000 + random.nextInt(89999));
             String phone = "555-" + (1000000 + random.nextInt(8999999));
-            String name = "Client Name " + i;
+            String name = usBanks[i];
 
             List<ClientReportOption> reportOptions = new ArrayList<>();
             for (int j = 1; j <= 5; j++) {
@@ -71,12 +80,12 @@ public class ClientDataGenerator {
                 reportOptions.add(option);
             }
 
-            String billingSp = "BILL" + i;
+            String billingSp = "BILL" + (i + 1);
 
             List<SysPrinsPrefix> prefixes = new ArrayList<>();
             for (int k = 1; k <= 5 + random.nextInt(5); k++) {
                 SysPrinsPrefix prefix = new SysPrinsPrefix();
-                prefix.setPrefix("prefixSP" + i + "_" + k + "_" + billingSp);
+                prefix.setPrefix("prefixSP" + (i + 1) + "_" + k + "_" + billingSp);
                 prefix.setAtmCashRule(random.nextBoolean() ? "Destroy" : "Return");
                 prefix.setBillingSp(billingSp);
                 prefixes.add(prefix);
@@ -88,7 +97,7 @@ public class ClientDataGenerator {
                 SysPrin sysPrin = new SysPrin();
                 SysPrinId sysPrinId = new SysPrinId();
                 sysPrinId.setClient(clientId);
-                sysPrinId.setSysPrin("SP" + i + s);
+                sysPrinId.setSysPrin("SP" + (i + 1) + s + " for " + clientId + " - " + name);
                 sysPrin.setId(sysPrinId);
 
                 String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
@@ -187,18 +196,18 @@ public class ClientDataGenerator {
                     city,
                     state,
                     zip,
-                    "Contact " + i,
+                    "Contact " + (i + 1),
                     phone,
-                    i % 2 == 0,
-                    "Fax-" + i,
+                    (i + 1) % 2 == 0,
+                    "Fax-" + (i + 1),
                     billingSp,
-                    i % 2,
-                    i % 3,
-                    i % 2 == 0,
-                    i % 2 == 1,
-                    i % 2,
-                    "XREF" + i,
-                    i % 2 == 0,
+                    (i + 1) % 2,
+                    (i + 1) % 3,
+                    (i + 1) % 2 == 0,
+                    (i + 1) % 2 == 1,
+                    (i + 1) % 2,
+                    "XREF" + (i + 1),
+                    (i + 1) % 2 == 0,
                     reportOptions,
                     prefixes,
                     sysPrinsList,
