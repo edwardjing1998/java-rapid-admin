@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <changeSet id="create-vendor-table" author="yourname">
+        <createTable tableName="VENDOR">
+            <column name="VEND_ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="VEND_NM" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VEND_RCVR_CD" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VEND_FSRV_NM" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VEND_FSRV_IP" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VEND_ACTV_CD" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VEND_FILE_IO" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

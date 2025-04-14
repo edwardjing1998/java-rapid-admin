@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+
+    <changeSet id="create-cases-table" author="yourname">
+        <createTable tableName="CASES">
+            <column name="case_number" type="VARCHAR(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(100)"/>
+            <column name="first_name" type="VARCHAR(100)"/>
+            <column name="addr1" type="VARCHAR(255)"/>
+            <column name="addr2" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(100)"/>
+            <column name="state" type="VARCHAR(50)"/>
+            <column name="zip" type="VARCHAR(20)"/>
+            <column name="hm_phone" type="VARCHAR(30)"/>
+            <column name="wk_phone" type="VARCHAR(30)"/>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="num_cards" type="INT"/>
+            <column name="next_date" type="DATE"/>
+            <column name="no_renewal" type="BOOLEAN"/>
+            <column name="reason" type="VARCHAR(255)"/>
+            <column name="disposition" type="VARCHAR(255)"/>
+            <column name="in_date" type="DATE"/>
+            <column name="delivery_id" type="VARCHAR(100)"/>
+            <column name="sys_prin" type="VARCHAR(255)"/>
+            <column name="out_date" type="DATE"/>
+            <column name="cycle" type="VARCHAR(50)"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="in_hour" type="TIME"/>
+            <column name="auto_date" type="DATE"/>
+            <column name="subreason" type="VARCHAR(255)"/>
+            <column name="prod_type" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -70,8 +70,9 @@ public class Client {
     @OneToMany(mappedBy = "billingSp", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SysPrinsPrefix> sysPrinsPrefixes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SysPrin> sysPrins = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientEmail> clientEmails = new ArrayList<>();

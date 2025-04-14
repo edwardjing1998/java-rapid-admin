@@ -54,4 +54,3 @@ public class InvalidDelivArea {
         return sysPrin != null ? sysPrin.getId().getSysPrin() : null;
     }
 }
-

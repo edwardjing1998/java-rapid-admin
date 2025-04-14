@@ -8,12 +8,17 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import org.springframework.core.annotation.Order;
+
 
 @Component
 public class ClientDataGenerator {
 
     private final ClientRepository clientRepository;
     private final AdminQueryListRepository adminQueryListRepository;
+
+    private final CaseDataGenerator caseDataGenerator;
+
 
     private final String[] usStates = {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -41,12 +46,13 @@ public class ClientDataGenerator {
 
     private final Random random = new Random();
 
-    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository) {
+    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository,
+                               CaseDataGenerator caseDataGenerator) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
+        this.caseDataGenerator = caseDataGenerator;
     }
 
-    @PostConstruct
     public void generateClients() {
         List<AdminQueryList> reports = new ArrayList<>();
         for (int j = 1; j <= 5; j++) {
