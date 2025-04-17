@@ -1,13 +1,14 @@
 package admin.controller;
 
 import admin.dto.ClientDTO;
+import admin.model.Client;
 import admin.service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/clients")
+@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ClientController {
 
@@ -18,8 +19,13 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping
+    @GetMapping("/clients")
     public List<ClientDTO> getAllClients() {
         return clientService.getAllClientsWithDetails();
+    }
+
+    @PostMapping("/client/save")
+    public Client createClient(@RequestBody Client client) {
+        return clientService.saveClient(client);
     }
 }

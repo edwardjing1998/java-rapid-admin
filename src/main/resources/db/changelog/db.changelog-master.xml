@@ -17,7 +17,6 @@
     <include file="db/changelog/create-invalid-delivery-areas-table.xml"/>
     <include file="db/changelog/create-cases-table.xml"/>
     <include file="db/changelog/create-vendor-table.xml"/>
-
 </databaseChangeLog>
 
 

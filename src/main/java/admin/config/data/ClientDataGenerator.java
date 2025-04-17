@@ -3,13 +3,10 @@ package admin.config.data;
 import admin.model.*;
 import admin.repository.AdminQueryListRepository;
 import admin.repository.ClientRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import org.springframework.core.annotation.Order;
-
 
 @Component
 public class ClientDataGenerator {
@@ -18,7 +15,6 @@ public class ClientDataGenerator {
     private final AdminQueryListRepository adminQueryListRepository;
 
     private final CaseDataGenerator caseDataGenerator;
-
 
     private final String[] usStates = {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -97,6 +93,9 @@ public class ClientDataGenerator {
                 prefixes.add(prefix);
             }
 
+            List<String> detailedStatuses = Arrays.asList("Destroy", "Return", "Research / Destroy", "Research / Return", "Research / Carrier Ret");
+            List<String> shortStatuses = Arrays.asList("Destroy", "Return");
+
             List<SysPrin> sysPrinsList = new ArrayList<>();
             int sysPrinCount = 2 + random.nextInt(4);
             for (int s = 1; s <= sysPrinCount; s++) {
@@ -106,66 +105,45 @@ public class ClientDataGenerator {
                 sysPrinId.setSysPrin("SP" + (i + 1) + s + " for " + clientId + " - " + name);
                 sysPrin.setId(sysPrinId);
 
-                String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
-                sysPrin.setCustType(custTypes[random.nextInt(custTypes.length)]);
+                sysPrin.setCustType("Full Processing");
                 sysPrin.setStartDate("2024-01-0" + s);
-                sysPrin.setUndeliverable(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setUndeliverable(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
 
-                sysPrin.setStatA("A" + s);
-                sysPrin.setStatB("B" + s);
-                sysPrin.setStatC("C" + s);
-                sysPrin.setStatD("D" + s);
-                sysPrin.setStatE("E" + s);
-                sysPrin.setStatF("F" + s);
-                sysPrin.setStatG("G" + s);
-                sysPrin.setStatH("H" + s);
-                sysPrin.setStatI("I" + s);
-                sysPrin.setStatJ("J" + s);
-                sysPrin.setStatK("K" + s);
-                sysPrin.setStatL("L" + s);
-                sysPrin.setStatM("M" + s);
-                sysPrin.setStatN("N" + s);
-                sysPrin.setStatO("O" + s);
-                sysPrin.setStatP("P" + s);
-                sysPrin.setStatQ("Q" + s);
-                sysPrin.setStatR("R" + s);
-                sysPrin.setStatS("S" + s);
-                sysPrin.setStatT("T" + s);
-                sysPrin.setStatU("U" + s);
-                sysPrin.setStatV("V" + s);
-                sysPrin.setStatW("W" + s);
-                sysPrin.setStatX("X" + s);
-                sysPrin.setStatY("Y" + s);
-                sysPrin.setStatZ("Z" + s);
+                sysPrin.setStatA(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatB(shortStatuses.get(random.nextInt(shortStatuses.size())));
+                sysPrin.setStatC(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatD(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatE(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatF(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatI(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatL(shortStatuses.get(random.nextInt(shortStatuses.size())));
+                sysPrin.setStatO(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatU(shortStatuses.get(random.nextInt(shortStatuses.size())));
+                sysPrin.setStatX(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
+                sysPrin.setStatZ(shortStatuses.get(random.nextInt(shortStatuses.size())));
 
-                sysPrin.setPoBox("Box" + s);
+                sysPrin.setPoBox("Return");
                 sysPrin.setNoRenewal("N");
                 sysPrin.setBlockCard("B");
                 sysPrin.setAddrFlag("Y");
-
                 sysPrin.setTempAway(100L + s);
-                sysPrin.setRsp(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setRsp("N");
                 sysPrin.setSession("Session" + s);
-                sysPrin.setBadState("No");
-                sysPrin.setAStatRch(random.nextBoolean() ? "Y" : "N");
-                sysPrin.setNm13(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setBadState("Return");
+                sysPrin.setAStatRch("Y");
+                sysPrin.setNm13("Y");
                 sysPrin.setTempAwayAtts(200L + s);
                 sysPrin.setReportMethod("Email");
                 sysPrin.setContact("Contact" + s);
                 sysPrin.setPhone("555-000" + s);
-                sysPrin.setActive(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setActive("Y");
                 sysPrin.setNotes("Note" + s);
-                String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
-                sysPrin.setReturnStatus(returnStatuses[random.nextInt(returnStatuses.length)]);
-                String[] destroyStatuses = {"Destroy", "Return"};
-                sysPrin.setDestroyStatus(destroyStatuses[random.nextInt(destroyStatuses.length)]);
-                String[] specialStatuses = {"Destroy", "Return"};
-                sysPrin.setSpecial(specialStatuses[random.nextInt(specialStatuses.length)]);
-                String[] pinMailerStatuses = {"Destroy", "Return"};
-                sysPrin.setPinMailer(pinMailerStatuses[random.nextInt(pinMailerStatuses.length)]);
+                sysPrin.setReturnStatus("A Status");
+                sysPrin.setDestroyStatus("Destroy");
+                sysPrin.setSpecial("Destroy");
+                sysPrin.setPinMailer("Destroy");
                 sysPrin.setHoldDays(10);
-
-                sysPrin.setNonUS("N");
+                sysPrin.setNonUS("Return");
 
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
                 for (int a = 1; a <= 5; a++) {
@@ -188,7 +166,7 @@ public class ClientDataGenerator {
                 email.setEmailName("User" + e);
                 email.setEmailAddress("user" + e + "@example.com");
                 email.setCarbonCopyFlag(e % 2 == 0);
-                email.setActiveFlag(random.nextBoolean());
+                email.setActiveFlag(true);
                 email.setMailServerId((long) random.nextInt(2));
                 email.setCreatedAt(LocalDateTime.now());
                 email.setUpdatedAt(LocalDateTime.now());

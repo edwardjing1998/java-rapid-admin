@@ -177,4 +177,8 @@ public class ClientService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public Client saveClient(Client client) {
+        return clientRepository.save(client);
+    }
 }
