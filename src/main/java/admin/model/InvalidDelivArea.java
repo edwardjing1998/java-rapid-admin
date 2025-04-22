@@ -10,18 +10,21 @@ public class InvalidDelivArea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 100)
     private String area;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "client", referencedColumnName = "client"),
-            @JoinColumn(name = "sys_prin", referencedColumnName = "sys_prin")
-    })
-    private SysPrin sysPrin;
+    @Column(name = "SYS_PRIN", nullable = false, length = 100)
+    private String sysPrin;
 
-    // Constructor, getters, and setters
+    // Constructors
     public InvalidDelivArea() {}
 
+    public InvalidDelivArea(String area, String sysPrin) {
+        this.area = area;
+        this.sysPrin = sysPrin;
+    }
+
+    // Getters & Setters
     public Long getId() {
         return id;
     }
@@ -38,19 +41,11 @@ public class InvalidDelivArea {
         this.area = area;
     }
 
-    public SysPrin getSysPrin() {
+    public String getSysPrin() {
         return sysPrin;
     }
 
-    public void setSysPrin(SysPrin sysPrin) {
+    public void setSysPrin(String sysPrin) {
         this.sysPrin = sysPrin;
-    }
-
-    public String getClient() {
-        return sysPrin != null ? sysPrin.getId().getClient() : null;
-    }
-
-    public String getSysPrinCode() {
-        return sysPrin != null ? sysPrin.getId().getSysPrin() : null;
     }
 }

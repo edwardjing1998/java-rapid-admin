@@ -1,23 +1,42 @@
 package admin.dto;
 
 public class InvalidDelivAreaDTO {
+
     private Long id;
     private String area;
-
-    private String client;
     private String sysPrin;
 
+    // Constructors
     public InvalidDelivAreaDTO() {}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public InvalidDelivAreaDTO(Long id, String area, String sysPrin) {
+        this.id = id;
+        this.area = area;
+        this.sysPrin = sysPrin;
+    }
 
-    public String getArea() { return area; }
-    public void setArea(String area) { this.area = area; }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-    public String getClient() { return client; }
-    public void setClient(String client) { this.client = client; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getSysPrin() { return sysPrin; }
-    public void setSysPrin(String sysPrin) { this.sysPrin = sysPrin; }
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getSysPrin() {
+        return sysPrin;
+    }
+
+    public void setSysPrin(String sysPrin) {
+        this.sysPrin = sysPrin;
+    }
 }

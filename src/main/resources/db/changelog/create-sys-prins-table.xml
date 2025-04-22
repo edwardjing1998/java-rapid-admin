@@ -16,7 +16,6 @@
             </column>
 
             <column name="CUST_TYPE" type="VARCHAR(255)"/>
-            <column name="START_DATE" type="VARCHAR(255)"/>
             <column name="UNDELIVERABLE" type="VARCHAR(255)"/>
             <column name="STAT_A" type="VARCHAR(255)"/>
             <column name="STAT_B" type="VARCHAR(255)"/>
@@ -24,40 +23,22 @@
             <column name="STAT_D" type="VARCHAR(255)"/>
             <column name="STAT_E" type="VARCHAR(255)"/>
             <column name="STAT_F" type="VARCHAR(255)"/>
-            <column name="STAT_G" type="VARCHAR(255)"/>
-            <column name="STAT_H" type="VARCHAR(255)"/>
             <column name="STAT_I" type="VARCHAR(255)"/>
-            <column name="STAT_J" type="VARCHAR(255)"/>
-            <column name="STAT_K" type="VARCHAR(255)"/>
             <column name="STAT_L" type="VARCHAR(255)"/>
-            <column name="STAT_M" type="VARCHAR(255)"/>
-            <column name="STAT_N" type="VARCHAR(255)"/>
             <column name="STAT_O" type="VARCHAR(255)"/>
-            <column name="STAT_P" type="VARCHAR(255)"/>
-            <column name="STAT_Q" type="VARCHAR(255)"/>
-            <column name="STAT_R" type="VARCHAR(255)"/>
-            <column name="STAT_S" type="VARCHAR(255)"/>
-            <column name="STAT_T" type="VARCHAR(255)"/>
             <column name="STAT_U" type="VARCHAR(255)"/>
-            <column name="STAT_V" type="VARCHAR(255)"/>
-            <column name="STAT_W" type="VARCHAR(255)"/>
             <column name="STAT_X" type="VARCHAR(255)"/>
-            <column name="STAT_Y" type="VARCHAR(255)"/>
             <column name="STAT_Z" type="VARCHAR(255)"/>
             <column name="PO_BOX" type="VARCHAR(255)"/>
-            <column name="NO_RENEWAL" type="VARCHAR(255)"/>
-            <column name="BLOCK_CARD" type="VARCHAR(255)"/>
             <column name="ADDR_FLAG" type="VARCHAR(255)"/>
             <column name="TEMP_AWAY" type="BIGINT"/>
-            <column name="RSP" type="VARCHAR(255)"/>
+            <column name="RPS" type="VARCHAR(255)"/>
             <column name="SESSION" type="VARCHAR(255)"/>
             <column name="BAD_STATE" type="VARCHAR(255)"/>
             <column name="A_STAT_RCH" type="VARCHAR(255)"/>
             <column name="NM_13" type="VARCHAR(255)"/>
             <column name="TEMP_AWAY_ATTS" type="BIGINT"/>
             <column name="REPORT_METHOD" type="VARCHAR(255)"/>
-            <column name="CONTACT" type="VARCHAR(255)"/>
-            <column name="PHONE" type="VARCHAR(255)"/>
             <column name="ACTIVE" type="VARCHAR(255)"/>
             <column name="NOTES" type="VARCHAR(255)"/>
             <column name="RET_STAT" type="VARCHAR(255)"/>
@@ -66,6 +47,9 @@
             <column name="SPECIAL" type="VARCHAR(50)"/>
             <column name="PIN" type="VARCHAR(50)"/>
             <column name="HOLD_DAYS" type="BIGINT"/>
+            <column name="FORWARDING_ADDR" type="VARCHAR(50)"/>
+            <column name="ENTITY_CD" type="VARCHAR(50)"/>
+
         </createTable>
 
         <!-- Foreign key: SYS_PRINS.client → CLIENTS.client -->

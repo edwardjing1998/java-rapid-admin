@@ -30,6 +30,20 @@ public class CaseDataGenerator {
         this.clientRepository = clientRepository;
     }
 
+    private final String[][] sampleAddresses = {
+            {"123 Elm St", "New York", "NY"},
+            {"456 Oak Ave", "Los Angeles", "CA"},
+            {"789 Maple Dr", "Chicago", "IL"},
+            {"321 Pine Rd", "Houston", "TX"},
+            {"654 Cedar Blvd", "Phoenix", "AZ"},
+            {"987 Birch Ln", "Philadelphia", "PA"},
+            {"159 Spruce Ct", "San Antonio", "TX"},
+            {"753 Walnut Way", "San Diego", "CA"},
+            {"852 Chestnut Pl", "Dallas", "TX"},
+            {"963 Poplar Cir", "San Jose", "CA"}
+    };
+
+
     public void generateCases() {
         List<Client> clients = clientRepository.findAllWithSysPrins();
         List<Case> allCases = new ArrayList<>();
@@ -50,10 +64,15 @@ public class CaseDataGenerator {
                 c.setAccount("ACC" + random.nextInt(10000));
                 c.setLastName("Doe" + i);
                 c.setFirstName("John" + i);
-                c.setAddr1("123 Main St");
+
                 c.setAddr2("Suite " + i);
-                c.setCity("City" + i);
-                c.setState("ST");
+
+                int addrIndex = (i + dispositionIndex) % sampleAddresses.length;
+                String[] addrData = sampleAddresses[addrIndex];
+                c.setAddr1(addrData[0]);
+                c.setCity(addrData[1]);
+                c.setState(addrData[2]);
+
                 c.setZip(String.format("%05d", 10000 + random.nextInt(89999)));
                 c.setHomePhone("555-100" + i);
                 c.setWorkPhone("555-200" + i);

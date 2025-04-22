@@ -3,6 +3,7 @@ package admin.config.data;
 import admin.model.*;
 import admin.repository.AdminQueryListRepository;
 import admin.repository.ClientRepository;
+import admin.repository.InvalidDelivAreaRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,10 @@ public class ClientDataGenerator {
     private final AdminQueryListRepository adminQueryListRepository;
 
     private final CaseDataGenerator caseDataGenerator;
+
+    private final InvalidDelivAreaRepository invalidDelivAreaRepository;
+
+
 
     private final String[] usStates = {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -42,11 +47,15 @@ public class ClientDataGenerator {
 
     private final Random random = new Random();
 
+    private InvalidDelivArea area = new InvalidDelivArea();
+
+
     public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository,
-                               CaseDataGenerator caseDataGenerator) {
+                               CaseDataGenerator caseDataGenerator, InvalidDelivAreaRepository invalidDelivAreaRepository) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
         this.caseDataGenerator = caseDataGenerator;
+        this.invalidDelivAreaRepository = invalidDelivAreaRepository;
     }
 
     public void generateClients() {
@@ -105,8 +114,8 @@ public class ClientDataGenerator {
                 sysPrinId.setSysPrin("SP" + (i + 1) + s + " for " + clientId + " - " + name);
                 sysPrin.setId(sysPrinId);
 
-                sysPrin.setCustType("Full Processing");
-                sysPrin.setStartDate("2024-01-0" + s);
+                String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
+                sysPrin.setCustType(custTypes[random.nextInt(custTypes.length)]);
                 sysPrin.setUndeliverable(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
 
                 sysPrin.setStatA(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
@@ -123,36 +132,49 @@ public class ClientDataGenerator {
                 sysPrin.setStatZ(shortStatuses.get(random.nextInt(shortStatuses.size())));
 
                 sysPrin.setPoBox("Return");
-                sysPrin.setNoRenewal("N");
-                sysPrin.setBlockCard("B");
-                sysPrin.setAddrFlag("Y");
+                sysPrin.setAddrFlag(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAway(100L + s);
-                sysPrin.setRsp("N");
+                sysPrin.setRps(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setSession("Session" + s);
                 sysPrin.setBadState("Return");
-                sysPrin.setAStatRch("Y");
-                sysPrin.setNm13("Y");
+                sysPrin.setAStatRch(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setNm13(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAwayAtts(200L + s);
                 sysPrin.setReportMethod("Email");
-                sysPrin.setContact("Contact" + s);
-                sysPrin.setPhone("555-000" + s);
                 sysPrin.setActive("Y");
                 sysPrin.setNotes("Note" + s);
-                sysPrin.setReturnStatus("A Status");
-                sysPrin.setDestroyStatus("Destroy");
-                sysPrin.setSpecial("Destroy");
-                sysPrin.setPinMailer("Destroy");
+                String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
+                sysPrin.setReturnStatus(returnStatuses[random.nextInt(returnStatuses.length)]);
+
+                String[] destroyStatuses = {"Destroy", "Return"};
+                sysPrin.setDestroyStatus(destroyStatuses[random.nextInt(destroyStatuses.length)]);
+
+                String[] specialOptions = {"Destroy", "Return"};
+                sysPrin.setSpecial(specialOptions[random.nextInt(specialOptions.length)]);
+
+                String[] pinMailerOptions = {"Destroy", "Return"};
+                sysPrin.setPinMailer(pinMailerOptions[random.nextInt(pinMailerOptions.length)]);
+
                 sysPrin.setHoldDays(10);
                 sysPrin.setNonUS("Return");
+                String[] forwardingAddressOptions = {"Re-Mail", "Research"};
+                sysPrin.setForwardingAddress(forwardingAddressOptions[random.nextInt(forwardingAddressOptions.length)]);
+
+                String sysPrinCode = sysPrin.getId().getSysPrin(); // get the String identifier
 
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
                 for (int a = 1; a <= 5; a++) {
+                    String invalid_city = sampleCities[random.nextInt(sampleCities.length)];
+                    String invalid_state = usStates[random.nextInt(usStates.length)];
+                    String invalid_zip = String.format("%05d", 10000 + random.nextInt(89999));
+
                     InvalidDelivArea area = new InvalidDelivArea();
-                    area.setArea("Area " + a);
-                    area.setSysPrin(sysPrin);
+                    area.setArea(invalid_city + ", " + invalid_state + " " + invalid_zip);
+                    area.setSysPrin(sysPrinCode); // manually assign sysPrin code (string)
                     invalidAreas.add(area);
                 }
-                sysPrin.setInvalidDelivAreas(invalidAreas);
+
+                invalidDelivAreaRepository.saveAll(invalidAreas);
 
                 sysPrin.setClient(null);
                 sysPrinsList.add(sysPrin);

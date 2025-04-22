@@ -7,27 +7,22 @@ public class SysPrinDTO {
     private String sysPrin;
 
     private String custType;
-    private String startDate;
     private String undeliverable;
 
-    private String statA, statB, statC, statD, statE, statF, statG, statH, statI, statJ;
-    private String statK, statL, statM, statN, statO, statP, statQ, statR, statS, statT;
-    private String statU, statV, statW, statX, statY, statZ;
+    private String statA, statB, statC, statD, statE, statF, statI;
+    private String statL, statO;
+    private String statU, statX, statZ;
 
     private String poBox;
-    private String noRenewal;
-    private String blockCard;
     private String addrFlag;
     private Long tempAway;
-    private String rsp;
+    private String rps;
     private String session;
     private String badState;
     private String aStatRch;
     private String nm13;
     private Long tempAwayAtts;
     private String reportMethod;
-    private String contact;
-    private String phone;
     private String active;
     private String notes;
     private String returnStatus;
@@ -36,6 +31,8 @@ public class SysPrinDTO {
     private String special;
     private String pinMailer;
     private Integer holdDays;
+
+    private String forwardingAddress;
 
     private List<InvalidDelivAreaDTO> invalidDelivAreas;
 
@@ -49,9 +46,6 @@ public class SysPrinDTO {
 
     public String getCustType() { return custType; }
     public void setCustType(String custType) { this.custType = custType; }
-
-    public String getStartDate() { return startDate; }
-    public void setStartDate(String startDate) { this.startDate = startDate; }
 
     public String getUndeliverable() { return undeliverable; }
     public void setUndeliverable(String undeliverable) { this.undeliverable = undeliverable; }
@@ -68,59 +62,27 @@ public class SysPrinDTO {
     public void setStatE(String statE) { this.statE = statE; }
     public String getStatF() { return statF; }
     public void setStatF(String statF) { this.statF = statF; }
-    public String getStatG() { return statG; }
-    public void setStatG(String statG) { this.statG = statG; }
-    public String getStatH() { return statH; }
-    public void setStatH(String statH) { this.statH = statH; }
     public String getStatI() { return statI; }
     public void setStatI(String statI) { this.statI = statI; }
-    public String getStatJ() { return statJ; }
-    public void setStatJ(String statJ) { this.statJ = statJ; }
-    public String getStatK() { return statK; }
-    public void setStatK(String statK) { this.statK = statK; }
     public String getStatL() { return statL; }
     public void setStatL(String statL) { this.statL = statL; }
-    public String getStatM() { return statM; }
-    public void setStatM(String statM) { this.statM = statM; }
-    public String getStatN() { return statN; }
-    public void setStatN(String statN) { this.statN = statN; }
     public String getStatO() { return statO; }
     public void setStatO(String statO) { this.statO = statO; }
-    public String getStatP() { return statP; }
-    public void setStatP(String statP) { this.statP = statP; }
-    public String getStatQ() { return statQ; }
-    public void setStatQ(String statQ) { this.statQ = statQ; }
-    public String getStatR() { return statR; }
-    public void setStatR(String statR) { this.statR = statR; }
-    public String getStatS() { return statS; }
-    public void setStatS(String statS) { this.statS = statS; }
-    public String getStatT() { return statT; }
-    public void setStatT(String statT) { this.statT = statT; }
     public String getStatU() { return statU; }
     public void setStatU(String statU) { this.statU = statU; }
-    public String getStatV() { return statV; }
-    public void setStatV(String statV) { this.statV = statV; }
-    public String getStatW() { return statW; }
-    public void setStatW(String statW) { this.statW = statW; }
     public String getStatX() { return statX; }
     public void setStatX(String statX) { this.statX = statX; }
-    public String getStatY() { return statY; }
-    public void setStatY(String statY) { this.statY = statY; }
     public String getStatZ() { return statZ; }
     public void setStatZ(String statZ) { this.statZ = statZ; }
 
     public String getPoBox() { return poBox; }
     public void setPoBox(String poBox) { this.poBox = poBox; }
-    public String getNoRenewal() { return noRenewal; }
-    public void setNoRenewal(String noRenewal) { this.noRenewal = noRenewal; }
-    public String getBlockCard() { return blockCard; }
-    public void setBlockCard(String blockCard) { this.blockCard = blockCard; }
     public String getAddrFlag() { return addrFlag; }
     public void setAddrFlag(String addrFlag) { this.addrFlag = addrFlag; }
     public Long getTempAway() { return tempAway; }
     public void setTempAway(Long tempAway) { this.tempAway = tempAway; }
-    public String getRsp() { return rsp; }
-    public void setRsp(String rsp) { this.rsp = rsp; }
+    public String getRps() { return rps; }
+    public void setRps(String rps) { this.rps = rps; }
     public String getSession() { return session; }
     public void setSession(String session) { this.session = session; }
     public String getBadState() { return badState; }
@@ -133,10 +95,6 @@ public class SysPrinDTO {
     public void setTempAwayAtts(Long tempAwayAtts) { this.tempAwayAtts = tempAwayAtts; }
     public String getReportMethod() { return reportMethod; }
     public void setReportMethod(String reportMethod) { this.reportMethod = reportMethod; }
-    public String getContact() { return contact; }
-    public void setContact(String contact) { this.contact = contact; }
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
     public String getActive() { return active; }
     public void setActive(String active) { this.active = active; }
     public String getNotes() { return notes; }
@@ -162,4 +120,13 @@ public class SysPrinDTO {
     public void setInvalidDelivAreas(List<InvalidDelivAreaDTO> invalidDelivAreas) {
         this.invalidDelivAreas = invalidDelivAreas;
     }
+
+    public String getForwardingAddress() {
+        return forwardingAddress;
+    }
+
+    public void setForwardingAddress(String forwardingAddress) {
+        this.forwardingAddress = forwardingAddress;
+    }
+
 }

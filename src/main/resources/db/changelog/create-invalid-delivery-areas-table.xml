@@ -13,9 +13,6 @@
             <column name="area" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="client" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
             <column name="sys_prin" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>

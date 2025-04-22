@@ -16,14 +16,18 @@ public class ClientService {
     private final SysPrinsPrefixRepository sysPrinsPrefixRepository;
     private final ClientEmailRepository clientEmailRepository;
 
+    private final InvalidDelivAreaRepository invalidDelivAreaRepository;
+
     public ClientService(ClientRepository clientRepository,
                          SysPrinRepository sysPrinRepository,
                          SysPrinsPrefixRepository sysPrinsPrefixRepository,
-                         ClientEmailRepository clientEmailRepository) {
+                         ClientEmailRepository clientEmailRepository,
+                         InvalidDelivAreaRepository invalidDelivAreaRepository) {
         this.clientRepository = clientRepository;
         this.sysPrinRepository = sysPrinRepository;
         this.sysPrinsPrefixRepository = sysPrinsPrefixRepository;
         this.clientEmailRepository = clientEmailRepository;
+        this.invalidDelivAreaRepository = invalidDelivAreaRepository;
     }
 
     public List<ClientDTO> getAllClientsWithDetails() {
@@ -92,7 +96,6 @@ public class ClientService {
                 sysDto.setClient(sp.getId().getClient());
                 sysDto.setSysPrin(sp.getId().getSysPrin());
                 sysDto.setCustType(sp.getCustType());
-                sysDto.setStartDate(sp.getStartDate());
                 sysDto.setUndeliverable(sp.getUndeliverable());
                 sysDto.setStatA(sp.getStatA());
                 sysDto.setStatB(sp.getStatB());
@@ -100,40 +103,22 @@ public class ClientService {
                 sysDto.setStatD(sp.getStatD());
                 sysDto.setStatE(sp.getStatE());
                 sysDto.setStatF(sp.getStatF());
-                sysDto.setStatG(sp.getStatG());
-                sysDto.setStatH(sp.getStatH());
                 sysDto.setStatI(sp.getStatI());
-                sysDto.setStatJ(sp.getStatJ());
-                sysDto.setStatK(sp.getStatK());
                 sysDto.setStatL(sp.getStatL());
-                sysDto.setStatM(sp.getStatM());
-                sysDto.setStatN(sp.getStatN());
                 sysDto.setStatO(sp.getStatO());
-                sysDto.setStatP(sp.getStatP());
-                sysDto.setStatQ(sp.getStatQ());
-                sysDto.setStatR(sp.getStatR());
-                sysDto.setStatS(sp.getStatS());
-                sysDto.setStatT(sp.getStatT());
                 sysDto.setStatU(sp.getStatU());
-                sysDto.setStatV(sp.getStatV());
-                sysDto.setStatW(sp.getStatW());
                 sysDto.setStatX(sp.getStatX());
-                sysDto.setStatY(sp.getStatY());
                 sysDto.setStatZ(sp.getStatZ());
                 sysDto.setPoBox(sp.getPoBox());
-                sysDto.setNoRenewal(sp.getNoRenewal());
-                sysDto.setBlockCard(sp.getBlockCard());
                 sysDto.setAddrFlag(sp.getAddrFlag());
                 sysDto.setTempAway(sp.getTempAway());
-                sysDto.setRsp(sp.getRsp());
+                sysDto.setRps(sp.getRps());
                 sysDto.setSession(sp.getSession());
                 sysDto.setBadState(sp.getBadState());
                 sysDto.setAStatRch(sp.getAStatRch());
                 sysDto.setNm13(sp.getNm13());
                 sysDto.setTempAwayAtts(sp.getTempAwayAtts());
                 sysDto.setReportMethod(sp.getReportMethod());
-                sysDto.setContact(sp.getContact());
-                sysDto.setPhone(sp.getPhone());
                 sysDto.setActive(sp.getActive());
                 sysDto.setNotes(sp.getNotes());
                 sysDto.setReturnStatus(sp.getReturnStatus());
@@ -142,15 +127,17 @@ public class ClientService {
                 sysDto.setSpecial(sp.getSpecial());
                 sysDto.setPinMailer(sp.getPinMailer());
                 sysDto.setHoldDays(sp.getHoldDays());
+                sysDto.setForwardingAddress(sp.getForwardingAddress());
 
-                List<InvalidDelivAreaDTO> areaDTOs = sp.getInvalidDelivAreas().stream().map(area -> {
+                List<InvalidDelivArea> areas = invalidDelivAreaRepository.findBySysPrin(sp.getId().getSysPrin());
+                List<InvalidDelivAreaDTO> areaDTOs = areas.stream().map(area -> {
                     InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
                     areaDto.setId(area.getId());
                     areaDto.setArea(area.getArea());
-                    areaDto.setClient(sp.getId().getClient());
-                    areaDto.setSysPrin(sp.getId().getSysPrin());
+                    areaDto.setSysPrin(area.getSysPrin());
                     return areaDto;
                 }).collect(Collectors.toList());
+
                 sysDto.setInvalidDelivAreas(areaDTOs);
 
                 return sysDto;
