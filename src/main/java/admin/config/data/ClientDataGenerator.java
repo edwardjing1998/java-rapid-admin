@@ -222,7 +222,6 @@ public class ClientDataGenerator {
 
             reportOptions.forEach(opt -> opt.setClient(client));
             sysPrinsList.forEach(sp -> sp.setClient(client));
-            emails.forEach(em -> em.setClient(client));
 
             clients.add(client);
         }

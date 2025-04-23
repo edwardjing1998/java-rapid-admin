@@ -38,11 +38,6 @@ public class ClientEmail {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Client_ID", referencedColumnName = "client", insertable = false, updatable = false)
-    private Client client;
-
-
     // --- Constructors ---
     public ClientEmail() {}
 
@@ -127,13 +122,4 @@ public class ClientEmail {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
 }

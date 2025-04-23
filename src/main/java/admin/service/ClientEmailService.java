@@ -2,8 +2,8 @@ package admin.service;
 
 import admin.model.ClientEmail;
 import admin.repository.ClientEmailRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,5 +25,14 @@ public class ClientEmailService {
         email.setCreatedAt(now);
         email.setUpdatedAt(now);
         return clientEmailRepository.save(email);
+    }
+    @Transactional
+    public boolean deleteByClientIdAndEmailAddress(String clientId, String emailAddress) {
+        return clientEmailRepository.findByClientIdAndEmailAddress(clientId, emailAddress)
+                .map(email -> {
+                    clientEmailRepository.deleteByClientIdAndEmailAddress(clientId, emailAddress);
+                    return true;
+                })
+                .orElse(false);
     }
 }

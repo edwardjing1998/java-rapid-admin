@@ -28,4 +28,17 @@ public class ClientEmailController {
         ClientEmail saved = clientEmailService.saveClientEmail(email);
         return ResponseEntity.ok(saved);
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteEmail(
+            @RequestParam String clientId,
+            @RequestParam String emailAddress
+    ) {
+        boolean deleted = clientEmailService.deleteByClientIdAndEmailAddress(clientId, emailAddress);
+        if (deleted) {
+            return ResponseEntity.ok("Email deleted successfully.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

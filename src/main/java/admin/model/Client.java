@@ -73,10 +73,9 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SysPrin> sysPrins = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "Client_ID", referencedColumnName = "client")
     private List<ClientEmail> clientEmails = new ArrayList<>();
-
 
     public Client() {}
 
