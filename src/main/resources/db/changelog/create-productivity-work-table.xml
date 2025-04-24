@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-your-table" author="edward">
+        <createTable tableName="PRODUCTIVITY_WORK">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="USERID" type="char(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="USER_NAME" type="char(25)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="FROMDATE" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="TODATE" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MAILED_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MAILED_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="MAILED_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RETURNED_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RETURNED_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RETURNED_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="DESTROYED_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="DESTROYED_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="DESTROYED_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="HOLD_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="HOLD_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="HOLD_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RESEARCH_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RESEARCH_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="RESEARCH_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PAYMENT_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PAYMENT_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PAYMENT_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ADDRESS_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ADDRESS_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ADDRESS_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CORRES_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CORRES_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CORRES_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKDEST_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKDEST_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKDEST_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKRET_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKRET_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="BULKRET_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SPECIAL_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="SPECIAL_CARDS" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SPECIAL_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PRIVATE_LABEL_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PRIVATE_LABEL_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PRIVATE_LABEL_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="METALCARD_COUNT" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="METALCARD_TIME" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="METAL_CARDS" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ROBOT_LABEL_TOTAL" type="int">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

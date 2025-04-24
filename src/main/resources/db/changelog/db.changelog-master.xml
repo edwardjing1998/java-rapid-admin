@@ -18,6 +18,7 @@
     <include file="db/changelog/create-cases-table.xml"/>
     <include file="db/changelog/create-vendor-table.xml"/>
     <include file="db/changelog/create-dailymessages-table.xml"/>
+    <include file="db/changelog/create-productivity-work-table.xml"/>
 </databaseChangeLog>
 
 
