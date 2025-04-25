@@ -1,5 +1,6 @@
 package admin.controller;
 
+import admin.dto.BulkDestSummaryDTO;
 import admin.dto.ProductivityWorkDTO;
 import admin.service.ProductivityWorkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,4 +41,11 @@ public class ProductivityWorkController {
     ) {
         return service.getRecordsByUserId(userId, fromDate, toDate);
     }
+
+
+    @GetMapping("/bulkdest-summary")
+    public BulkDestSummaryDTO getBulkDestSummary() {
+        return service.getBulkDestSummary();
+    }
+
 }

@@ -1,5 +1,6 @@
 package admin.service;
 
+import admin.dto.BulkDestSummaryDTO;
 import admin.dto.ProductivityWorkDTO;
 import admin.model.ProductivityWork;
 import admin.repository.ProductivityWorkRepository;
@@ -167,4 +168,12 @@ public class ProductivityWorkService {
 
         return dto;
     }
+
+    public BulkDestSummaryDTO getBulkDestSummary() {
+        BulkDestSummaryDTO result = repository.getBulkDestSummary();
+        Long bulkDestCount = result != null ? ((Number) result.getBulkdestAccounts()).longValue() : 0L;
+        Long bulkDestCards = result != null ? ((Number) result.getBulkdestAccounts()).longValue() : 0L;
+        return new BulkDestSummaryDTO(bulkDestCount, bulkDestCards);
+    }
+
 }

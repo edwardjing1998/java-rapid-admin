@@ -1,5 +1,6 @@
 package admin.repository;
 
+import admin.dto.BulkDestSummaryDTO;
 import admin.model.ProductivityWork;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -82,5 +83,9 @@ public interface ProductivityWorkRepository extends JpaRepository<ProductivityWo
     ORDER BY p.userId, p.fromDate
 """)
     List<Object[]> findSelectedFieldsByUserId(String userId, LocalDateTime fromDate, LocalDateTime toDate);
+
+    @Query("SELECT new admin.dto.BulkDestSummaryDTO(SUM(p.bulkDestCount), SUM(p.bulkDestCards)) FROM ProductivityWork p")
+    BulkDestSummaryDTO getBulkDestSummary();
+
 
 }
