@@ -25,13 +25,16 @@ public class ClientReportOption {
     private Boolean receiveFlag;
 
     @Column(name = "OUTPUT_TYPE_CD", nullable = false)
-    private String outputTypeCd;
+    private Integer outputTypeCd;
 
     @Column(name = "FILE_TYPE_CD", nullable = false)
-    private String fileTypeCd;
+    private Integer fileTypeCd;
 
     @Column(name = "EMAIL_FLAG", nullable = false)
     private Integer emailFlag;
+
+    @Column(name = "EMAIL_BODY_TX")
+    private String emailBodyTx;
 
     @Column(name = "REPORT_PASSWORD_TX")
     private String reportPasswordTx;
@@ -39,15 +42,15 @@ public class ClientReportOption {
     // ✅ New association with AdminQueryList
 
     @ManyToOne
-    @JoinColumn(name = "REPORT_ID", referencedColumnName = "report_id", insertable = false, updatable = false)
-    @Where(clause = "report_by_client_flag = 1")
+    @JoinColumn(name = "REPORT_ID", referencedColumnName = "REPORT_ID", insertable = false, updatable = false)
+    @Where(clause = "REPORT_BY_CLIENT_FLAG = 1")
     private AdminQueryList report;
 
     public ClientReportOption() {}
 
     public ClientReportOption(Long id, Client client, Long reportId, Boolean receiveFlag,
-                              String outputTypeCd, String fileTypeCd, Integer emailFlag,
-                              String reportPasswordTx) {
+                              Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag,
+                              String reportPasswordTx, String emailBodyTx) {
         this.id = id;
         this.client = client;
         this.reportId = reportId;
@@ -56,6 +59,7 @@ public class ClientReportOption {
         this.fileTypeCd = fileTypeCd;
         this.emailFlag = emailFlag;
         this.reportPasswordTx = reportPasswordTx;
+        this.emailBodyTx = emailBodyTx;
     }
 
     // Getters and setters
@@ -91,19 +95,19 @@ public class ClientReportOption {
         this.receiveFlag = receiveFlag;
     }
 
-    public String getOutputTypeCd() {
+    public Integer getOutputTypeCd() {
         return outputTypeCd;
     }
 
-    public void setOutputTypeCd(String outputTypeCd) {
+    public void setOutputTypeCd(Integer outputTypeCd) {
         this.outputTypeCd = outputTypeCd;
     }
 
-    public String getFileTypeCd() {
+    public Integer getFileTypeCd() {
         return fileTypeCd;
     }
 
-    public void setFileTypeCd(String fileTypeCd) {
+    public void setFileTypeCd(Integer fileTypeCd) {
         this.fileTypeCd = fileTypeCd;
     }
 
@@ -122,6 +126,15 @@ public class ClientReportOption {
     public void setReportPasswordTx(String reportPasswordTx) {
         this.reportPasswordTx = reportPasswordTx;
     }
+
+    public String getEmailBodyTx() {
+        return emailBodyTx;
+    }
+
+    public void setEmailBodyTx(String emailBodyTx) {
+        this.emailBodyTx = emailBodyTx;
+    }
+
 
     public AdminQueryList getReport() {
         return report;

@@ -15,8 +15,6 @@ public class ClientDataGenerator {
     private final ClientRepository clientRepository;
     private final AdminQueryListRepository adminQueryListRepository;
 
-    private final CaseDataGenerator caseDataGenerator;
-
     private final InvalidDelivAreaRepository invalidDelivAreaRepository;
 
 
@@ -45,16 +43,73 @@ public class ClientDataGenerator {
             "First Horizon", "East West Bancorp", "New York Community Bancorp", "Wintrust Financial", "Western Alliance Bancorporation"
     };
 
+    private final String[] queryNames = {
+            "zipcode step 1 - T", "Phase 1 Retest", "ZipCode Step 2", "Phase3 test",
+            "Rapid Daily Activity - AAID", "First Data Rapid Daily Activity Web Report HSBC",
+            "Binary - Rapid Daily Activity Report 6056 - NDM", "ProductivityWork_Rpt",
+            "Mailing SysPrin - T", "SPS - First Data Rapid Daily Activity Web Report",
+            "First Data Rapid Activity Report", "SendToMIT", "Custom Excel Report",
+            "Product Group Report", "Account Transfer Rejects Daily Report", "Amex Remail - 1",
+            "Phase 1 Test", "Create Robot Queue", "Unworked Robot Cases", "Rapid Hold Cases",
+            "Clear Cycle Tracking", "Daily Billing Mail Report", "Billing Mail Report",
+            "Daily Mail List", "Mail List", "Daily Mail Summary", "Mail Summary",
+            "Operator Code List", "List Excluded From Postage Reports", "BenchmarkResults",
+            "Rapid Daily Activity Report - NDM", "First Data Rapid Daily Activity Report",
+            "Rapid Research Cases", "Queued for Return Cases", "Queued for Destroy cases",
+            "Hold Date Expired Cases", "Number of New Cases for Day", "BenchmarkResults",
+            "Binary -  Rapid Daily Activity Report - NDM", "Amex Remail Cases Web",
+            "Amex Memo Cases Web", "First Data Rapid Activity Special",
+            "First Data Custom Rapid Daily Activity (AMEX)", "SLA Report (Web)", "DHL Cases",
+            "First Data Rapid Activity Report", "TeleServices Cases Web", "Rapid Titanium Report",
+            "FedEx Cases", "Check For Deleted Account", "Rapid Daily Activity Report LH1",
+            "Rapid Daily Activity Report TNB", "Rapid Daily Activity Report ECnt",
+            "Mail Compliance Report", "Return Query", "Amex Worked w/o D/R", "Amex Worked w/ D/R",
+            "PSCU RAPID CUSTOM WEB REPORT", "SLA Report", "MasterCard Daily Count",
+            "Visa Daily Count", "Amex Daily Count", "Pin Mailer User", "ATM Billing Report",
+            "Pin Mailer Billing Report", "MasterCard Visa not Closed - Del Cases After Addr",
+            "Delete Sys Prins by Client Id", "Select Sys Prins by Client Id",
+            "MasterCard Visa not Closed - Del Addr before Cases",
+            "DELETE All Transactions For A Client", "SELECT All Transactions To Delete For A Client",
+            "PinMailer", "Rapid Extract Monthly Billing Report", "Pin Mailer Load",
+            "Rapid CleanUp Unmatched Sys Prins", "Account Transfer Rejects Daily Report",
+            "View Rapid Sys_prin_billing Table", "INVALID SYS PRINS UPDATE",
+            "SYS PRIN LOAD COUNTS", "INVALID SYS PRINS", "Clean Up TRANS With Auto Date 01/01/1900",
+            "UPS Cases", "View Sys Prins Table By System Only", "View Client Change Log",
+            "View Sys Prin Change Log", "Case Activity 7th thru 24th Month",
+            "Case Activity 4th thru 6th Month", "Case Activity 1st thru 3rd Month",
+            "Amex Not Closed", "MasterCard Visa not Closed", "First Data Rapid Daily Activity Web Report",
+            "MITAA File", "RapidMonthlyBillingRpt", "ConnectPayRpt7012", "User ID List",
+            "Quarterly User Verification", "Rapid3QrtrlyUserVerification", "Set Rapid3 Users To Inactive",
+            "Rapid3 System Prin Billing", "Rapid3 System Prin Billing Archive",
+            "Rapid3_Archive System Prin Billing Archive", "Amex Custom Destroy Report",
+            "Monthly Billing Report - Totals by client", "OFL ClientCases Daily Web Report",
+            "OFL Client Cases Daily Admin Report", "PayPalDailyPrivateLabelRpt", "CAP1 Daily File",
+            "OFL Client Cases - DELETE", "OFL Client Cases - VIEW TOTALS BY DAY",
+            "CAP1-Email-Step1", "CAP1-Email-Step2", "CAP1Email", "CAP1-Email-Final-Cleanup",
+            "CAP1-Email-Step2-TUES", "CAP1Email-Tues", "CAP1-Email-Step1-Tues",
+            "CAP1-Email-Final-Cleanup-Tues", "SendToSolutions", "ReceiveFromSolutions",
+            "Rapid Admin Query List", "Pin Mailer Totals", "ATM/Cash Card Totals",
+            "Check Open Cases By Sys/Prin", "TeleServices Cases", "Amex Memo Cases",
+            "Amex Remail Cases", "Solution Cases", "ABC letters Cases", "Vendor Cases",
+            "BulkCard Cases", "List Robot Labels", "RapidMonthlyPinMailerBillingRpt",
+            "RESET Master Codes for  Reporting", "RESET Master Codes for  Daily Processing",
+            "CAP1 - Prepend Zeroes to Account Number", "CAP1 - Reset Process Date",
+            "First Data Rapid Daily Activity Web Report 5620", "Vendor Sent To Maintenance",
+            "NCOA Processing: Remove Client", "NCOA Processing: View Client",
+            "Rapid Daily Activity Report CL5596", "Rapid Daily Activity Report CL5642",
+            "Rapid Daily Activity Report CL5685", "Amex Custom Destroy Report 375",
+            "SolutionsRobotFile", "Amex Custom Destroy Report1", "Amex Billing", "Amex Cases",
+            "Mailing SysPrin", "Amex Remail", "BulkCards", "ZipCode Step 1"
+    };
+
     private final Random random = new Random();
 
     private InvalidDelivArea area = new InvalidDelivArea();
 
 
-    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository,
-                               CaseDataGenerator caseDataGenerator, InvalidDelivAreaRepository invalidDelivAreaRepository) {
+    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository, InvalidDelivAreaRepository invalidDelivAreaRepository) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
-        this.caseDataGenerator = caseDataGenerator;
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
     }
 
@@ -62,8 +117,21 @@ public class ClientDataGenerator {
         List<AdminQueryList> reports = new ArrayList<>();
         for (int j = 1; j <= 5; j++) {
             AdminQueryList report = new AdminQueryList();
-            report.setReportName("Report " + j);
-            report.setReportByClientFlag(1);
+            report.setDefaultFileNm("Report " + j);
+            int randomBit = random.nextInt(2);  // 0 or 1
+            report.setReportByClientFlag(randomBit == 1); // 1 → true, 0 → false
+            report.setDbDriverType("SQL Server");
+            report.setQueryName(queryNames[random.nextInt(queryNames.length)]);
+
+            report.setInputDataFields("Field1, Field2");
+            report.setFileExt(random.nextBoolean() ? "TXT" : "XLT");
+            report.setFileHeaderInd(1);
+            report.setReportDbServer("localhost");
+            report.setReportDb("demoDb");
+            report.setReportDbUserid("admin");
+            report.setReportDbPasswrd("adminpass");
+            report.setReportDbIpAndPort("127.0.0.1:1433");
+
             reports.add(report);
         }
         adminQueryListRepository.saveAll(reports);
@@ -83,11 +151,12 @@ public class ClientDataGenerator {
                 ClientReportOption option = new ClientReportOption();
                 option.setReportId((long) j);
                 option.setReceiveFlag(j % 2 == 0);
-                option.setOutputTypeCd(random.nextBoolean() ? "File" : "Print");
-                option.setFileTypeCd(random.nextBoolean() ? "Text" : "Excel");
-                option.setEmailFlag(j % 3);
+                option.setOutputTypeCd(random.nextInt(3)); // 0 (None), 1 (File), or 2 (Print)
+                option.setFileTypeCd(random.nextInt(3));  // 0 (None), 1 (Text), or 2 (Excel)
+                option.setEmailFlag(random.nextInt(3));  // 0 (None), 1 (Email), or 2 (Web)
                 option.setReportPasswordTx("pass" + j);
-                option.setReport(reports.get(j - 1));
+                option.setReport(reports.get((j - 1) % reports.size()));
+                option.setEmailBodyTx("Email body for " + clientId + " item  " + j);
                 reportOptions.add(option);
             }
 

@@ -21,16 +21,17 @@
             <column name="RECEIVE_FLAG" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
-            <column name="OUTPUT_TYPE_CD" type="VARCHAR(50)">
+            <column name="OUTPUT_TYPE_CD" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="FILE_TYPE_CD" type="VARCHAR(50)">
+            <column name="FILE_TYPE_CD" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="EMAIL_FLAG" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="REPORT_PASSWORD_TX" type="VARCHAR(255)"/>
+            <column name="EMAIL_BODY_TX" type="VARCHAR(500)"/>
         </createTable>
 
         <addForeignKeyConstraint

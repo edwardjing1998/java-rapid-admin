@@ -58,12 +58,7 @@ public class ClientService {
                         AdminQueryList report = ro.getReport();
                         AdminQueryListDTO reportDetails = null;
                         if (report != null) {
-                            reportDetails = new AdminQueryListDTO();
-                            reportDetails.setReportId(report.getReportId());
-                            reportDetails.setReportName(report.getReportName());
-                            reportDetails.setReportByClientFlag(report.getReportByClientFlag());
-                            reportDetails.setCreatedAt(report.getCreatedAt());
-                            reportDetails.setUpdatedAt(report.getUpdatedAt());
+                            reportDetails = new AdminQueryListDTO(report);
                         }
 
                         ClientReportOptionDTO optionDTO = new ClientReportOptionDTO(
@@ -73,6 +68,7 @@ public class ClientService {
                                 ro.getOutputTypeCd(),
                                 ro.getFileTypeCd(),
                                 ro.getEmailFlag(),
+                                ro.getEmailBodyTx(),
                                 ro.getReportPasswordTx()
                         );
                         optionDTO.setClientId(client.getClient());

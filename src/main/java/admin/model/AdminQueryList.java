@@ -10,59 +10,314 @@ public class AdminQueryList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
-    private Long reportId;
+    private Short reportId;
 
-    @Column(name = "report_name", nullable = false)
-    private String reportName;
+    @Column(name = "query_name", nullable = false, length = 50)
+    private String queryName;
 
-    @Column(name = "report_by_client_flag", nullable = false)
-    private Integer reportByClientFlag; // Changed from Boolean to Integer
+    @Column(name = "query", columnDefinition = "TEXT")
+    private String query;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "input_data_fields", nullable = false, length = 255)
+    private String inputDataFields;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "file_ext", nullable = false, length = 3)
+    private String fileExt;
 
-    // Getters and Setters
+    @Column(name = "db_driver_type", nullable = false, length = 30)
+    private String dbDriverType;
 
-    public Long getReportId() {
+    @Column(name = "file_header_ind", nullable = false)
+    private Integer fileHeaderInd;
+
+    @Column(name = "default_file_nm", nullable = false, length = 100)
+    private String defaultFileNm;
+
+    @Column(name = "report_db_server", nullable = false, length = 100)
+    private String reportDbServer;
+
+    @Column(name = "report_db", nullable = false, length = 100)
+    private String reportDb;
+
+    @Column(name = "report_db_userid", nullable = false, length = 50)
+    private String reportDbUserid;
+
+    @Column(name = "report_db_passwrd", nullable = false, length = 100)
+    private String reportDbPasswrd;
+
+    @Column(name = "file_transfer_type")
+    private Integer fileTransferType;
+
+    @Column(name = "report_db_ip_and_port", nullable = false, length = 100)
+    private String reportDbIpAndPort;
+
+    @Column(name = "report_by_client_flag")
+    private Boolean reportByClientFlag;
+
+    @Column(name = "rerun_date_range_start")
+    private LocalDateTime rerunDateRangeStart;
+
+    @Column(name = "rerun_date_range_end")
+    private LocalDateTime rerunDateRangeEnd;
+
+    @Column(name = "rerun_client_id", length = 4)
+    private String rerunClientId;
+
+    @Column(name = "email_from_address", length = 50)
+    private String emailFromAddress;
+
+    @Column(name = "email_event_id", length = 50)
+    private String emailEventId;
+
+    @Column(name = "tab_delimited_flag")
+    private Boolean tabDelimitedFlag;
+
+    @Column(name = "input_file_tx", length = 100)
+    private String inputFileTx;
+
+    @Column(name = "input_file_key_start_pos")
+    private Integer inputFileKeyStartPos;
+
+    @Column(name = "input_file_key_length")
+    private Integer inputFileKeyLength;
+
+    @Column(name = "access_level")
+    private Byte accessLevel;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @Column(name = "is_visible")
+    private Boolean isVisible;
+
+    @Column(name = "num_sheets")
+    private Integer numSheets;
+
+    public AdminQueryList() {
+    }
+
+    // ------ Getter and Setter Methods ------
+    public Short getReportId() {
         return reportId;
     }
 
-    public void setReportId(Long reportId) {
+    public void setReportId(Short reportId) {
         this.reportId = reportId;
     }
 
-    public String getReportName() {
-        return reportName;
+    public String getQueryName() {
+        return queryName;
     }
 
-    public void setReportName(String reportName) {
-        this.reportName = reportName;
+    public void setQueryName(String queryName) {
+        this.queryName = queryName;
     }
 
-    public Integer getReportByClientFlag() {
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public String getInputDataFields() {
+        return inputDataFields;
+    }
+
+    public void setInputDataFields(String inputDataFields) {
+        this.inputDataFields = inputDataFields;
+    }
+
+    public String getFileExt() {
+        return fileExt;
+    }
+
+    public void setFileExt(String fileExt) {
+        this.fileExt = fileExt;
+    }
+
+    public String getDbDriverType() {
+        return dbDriverType;
+    }
+
+    public void setDbDriverType(String dbDriverType) {
+        this.dbDriverType = dbDriverType;
+    }
+
+    public Integer getFileHeaderInd() {
+        return fileHeaderInd;
+    }
+
+    public void setFileHeaderInd(Integer fileHeaderInd) {
+        this.fileHeaderInd = fileHeaderInd;
+    }
+
+    public String getDefaultFileNm() {
+        return defaultFileNm;
+    }
+
+    public void setDefaultFileNm(String defaultFileNm) {
+        this.defaultFileNm = defaultFileNm;
+    }
+
+    public String getReportDbServer() {
+        return reportDbServer;
+    }
+
+    public void setReportDbServer(String reportDbServer) {
+        this.reportDbServer = reportDbServer;
+    }
+
+    public String getReportDb() {
+        return reportDb;
+    }
+
+    public void setReportDb(String reportDb) {
+        this.reportDb = reportDb;
+    }
+
+    public String getReportDbUserid() {
+        return reportDbUserid;
+    }
+
+    public void setReportDbUserid(String reportDbUserid) {
+        this.reportDbUserid = reportDbUserid;
+    }
+
+    public String getReportDbPasswrd() {
+        return reportDbPasswrd;
+    }
+
+    public void setReportDbPasswrd(String reportDbPasswrd) {
+        this.reportDbPasswrd = reportDbPasswrd;
+    }
+
+    public Integer getFileTransferType() {
+        return fileTransferType;
+    }
+
+    public void setFileTransferType(Integer fileTransferType) {
+        this.fileTransferType = fileTransferType;
+    }
+
+    public String getReportDbIpAndPort() {
+        return reportDbIpAndPort;
+    }
+
+    public void setReportDbIpAndPort(String reportDbIpAndPort) {
+        this.reportDbIpAndPort = reportDbIpAndPort;
+    }
+
+    public Boolean getReportByClientFlag() {
         return reportByClientFlag;
     }
 
-    public void setReportByClientFlag(Integer reportByClientFlag) {
+    public void setReportByClientFlag(Boolean reportByClientFlag) {
         this.reportByClientFlag = reportByClientFlag;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getRerunDateRangeStart() {
+        return rerunDateRangeStart;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setRerunDateRangeStart(LocalDateTime rerunDateRangeStart) {
+        this.rerunDateRangeStart = rerunDateRangeStart;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public LocalDateTime getRerunDateRangeEnd() {
+        return rerunDateRangeEnd;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setRerunDateRangeEnd(LocalDateTime rerunDateRangeEnd) {
+        this.rerunDateRangeEnd = rerunDateRangeEnd;
+    }
+
+    public String getRerunClientId() {
+        return rerunClientId;
+    }
+
+    public void setRerunClientId(String rerunClientId) {
+        this.rerunClientId = rerunClientId;
+    }
+
+    public String getEmailFromAddress() {
+        return emailFromAddress;
+    }
+
+    public void setEmailFromAddress(String emailFromAddress) {
+        this.emailFromAddress = emailFromAddress;
+    }
+
+    public String getEmailEventId() {
+        return emailEventId;
+    }
+
+    public void setEmailEventId(String emailEventId) {
+        this.emailEventId = emailEventId;
+    }
+
+    public Boolean getTabDelimitedFlag() {
+        return tabDelimitedFlag;
+    }
+
+    public void setTabDelimitedFlag(Boolean tabDelimitedFlag) {
+        this.tabDelimitedFlag = tabDelimitedFlag;
+    }
+
+    public String getInputFileTx() {
+        return inputFileTx;
+    }
+
+    public void setInputFileTx(String inputFileTx) {
+        this.inputFileTx = inputFileTx;
+    }
+
+    public Integer getInputFileKeyStartPos() {
+        return inputFileKeyStartPos;
+    }
+
+    public void setInputFileKeyStartPos(Integer inputFileKeyStartPos) {
+        this.inputFileKeyStartPos = inputFileKeyStartPos;
+    }
+
+    public Integer getInputFileKeyLength() {
+        return inputFileKeyLength;
+    }
+
+    public void setInputFileKeyLength(Integer inputFileKeyLength) {
+        this.inputFileKeyLength = inputFileKeyLength;
+    }
+
+    public Byte getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(Byte accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public Boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setIsVisible(Boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public Integer getNumSheets() {
+        return numSheets;
+    }
+
+    public void setNumSheets(Integer numSheets) {
+        this.numSheets = numSheets;
     }
 }

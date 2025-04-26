@@ -1,25 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-        http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="create-admin-query-list-table" author="Edward Jing">
-        <createTable tableName="admin_query_list">
-            <column name="report_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="report_name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="report_by_client_flag" type="BOOLEAN">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-    </changeSet>
+<changeSet id="create-admin-query-list" author="Edward Jing">
+    <createTable tableName="ADMIN_QUERY_LIST">
+        <column name="report_id" type="SMALLINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="query_name" type="CHAR(50)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="query" type="TEXT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="input_data_fields" type="CHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_ext" type="CHAR(3)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="db_driver_type" type="CHAR(30)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_header_ind" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="default_file_nm" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="report_db_server" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="report_db" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="report_db_userid" type="VARCHAR(50)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="report_db_passwrd" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="file_transfer_type" type="INT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="report_db_ip_and_port" type="VARCHAR(100)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="report_by_client_flag" type="BIT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="rerun_date_range_start" type="SMALLDATETIME">
+            <constraints nullable="true"/>
+        </column>
+        <column name="rerun_date_range_end" type="SMALLDATETIME">
+            <constraints nullable="true"/>
+        </column>
+        <column name="rerun_client_id" type="CHAR(4)">
+            <constraints nullable="true"/>
+        </column>
+        <column name="email_from_address" type="VARCHAR(50)">
+            <constraints nullable="true"/>
+        </column>
+        <column name="email_event_id" type="CHAR(50)">
+            <constraints nullable="true"/>
+        </column>
+        <column name="tab_delimited_flag" type="BIT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="input_file_tx" type="VARCHAR(100)">
+            <constraints nullable="true"/>
+        </column>
+        <column name="input_file_key_start_pos" type="INT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="input_file_key_length" type="INT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="access_level" type="TINYINT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="is_active" type="BIT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="is_visible" type="BIT">
+            <constraints nullable="true"/>
+        </column>
+        <column name="num_sheets" type="INT">
+            <constraints nullable="true"/>
+        </column>
+    </createTable>
+</changeSet>
 
 </databaseChangeLog>
+

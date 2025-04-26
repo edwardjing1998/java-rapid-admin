@@ -5,15 +5,18 @@ public class ClientReportOptionDTO {
     private String clientId;
     private Long reportId;
     private Boolean receiveFlag;
-    private String outputTypeCd;
-    private String fileTypeCd;
+    private Integer outputTypeCd;
+    private Integer fileTypeCd;
     private Integer emailFlag;
     private String reportPasswordTx;
+
+    private String emailBodyTx;
+
 
     private AdminQueryListDTO reportDetails;  // ✅ New field
 
 
-    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, String outputTypeCd, String fileTypeCd, Integer emailFlag, String reportPasswordTx) {
+    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag, String reportPasswordTx, String emailBodyTx) {
         this.id = id;
         this.reportId = reportId;
         this.receiveFlag = receiveFlag;
@@ -21,6 +24,7 @@ public class ClientReportOptionDTO {
         this.fileTypeCd = fileTypeCd;
         this.emailFlag = emailFlag;
         this.reportPasswordTx = reportPasswordTx;
+        this.emailBodyTx = emailBodyTx;
     }
 
     public Long getId() {
@@ -55,19 +59,19 @@ public class ClientReportOptionDTO {
         this.receiveFlag = receiveFlag;
     }
 
-    public String getOutputTypeCd() {
+    public Integer getOutputTypeCd() {
         return outputTypeCd;
     }
 
-    public void setOutputTypeCd(String outputTypeCd) {
+    public void setOutputTypeCd(Integer outputTypeCd) {
         this.outputTypeCd = outputTypeCd;
     }
 
-    public String getFileTypeCd() {
+    public Integer getFileTypeCd() {
         return fileTypeCd;
     }
 
-    public void setFileTypeCd(String fileTypeCd) {
+    public void setFileTypeCd(Integer fileTypeCd) {
         this.fileTypeCd = fileTypeCd;
     }
 
@@ -85,6 +89,14 @@ public class ClientReportOptionDTO {
 
     public void setReportPasswordTx(String reportPasswordTx) {
         this.reportPasswordTx = reportPasswordTx;
+    }
+
+    public String getEmailBodyTx() {
+        return emailBodyTx;
+    }
+
+    public void setEmailBodyTx(String emailBodyTx) {
+        this.emailBodyTx = emailBodyTx;
     }
 
     public AdminQueryListDTO getReportDetails() {
