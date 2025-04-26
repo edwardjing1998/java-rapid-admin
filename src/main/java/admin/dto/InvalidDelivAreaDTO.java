@@ -2,28 +2,18 @@ package admin.dto;
 
 public class InvalidDelivAreaDTO {
 
-    private Long id;
     private String area;
     private String sysPrin;
 
     // Constructors
     public InvalidDelivAreaDTO() {}
 
-    public InvalidDelivAreaDTO(Long id, String area, String sysPrin) {
-        this.id = id;
+    public InvalidDelivAreaDTO(String area, String sysPrin) {
         this.area = area;
         this.sysPrin = sysPrin;
     }
 
     // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getArea() {
         return area;
     }

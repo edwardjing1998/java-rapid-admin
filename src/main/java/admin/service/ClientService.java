@@ -125,10 +125,9 @@ public class ClientService {
                 sysDto.setHoldDays(sp.getHoldDays());
                 sysDto.setForwardingAddress(sp.getForwardingAddress());
 
-                List<InvalidDelivArea> areas = invalidDelivAreaRepository.findBySysPrin(sp.getId().getSysPrin());
+                List<InvalidDelivArea> areas = invalidDelivAreaRepository.findByIdSysPrin(sp.getId().getSysPrin());
                 List<InvalidDelivAreaDTO> areaDTOs = areas.stream().map(area -> {
                     InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
-                    areaDto.setId(area.getId());
                     areaDto.setArea(area.getArea());
                     areaDto.setSysPrin(area.getSysPrin());
                     return areaDto;

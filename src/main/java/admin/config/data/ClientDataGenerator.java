@@ -104,9 +104,6 @@ public class ClientDataGenerator {
 
     private final Random random = new Random();
 
-    private InvalidDelivArea area = new InvalidDelivArea();
-
-
     public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository, InvalidDelivAreaRepository invalidDelivAreaRepository) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
@@ -180,7 +177,7 @@ public class ClientDataGenerator {
                 SysPrin sysPrin = new SysPrin();
                 SysPrinId sysPrinId = new SysPrinId();
                 sysPrinId.setClient(clientId);
-                sysPrinId.setSysPrin("SP" + (i + 1) + s + " for " + clientId + " - " + name);
+                sysPrinId.setSysPrin("SP" + (i + 1) + s);
                 sysPrin.setId(sysPrinId);
 
                 String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
@@ -234,12 +231,9 @@ public class ClientDataGenerator {
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
                 for (int a = 1; a <= 5; a++) {
                     String randomState = usStates[random.nextInt(usStates.length)];
-                    InvalidDelivArea area = new InvalidDelivArea();
-                    area.setArea(randomState);
-                    area.setSysPrin(sysPrinCode);
+                    InvalidDelivArea area = new InvalidDelivArea(new InvalidDelivAreaId(sysPrinCode, randomState));
                     invalidAreas.add(area);
                 }
-
                 invalidDelivAreaRepository.saveAll(invalidAreas);
 
                 sysPrin.setClient(null);

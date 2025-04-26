@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface InvalidDelivAreaRepository extends JpaRepository<InvalidDelivArea, Long> {
-    List<InvalidDelivArea> findBySysPrin(String sysPrin);
+    List<InvalidDelivArea> findByIdSysPrin(String sysPrin);
+
 }

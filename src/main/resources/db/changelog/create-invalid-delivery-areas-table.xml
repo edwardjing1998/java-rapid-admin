@@ -7,17 +7,18 @@
 
     <changeSet id="20250413-01" author="yourname">
         <createTable tableName="invalid_deliv_areas">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="area" type="VARCHAR(100)">
+            <column name="sys_prin" type="VARCHAR(12)">
                 <constraints nullable="false"/>
             </column>
-            <column name="sys_prin" type="VARCHAR(100)">
+            <column name="area" type="VARCHAR(3)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
+        <addPrimaryKey
+                tableName="invalid_deliv_areas"
+                columnNames="sys_prin,area"
+                constraintName="pk_invalid_deliv_areas"/>
     </changeSet>
 
 </databaseChangeLog>

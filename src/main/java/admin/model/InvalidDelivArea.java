@@ -6,46 +6,32 @@ import jakarta.persistence.*;
 @Table(name = "INVALID_DELIV_AREAS")
 public class InvalidDelivArea {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private InvalidDelivAreaId id;
 
-    @Column(nullable = false, length = 100)
-    private String area;
-
-    @Column(name = "SYS_PRIN", nullable = false, length = 100)
-    private String sysPrin;
-
-    // Constructors
     public InvalidDelivArea() {}
 
-    public InvalidDelivArea(String area, String sysPrin) {
-        this.area = area;
-        this.sysPrin = sysPrin;
-    }
-
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public InvalidDelivArea(InvalidDelivAreaId id) {
         this.id = id;
     }
 
-    public String getArea() {
-        return area;
+    public InvalidDelivArea(String area, String sysPrin) {
+        this.id = new InvalidDelivAreaId(area, sysPrin);
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public InvalidDelivAreaId getId() {
+        return id;
+    }
+
+    public void setId(InvalidDelivAreaId id) {
+        this.id = id;
     }
 
     public String getSysPrin() {
-        return sysPrin;
+        return id != null ? id.getSysPrin() : null;
     }
 
-    public void setSysPrin(String sysPrin) {
-        this.sysPrin = sysPrin;
+    public String getArea() {
+        return id != null ? id.getArea() : null;
     }
 }
