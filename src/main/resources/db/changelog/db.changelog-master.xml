@@ -7,7 +7,6 @@
 
     <!-- Import changelogs -->
 
-    <include file="db/changelog/changeset-001-create-user-table.xml"/>
     <include file="db/changelog/create-clients-table.xml"/>
     <include file="db/changelog/create-admin-query-list-table.xml"/>
     <include file="db/changelog/create-sys-prins-prefix-table.xml"/>
@@ -19,6 +18,7 @@
     <include file="db/changelog/create-vendor-table.xml"/>
     <include file="db/changelog/create-dailymessages-table.xml"/>
     <include file="db/changelog/create-productivity-work-table.xml"/>
+    <include file="db/changelog/create-users-table.xml"/>
 </databaseChangeLog>
 
 

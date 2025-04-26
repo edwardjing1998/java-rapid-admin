@@ -19,6 +19,11 @@ public class ProductivityWorkDataGenerator {
     private final ClientRepository clientRepository;
     private final Random random = new Random();
 
+    private final String[] names = {
+            "alice", "bob", "charlie", "david", "eve",
+            "frank", "grace", "henry", "irene", "jack"
+    };
+
     public ProductivityWorkDataGenerator(ProductivityWorkRepository productivityWorkRepository,
                                          ClientRepository clientRepository) {
         this.productivityWorkRepository = productivityWorkRepository;
@@ -35,73 +40,78 @@ public class ProductivityWorkDataGenerator {
         LocalDateTime firstDayOfLastMonth = firstDayOfThisMonth.minusMonths(1);
         LocalDateTime lastDayOfLastMonth = firstDayOfThisMonth.minusNanos(1);
 
-        for (Client client : clients) {
-            for (int i = 1; i <= 5; i++) {
-                ProductivityWork pw = new ProductivityWork();
-                pw.setUserId("U" + client.getClient() + i);
-                pw.setUserName("User " + i);
+        int totalUsers = 20; // match user count from UserDataGenerator
 
-                // ✅ Set fromDate to a random date in last month
-                pw.setFromDate(randomDateBetween(firstDayOfLastMonth, lastDayOfLastMonth));
+        for (int userIndex = 1; userIndex <= totalUsers; userIndex++) {
+            String userId = "user" + userIndex;
+            String userName = names[userIndex % names.length].toUpperCase();
 
-                // ✅ Set toDate to a random date in this month
-                pw.setToDate(randomDateBetween(firstDayOfThisMonth, now));
+            for (Client client : clients) {
+                for (int i = 1; i <= 2; i++) { // Generate fewer records per user/client pair
+                    ProductivityWork pw = new ProductivityWork();
 
-                pw.setMailedCount(randInt());
-                pw.setMailedTime(randInt());
-                pw.setMailedCards(randInt());
+                    pw.setUserId(userId);
+                    pw.setUserName(userName);
 
-                pw.setReturnedCount(randInt());
-                pw.setReturnedTime(randInt());
-                pw.setReturnedCards(randInt());
+                    pw.setFromDate(randomDateBetween(firstDayOfLastMonth, lastDayOfLastMonth));
+                    pw.setToDate(randomDateBetween(firstDayOfThisMonth, now));
 
-                pw.setDestroyedCount(randInt());
-                pw.setDestroyedTime(randInt());
-                pw.setDestroyedCards(randInt());
+                    pw.setMailedCount(randInt());
+                    pw.setMailedTime(randInt());
+                    pw.setMailedCards(randInt());
 
-                pw.setHoldCount(randInt());
-                pw.setHoldTime(randInt());
-                pw.setHoldCards(randInt());
+                    pw.setReturnedCount(randInt());
+                    pw.setReturnedTime(randInt());
+                    pw.setReturnedCards(randInt());
 
-                pw.setResearchCount(randInt());
-                pw.setResearchTime(randInt());
-                pw.setResearchCards(randInt());
+                    pw.setDestroyedCount(randInt());
+                    pw.setDestroyedTime(randInt());
+                    pw.setDestroyedCards(randInt());
 
-                pw.setPaymentCount(randInt());
-                pw.setPaymentTime(randInt());
-                pw.setPaymentCards(randInt());
+                    pw.setHoldCount(randInt());
+                    pw.setHoldTime(randInt());
+                    pw.setHoldCards(randInt());
 
-                pw.setAddressCount(randInt());
-                pw.setAddressTime(randInt());
-                pw.setAddressCards(randInt());
+                    pw.setResearchCount(randInt());
+                    pw.setResearchTime(randInt());
+                    pw.setResearchCards(randInt());
 
-                pw.setCorresCount(randInt());
-                pw.setCorresTime(randInt());
-                pw.setCorresCards(randInt());
+                    pw.setPaymentCount(randInt());
+                    pw.setPaymentTime(randInt());
+                    pw.setPaymentCards(randInt());
 
-                pw.setBulkDestCount(randInt());
-                pw.setBulkDestTime(randInt());
-                pw.setBulkDestCards(randInt());
+                    pw.setAddressCount(randInt());
+                    pw.setAddressTime(randInt());
+                    pw.setAddressCards(randInt());
 
-                pw.setBulkRetCount(randInt());
-                pw.setBulkRetTime(randInt());
-                pw.setBulkRetCards(randInt());
+                    pw.setCorresCount(randInt());
+                    pw.setCorresTime(randInt());
+                    pw.setCorresCards(randInt());
 
-                pw.setSpecialCount(randInt());
-                pw.setSpecialCards(randInt());
-                pw.setSpecialTime(randInt());
+                    pw.setBulkDestCount(randInt());
+                    pw.setBulkDestTime(randInt());
+                    pw.setBulkDestCards(randInt());
 
-                pw.setPrivateLabelCount(randInt());
-                pw.setPrivateLabelTime(randInt());
-                pw.setPrivateLabelCards(randInt());
+                    pw.setBulkRetCount(randInt());
+                    pw.setBulkRetTime(randInt());
+                    pw.setBulkRetCards(randInt());
 
-                pw.setMetalCardCount(randInt());
-                pw.setMetalCardTime(randInt());
-                pw.setMetalCards(randInt());
+                    pw.setSpecialCount(randInt());
+                    pw.setSpecialCards(randInt());
+                    pw.setSpecialTime(randInt());
 
-                pw.setRobotLabelTotal(randInt());
+                    pw.setPrivateLabelCount(randInt());
+                    pw.setPrivateLabelTime(randInt());
+                    pw.setPrivateLabelCards(randInt());
 
-                records.add(pw);
+                    pw.setMetalCardCount(randInt());
+                    pw.setMetalCardTime(randInt());
+                    pw.setMetalCards(randInt());
+
+                    pw.setRobotLabelTotal(randInt());
+
+                    records.add(pw);
+                }
             }
         }
 

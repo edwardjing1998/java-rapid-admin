@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/productivity-work")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductivityWorkController {
 
     private final ProductivityWorkService service;

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="USERS" author="Edward Jing">
+        <createTable tableName="users">
+            <column name="USER_ID" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="USER_NAME" type="char(25)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="CURRENT_PASSWORD" type="varchar(150)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ACCESS_LEVEL" type="char(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="FDRID" type="char(8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="FDRPWD" type="char(8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="FDRPWDEXP" type="smallint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ACTIVE" type="bit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OPERATOR_CD" type="char(2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LAST_LOGON_DATE" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="REPORT_GRP_ID" type="char(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="PASSWORD" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+
+            <!-- Password history columns -->
+            <!-- You can use a loop/script to generate these if needed -->
+            <column name="PASSWORD2" type="varchar(50)"/>
+            <column name="PASSWORD3" type="varchar(50)"/>
+            <column name="PASSWORD4" type="varchar(50)"/>
+            <column name="PASSWORD5" type="varchar(50)"/>
+            <column name="PASSWORD6" type="varchar(50)"/>
+            <column name="PASSWORD7" type="varchar(50)"/>
+            <column name="PASSWORD8" type="varchar(50)"/>
+            <column name="PASSWORD9" type="varchar(50)"/>
+            <column name="PASSWORD10" type="varchar(50)"/>
+            <column name="PASSWORD11" type="varchar(50)"/>
+            <column name="PASSWORD12" type="varchar(50)"/>
+            <column name="PASSWORD13" type="varchar(50)"/>
+            <column name="PASSWORD14" type="varchar(50)"/>
+            <column name="PASSWORD15" type="varchar(50)"/>
+            <column name="PASSWORD16" type="varchar(50)"/>
+            <column name="PASSWORD17" type="varchar(50)"/>
+            <column name="PASSWORD18" type="varchar(50)"/>
+            <column name="PASSWORD19" type="varchar(50)"/>
+            <column name="PASSWORD20" type="varchar(50)"/>
+
+            <column name="TIMEDPASSWORD" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LOGEDIN" type="varchar(2)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
