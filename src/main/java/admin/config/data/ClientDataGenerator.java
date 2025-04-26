@@ -233,13 +233,10 @@ public class ClientDataGenerator {
 
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
                 for (int a = 1; a <= 5; a++) {
-                    String invalid_city = sampleCities[random.nextInt(sampleCities.length)];
-                    String invalid_state = usStates[random.nextInt(usStates.length)];
-                    String invalid_zip = String.format("%05d", 10000 + random.nextInt(89999));
-
+                    String randomState = usStates[random.nextInt(usStates.length)];
                     InvalidDelivArea area = new InvalidDelivArea();
-                    area.setArea(invalid_city + ", " + invalid_state + " " + invalid_zip);
-                    area.setSysPrin(sysPrinCode); // manually assign sysPrin code (string)
+                    area.setArea(randomState);
+                    area.setSysPrin(sysPrinCode);
                     invalidAreas.add(area);
                 }
 
