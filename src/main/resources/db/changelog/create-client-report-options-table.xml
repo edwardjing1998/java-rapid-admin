@@ -2,54 +2,42 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="
-        http://www.liquibase.org/xml/ns/dbchangelog
-        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="create-client-report-options-table" author="Edward Jing">
-
-        <createTable tableName="CLIENT_REPORT_OPTIONS">
-            <column name="ID" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="CLIENT_ID" type="VARCHAR(50)">
+    <changeSet id="create-client-report-options" author="yourname">
+        <createTable tableName="client_report_options">
+            <column name="client_id" type="varchar(15)">
                 <constraints nullable="false"/>
             </column>
-            <column name="REPORT_ID" type="BIGINT">
+            <column name="report_id" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="RECEIVE_FLAG" type="BOOLEAN">
+            <column name="receive_flag" type="bit">
                 <constraints nullable="false"/>
             </column>
-            <column name="OUTPUT_TYPE_CD" type="INTEGER">
-                <constraints nullable="false"/>
+            <column name="output_type_cd" type="smallint">
+                <constraints nullable="true"/>
             </column>
-            <column name="FILE_TYPE_CD" type="INTEGER">
-                <constraints nullable="false"/>
+            <column name="file_type_cd" type="smallint">
+                <constraints nullable="true"/>
             </column>
-            <column name="EMAIL_FLAG" type="INTEGER">
-                <constraints nullable="false"/>
+            <column name="email_flag" type="smallint">
+                <constraints nullable="true"/>
             </column>
-            <column name="REPORT_PASSWORD_TX" type="VARCHAR(255)"/>
-            <column name="EMAIL_BODY_TX" type="VARCHAR(500)"/>
+            <column name="report_password_tx" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email_body_tx" type="varchar(500)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
 
-        <addForeignKeyConstraint
-                baseTableName="CLIENT_REPORT_OPTIONS"
-                baseColumnNames="CLIENT_ID"
-                constraintName="fk_reportoptions_client"
-                referencedTableName="CLIENTS"
-                referencedColumnNames="client"/>
-
-        <!-- Foreign key to ADMIN_QUERY_LIST -->
-        <addForeignKeyConstraint
-                baseTableName="CLIENT_REPORT_OPTIONS"
-                baseColumnNames="REPORT_ID"
-                constraintName="fk_reportoptions_report"
-                referencedTableName="ADMIN_QUERY_LIST"
-                referencedColumnNames="report_id"/>
-
-
+        <!-- Define composite primary key -->
+        <addPrimaryKey
+                tableName="client_report_options"
+                columnNames="client_id, report_id"
+                constraintName="pk_client_report_options"/>
     </changeSet>
 
 </databaseChangeLog>

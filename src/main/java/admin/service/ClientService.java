@@ -62,8 +62,8 @@ public class ClientService {
                         }
 
                         ClientReportOptionDTO optionDTO = new ClientReportOptionDTO(
-                                ro.getId(),
-                                ro.getReportId(),
+                                ro.getId().getClientId(),
+                                ro.getId().getReportId(),
                                 ro.getReceiveFlag(),
                                 ro.getOutputTypeCd(),
                                 ro.getFileTypeCd(),

@@ -64,8 +64,9 @@ public class Client {
     @Column(name = "amex_issued")
     private Boolean amexIssued;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.clientId", cascade = CascadeType.ALL)
     private List<ClientReportOption> reportOptions = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "billingSp", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SysPrinsPrefix> sysPrinsPrefixes = new ArrayList<>();

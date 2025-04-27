@@ -146,7 +146,9 @@ public class ClientDataGenerator {
             List<ClientReportOption> reportOptions = new ArrayList<>();
             for (int j = 1; j <= 5; j++) {
                 ClientReportOption option = new ClientReportOption();
-                option.setReportId((long) j);
+                option.setId(new ClientReportOptionId());
+                option.getId().setClientId(clientId);
+                option.getId().setReportId(j);
                 option.setReceiveFlag(j % 2 == 0);
                 option.setOutputTypeCd(random.nextInt(3)); // 0 (None), 1 (File), or 2 (Print)
                 option.setFileTypeCd(random.nextInt(3));  // 0 (None), 1 (Text), or 2 (Excel)
@@ -282,7 +284,7 @@ public class ClientDataGenerator {
                     emails
             );
 
-            reportOptions.forEach(opt -> opt.setClient(client));
+ //           reportOptions.forEach(opt -> opt.setClient(client));
             sysPrinsList.forEach(sp -> sp.setClient(client));
 
             clients.add(client);

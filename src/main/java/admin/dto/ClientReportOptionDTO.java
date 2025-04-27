@@ -1,9 +1,9 @@
 package admin.dto;
 
 public class ClientReportOptionDTO {
-    private Long id;
-    private String clientId;
-    private Long reportId;
+
+    private String clientId;          // 🔥 From EmbeddedId
+    private Integer reportId;          // 🔥 From EmbeddedId
     private Boolean receiveFlag;
     private Integer outputTypeCd;
     private Integer fileTypeCd;
@@ -16,8 +16,15 @@ public class ClientReportOptionDTO {
     private AdminQueryListDTO reportDetails;  // ✅ New field
 
 
-    public ClientReportOptionDTO(Long id, Long reportId, Boolean receiveFlag, Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag, String reportPasswordTx, String emailBodyTx) {
-        this.id = id;
+    public ClientReportOptionDTO(String clientId,
+                                 Integer reportId,
+                                 Boolean receiveFlag,
+                                 Integer outputTypeCd,
+                                 Integer fileTypeCd,
+                                 Integer emailFlag,
+                                 String reportPasswordTx,
+                                 String emailBodyTx) {
+        this.clientId = clientId;
         this.reportId = reportId;
         this.receiveFlag = receiveFlag;
         this.outputTypeCd = outputTypeCd;
@@ -25,14 +32,6 @@ public class ClientReportOptionDTO {
         this.emailFlag = emailFlag;
         this.reportPasswordTx = reportPasswordTx;
         this.emailBodyTx = emailBodyTx;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getClientId() {
@@ -43,11 +42,11 @@ public class ClientReportOptionDTO {
         this.clientId = clientId;
     }
 
-    public Long getReportId() {
+    public Integer getReportId() {
         return reportId;
     }
 
-    public void setReportId(Long reportId) {
+    public void setReportId(Integer reportId) {
         this.reportId = reportId;
     }
 
@@ -110,7 +109,6 @@ public class ClientReportOptionDTO {
     @Override
     public String toString() {
         return "ClientReportOptionDTO{" +
-                "id=" + id +
                 ", clientId='" + clientId + '\'' +
                 ", reportId=" + reportId +
                 ", receiveFlag=" + receiveFlag +

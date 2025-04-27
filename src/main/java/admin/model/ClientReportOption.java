@@ -9,17 +9,8 @@ import java.util.Objects;
 @Table(name = "CLIENT_REPORT_OPTIONS")
 public class ClientReportOption {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_ID", nullable = false)
-    private Client client;
-
-    @Column(name = "REPORT_ID", nullable = false)
-    private Long reportId;
+    @EmbeddedId
+    private ClientReportOptionId id;
 
     @Column(name = "RECEIVE_FLAG", nullable = false)
     private Boolean receiveFlag;
@@ -48,12 +39,9 @@ public class ClientReportOption {
 
     public ClientReportOption() {}
 
-    public ClientReportOption(Long id, Client client, Long reportId, Boolean receiveFlag,
+    public ClientReportOption(Boolean receiveFlag,
                               Integer outputTypeCd, Integer fileTypeCd, Integer emailFlag,
                               String reportPasswordTx, String emailBodyTx) {
-        this.id = id;
-        this.client = client;
-        this.reportId = reportId;
         this.receiveFlag = receiveFlag;
         this.outputTypeCd = outputTypeCd;
         this.fileTypeCd = fileTypeCd;
@@ -62,29 +50,12 @@ public class ClientReportOption {
         this.emailBodyTx = emailBodyTx;
     }
 
-    // Getters and setters
-    public Long getId() {
+    public ClientReportOptionId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ClientReportOptionId id) {
         this.id = id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Long getReportId() {
-        return reportId;
-    }
-
-    public void setReportId(Long reportId) {
-        this.reportId = reportId;
     }
 
     public Boolean getReceiveFlag() {
@@ -162,7 +133,6 @@ public class ClientReportOption {
     public String toString() {
         return "ClientReportOption{" +
                 "id=" + id +
-                ", reportId=" + reportId +
                 ", receiveFlag=" + receiveFlag +
                 ", outputTypeCd=" + outputTypeCd +
                 ", fileTypeCd=" + fileTypeCd +
