@@ -211,10 +211,12 @@ public class ClientDataGenerator {
                 sysPrin.setReportMethod(0.00);
                 sysPrin.setActive(true);
                 sysPrin.setNotes("Note" + s);
-                String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
+ //               String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
+                String[] returnStatuses = {"A", "C", "E", "F"};
                 sysPrin.setReturnStatus(returnStatuses[random.nextInt(returnStatuses.length)]);
 
-                String[] destroyStatuses = {"Destroy", "Return"};
+ //               String[] destroyStatuses = {"Destroy", "Return"};
+                String[] destroyStatuses = {"0", "1"};
                 sysPrin.setDestroyStatus(destroyStatuses[random.nextInt(destroyStatuses.length)]);
 
  //               String[] specialOptions = {"Destroy", "Return"}; // 0, 1
