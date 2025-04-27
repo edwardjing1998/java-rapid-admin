@@ -13,8 +13,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.springframework.core.annotation.Order;
-
 
 @Component
 public class CaseDataGenerator {
@@ -43,9 +41,8 @@ public class CaseDataGenerator {
             {"963 Poplar Cir", "San Jose", "CA"}
     };
 
-
     public void generateCases() {
-        List<Client> clients = clientRepository.findAllWithSysPrins();
+        List<Client> clients = clientRepository.findAllWithSysPrins();  // <- Use custom query here
         List<Case> allCases = new ArrayList<>();
 
         for (Client client : clients) {
