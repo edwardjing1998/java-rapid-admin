@@ -17,22 +17,27 @@ public class ClientEmailService {
     }
 
     public List<ClientEmail> getEmailsByClientId(String clientId) {
-        return clientEmailRepository.findByClientId(clientId);
+        return clientEmailRepository.findByIdClientId(clientId);
     }
 
     public ClientEmail saveClientEmail(ClientEmail email) {
-        LocalDateTime now = LocalDateTime.now();
-        email.setCreatedAt(now);
-        email.setUpdatedAt(now);
+        if (email.getId() == null) {
+            admin.model.ClientEmailId id = new admin.model.ClientEmailId();
+            id.setClientId(email.getId().getClientId());
+            id.setEmailAddressTx(email.getId().getEmailAddressTx());
+            email.setId(id);
+        }
         return clientEmailRepository.save(email);
     }
+
     @Transactional
     public boolean deleteByClientIdAndEmailAddress(String clientId, String emailAddress) {
-        return clientEmailRepository.findByClientIdAndEmailAddress(clientId, emailAddress)
+        return clientEmailRepository.findByIdClientIdAndIdEmailAddressTx(clientId, emailAddress)
                 .map(email -> {
-                    clientEmailRepository.deleteByClientIdAndEmailAddress(clientId, emailAddress);
+                    clientEmailRepository.deleteByIdClientIdAndIdEmailAddressTx(clientId, emailAddress);
                     return true;
                 })
                 .orElse(false);
     }
 }
+

@@ -139,19 +139,16 @@ public class ClientService {
             }).collect(Collectors.toList());
             dto.setSysPrins(sysPrinDTOs);
 
-            List<ClientEmail> clientEmails = clientEmailRepository.findByClientId(client.getClient());
+            List<ClientEmail> clientEmails = clientEmailRepository.findByIdClientId(client.getClient());
             List<ClientEmailDTO> emailDTOs = clientEmails.stream().map(email -> {
                 ClientEmailDTO emailDto = new ClientEmailDTO();
-                emailDto.setId(email.getId());
-                emailDto.setClientId(email.getClientId());
+                emailDto.setClientId(email.getId().getClientId());
                 emailDto.setReportId(email.getReportId());
-                emailDto.setEmailName(email.getEmailName());
-                emailDto.setEmailAddress(email.getEmailAddress());
+                emailDto.setEmailNameTx(email.getEmailNameTx());
+                emailDto.setEmailAddressTx(email.getId().getEmailAddressTx());
                 emailDto.setCarbonCopyFlag(email.getCarbonCopyFlag());
                 emailDto.setActiveFlag(email.getActiveFlag());
                 emailDto.setMailServerId(email.getMailServerId());
-                emailDto.setCreatedAt(email.getCreatedAt());
-                emailDto.setUpdatedAt(email.getUpdatedAt());
                 return emailDto;
             }).collect(Collectors.toList());
             dto.setClientEmail(emailDTOs);

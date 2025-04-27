@@ -10,34 +10,34 @@ import java.util.Objects;
 public class Client {
 
     @Id
-    @Column(name = "client", nullable = false, length = 255)
+    @Column(name = "client", nullable = false)
     private String client;
 
-    @Column(name = "name", nullable = false, length = 255)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "addr", length = 255)
+    @Column(name = "addr")
     private String addr;
 
-    @Column(name = "city", length = 100)
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "state", length = 50)
+    @Column(name = "state")
     private String state;
 
-    @Column(name = "zip", length = 20)
+    @Column(name = "zip")
     private String zip;
 
-    @Column(name = "contact", length = 100)
+    @Column(name = "contact")
     private String contact;
 
-    @Column(name = "phone", length = 30)
+    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "fax_number", length = 30)
+    @Column(name = "fax_number")
     private String faxNumber;
 
-    @Column(name = "billing_sp", length = 50)
+    @Column(name = "billing_sp")
     private String billingSp;
 
     @Column(name = "report_break_flag")
@@ -58,7 +58,7 @@ public class Client {
     @Column(name = "sub_client_ind")
     private Boolean subClientInd;
 
-    @Column(name = "sub_client_xref", length = 255)
+    @Column(name = "sub_client_xref")
     private String subClientXref;
 
     @Column(name = "amex_issued")

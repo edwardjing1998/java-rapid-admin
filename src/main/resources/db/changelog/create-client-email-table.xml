@@ -8,11 +8,8 @@
 
     <changeSet id="create-client-email-table" author="Edward Jing">
         <createTable tableName="client_email">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
 
-            <column name="Client_ID" type="VARCHAR(50)">
+            <column name="Client_ID" type="VARCHAR(4)">
                 <constraints nullable="false"/>
             </column>
 
@@ -20,11 +17,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="Email_Name_tx" type="VARCHAR(255)">
+            <column name="Email_Name_tx" type="VARCHAR(48)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="Email_Address_tx" type="VARCHAR(255)">
+            <column name="Email_Address_tx" type="VARCHAR(128)">
                 <constraints nullable="false"/>
             </column>
 
@@ -39,15 +36,13 @@
             <column name="Mail_Server_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-
-            <column name="created_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="updated_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
-                <constraints nullable="false"/>
-            </column>
         </createTable>
+
+        <!-- ✅ Add composite primary key -->
+        <addPrimaryKey
+                tableName="client_email"
+                columnNames="Client_ID, Email_Address_tx"
+                constraintName="pk_client_email"/>
 
         <!-- ✅ Add foreign key constraint -->
         <addForeignKeyConstraint
@@ -57,5 +52,6 @@
                 referencedTableName="clients"
                 referencedColumnNames="client"
                 onDelete="CASCADE"/>
+
     </changeSet>
 </databaseChangeLog>

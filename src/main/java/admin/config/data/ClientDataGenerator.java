@@ -38,9 +38,9 @@ public class ClientDataGenerator {
             "JPMorgan Chase", "Bank of America", "Wells Fargo", "Citigroup", "Goldman Sachs",
             "Morgan Stanley", "U.S. Bancorp", "PNC Financial Services", "Truist Financial", "Capital One Financial",
             "Charles Schwab", "Fifth Third Bancorp", "Ally Financial", "KeyCorp", "Regions Financial",
-            "Huntington Bancshares", "First Republic Bank", "M&T Bank Corporation", "Citizens Financial Group", "Comerica",
-            "Zions Bancorporation", "BOK Financial", "Synovus Financial", "Raymond James Financial", "SVB Financial Group",
-            "First Horizon", "East West Bancorp", "New York Community Bancorp", "Wintrust Financial", "Western Alliance Bancorporation"
+            "Huntington Bancshares", "First Republic Bank", "M&T Bank Corporation", "Citizens Financial", "Comerica",
+            "Zions Bancorporation", "BOK Financial", "Synovus Financial", "Raymond James Financial", "SVB Financial",
+            "First Horizon", "East West Bancorp", "New York Community Bancorp", "Wintrust Financial", "Western Alliance"
     };
 
     private final String[] queryNames = {
@@ -136,7 +136,7 @@ public class ClientDataGenerator {
         List<Client> clients = new ArrayList<>();
 
         for (int i = 0; i < usBanks.length; i++) {
-            String clientId = "CLIENT" + (i + 1);
+            String clientId = String.valueOf(i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
             String zip = String.format("%05d", 10000 + random.nextInt(89999));
@@ -243,15 +243,17 @@ public class ClientDataGenerator {
             List<ClientEmail> emails = new ArrayList<>();
             for (int e = 1; e <= 3 + random.nextInt(3); e++) {
                 ClientEmail email = new ClientEmail();
-                email.setClientId(clientId);
+                ClientEmailId emailId = new ClientEmailId();
+                emailId.setClientId(clientId);
+                emailId.setEmailAddressTx("user" + e + "@example.com");
+                email.setId(emailId);
+
                 email.setReportId((long) (1 + random.nextInt(5)));
-                email.setEmailName("User" + e);
-                email.setEmailAddress("user" + e + "@example.com");
+                email.setEmailNameTx("User" + e);
+                email.getId().setEmailAddressTx("user" + e + "@example.com");
                 email.setCarbonCopyFlag(e % 2 == 0);
                 email.setActiveFlag(true);
                 email.setMailServerId((long) random.nextInt(2));
-                email.setCreatedAt(LocalDateTime.now());
-                email.setUpdatedAt(LocalDateTime.now());
                 emails.add(email);
             }
 
@@ -272,7 +274,7 @@ public class ClientDataGenerator {
                     (i + 1) % 2 == 0,
                     (i + 1) % 2 == 1,
                     (i + 1) % 2,
-                    "XREF" + (i + 1),
+                    "" + (i + 1),
                     (i + 1) % 2 == 0,
                     reportOptions,
                     prefixes,
