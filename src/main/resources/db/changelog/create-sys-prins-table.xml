@@ -8,48 +8,50 @@
     <changeSet id="create-sys-prins-table" author="Edward Jing">
 
         <createTable tableName="SYS_PRINS">
-            <column name="client" type="VARCHAR(255)">
+            <column name="client" type="VARCHAR(4)">
                 <constraints nullable="false"/>
             </column>
-            <column name="sys_prin" type="VARCHAR(255)">
+            <column name="sys_prin" type="VARCHAR(12)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="CUST_TYPE" type="VARCHAR(255)"/>
+            <column name="CUST_TYPE" type="VARCHAR(1)"/>
             <column name="UNDELIVERABLE" type="VARCHAR(255)"/>
-            <column name="STAT_A" type="VARCHAR(255)"/>
-            <column name="STAT_B" type="VARCHAR(255)"/>
-            <column name="STAT_C" type="VARCHAR(255)"/>
-            <column name="STAT_D" type="VARCHAR(255)"/>
-            <column name="STAT_E" type="VARCHAR(255)"/>
-            <column name="STAT_F" type="VARCHAR(255)"/>
-            <column name="STAT_I" type="VARCHAR(255)"/>
-            <column name="STAT_L" type="VARCHAR(255)"/>
-            <column name="STAT_O" type="VARCHAR(255)"/>
-            <column name="STAT_U" type="VARCHAR(255)"/>
-            <column name="STAT_X" type="VARCHAR(255)"/>
-            <column name="STAT_Z" type="VARCHAR(255)"/>
-            <column name="PO_BOX" type="VARCHAR(255)"/>
-            <column name="ADDR_FLAG" type="VARCHAR(255)"/>
+            <column name="STAT_A" type="VARCHAR(1)"/>
+            <column name="STAT_B" type="VARCHAR(1)"/>
+            <column name="STAT_C" type="VARCHAR(1)"/>
+            <column name="STAT_D" type="VARCHAR(1)"/>
+            <column name="STAT_E" type="VARCHAR(1)"/>
+            <column name="STAT_F" type="VARCHAR(1)"/>
+            <column name="STAT_I" type="VARCHAR(1)"/>
+            <column name="STAT_L" type="VARCHAR(1)"/>
+            <column name="STAT_O" type="VARCHAR(1)"/>
+            <column name="STAT_U" type="VARCHAR(1)"/>
+            <column name="STAT_X" type="VARCHAR(1)"/>
+            <column name="STAT_Z" type="VARCHAR(1)"/>
+            <column name="PO_BOX" type="VARCHAR(1)"/>
+            <column name="ADDR_FLAG" type="VARCHAR(1)"/>
             <column name="TEMP_AWAY" type="BIGINT"/>
-            <column name="RPS" type="VARCHAR(255)"/>
-            <column name="SESSION" type="VARCHAR(255)"/>
-            <column name="BAD_STATE" type="VARCHAR(255)"/>
-            <column name="A_STAT_RCH" type="VARCHAR(255)"/>
-            <column name="NM_13" type="VARCHAR(255)"/>
+            <column name="RPS" type="VARCHAR(1)"/>
+            <column name="SESSION" type="VARCHAR(1)"/>
+            <column name="BAD_STATE" type="VARCHAR(1)"/>
+            <column name="A_STAT_RCH" type="VARCHAR(1)"/>
+            <column name="NM_13" type="VARCHAR(1)"/>
             <column name="TEMP_AWAY_ATTS" type="BIGINT"/>
-            <column name="REPORT_METHOD" type="VARCHAR(255)"/>
-            <column name="ACTIVE" type="VARCHAR(255)"/>
+            <column name="REPORT_METHOD" type="FLOAT"/>
+            <column name="ACTIVE" type="Boolean"/>
             <column name="NOTES" type="VARCHAR(255)"/>
             <column name="RET_STAT" type="VARCHAR(255)"/>
             <column name="DES_STAT" type="VARCHAR(255)"/>
-            <column name="NON_US" type="VARCHAR(255)"/>
-            <column name="SPECIAL" type="VARCHAR(50)"/>
-            <column name="PIN" type="VARCHAR(50)"/>
+            <column name="NON_US" type="VARCHAR(1)"/>
+            <column name="SPECIAL" type="VARCHAR(1)"/>
+            <column name="PIN" type="VARCHAR(1)"/>
             <column name="HOLD_DAYS" type="BIGINT"/>
-            <column name="FORWARDING_ADDR" type="VARCHAR(50)"/>
-            <column name="ENTITY_CD" type="VARCHAR(50)"/>
+            <column name="FORWARDING_ADDR" type="VARCHAR(1)"/>
 
+            <column name="CONTACT" type="VARCHAR(20)"/>
+            <column name="PHONE" type="VARCHAR(13)"/>
+            <column name="ENTITY_CD" type="VARCHAR(1)"/>
         </createTable>
 
         <!-- Foreign key: SYS_PRINS.client → CLIENTS.client -->

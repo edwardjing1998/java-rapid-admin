@@ -16,7 +16,7 @@ public class SysPrin {
     @JoinColumn(name = "client", referencedColumnName = "client", insertable = false, updatable = false)
     private Client client;
 
-    @Column(name = "CUST_TYPE") private String custType;
+    @Column(name = "CUST_TYPE") private Integer custType;
 
     @Column(name = "UNDELIVERABLE") private String undeliverable;
 
@@ -42,8 +42,8 @@ public class SysPrin {
     @Column(name = "A_STAT_RCH") private String aStatRch;
     @Column(name = "NM_13") private String nm13;
     @Column(name = "TEMP_AWAY_ATTS") private Long tempAwayAtts;
-    @Column(name = "REPORT_METHOD") private String reportMethod;
-    @Column(name = "ACTIVE") private String active;
+    @Column(name = "REPORT_METHOD") private Double reportMethod;
+    @Column(name = "ACTIVE") private Boolean active;
     @Column(name = "NOTES") private String notes;
     @Column(name = "RET_STAT") private String returnStatus;
     @Column(name = "DES_STAT") private String destroyStatus;
@@ -56,6 +56,12 @@ public class SysPrin {
 
     @Column(name = "HOLD_DAYS") private Integer holdDays;
 
+    @Column(name = "CONTACT") private String contact;
+
+    @Column(name = "PHONE") private String phone;
+
+    @Column(name = "ENTITY_CD") private String entityCode;
+
     // Getters and setters
     public SysPrinId getId() { return id; }
     public void setId(SysPrinId id) { this.id = id; }
@@ -63,8 +69,8 @@ public class SysPrin {
     public Client getClient() { return client; }
     public void setClient(Client client) { this.client = client; }
 
-    public String getCustType() { return custType; }
-    public void setCustType(String custType) { this.custType = custType; }
+    public Integer getCustType() { return custType; }
+    public void setCustType(Integer custType) { this.custType = custType; }
 
     public String getUndeliverable() { return undeliverable; }
     public void setUndeliverable(String undeliverable) { this.undeliverable = undeliverable; }
@@ -112,10 +118,10 @@ public class SysPrin {
     public void setNm13(String nm13) { this.nm13 = nm13; }
     public Long getTempAwayAtts() { return tempAwayAtts; }
     public void setTempAwayAtts(Long tempAwayAtts) { this.tempAwayAtts = tempAwayAtts; }
-    public String getReportMethod() { return reportMethod; }
-    public void setReportMethod(String reportMethod) { this.reportMethod = reportMethod; }
-    public String getActive() { return active; }
-    public void setActive(String active) { this.active = active; }
+    public Double getReportMethod() { return reportMethod; }
+    public void setReportMethod(Double reportMethod) { this.reportMethod = reportMethod; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
     public String getReturnStatus() { return returnStatus; }
@@ -137,5 +143,13 @@ public class SysPrin {
     public String getForwardingAddress() { return forwardingAddress; }
     public void setForwardingAddress(String forwardingAddress) { this.forwardingAddress = forwardingAddress; }
 
+    public String getContact() { return contact; }
+    public void setContact(String contact) { this.contact = contact; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getEntityCode() { return entityCode; }
+    public void setEntityCode(String entityCode) { this.entityCode = entityCode; }
 
 }

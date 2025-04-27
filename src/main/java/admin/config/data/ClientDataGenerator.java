@@ -170,8 +170,10 @@ public class ClientDataGenerator {
                 prefixes.add(prefix);
             }
 
-            List<String> detailedStatuses = Arrays.asList("Destroy", "Return", "Research / Destroy", "Research / Return", "Research / Carrier Ret");
-            List<String> shortStatuses = Arrays.asList("Destroy", "Return");
+ //           List<String> detailedStatuses = Arrays.asList("Destroy", "Return", "Research / Destroy", "Research / Return", "Research / Carrier Ret");
+            List<String> detailedStatuses = Arrays.asList("", "0", "1", "2", "3");
+ //           List<String> shortStatuses = Arrays.asList("Destroy" (0), "Return" (1));
+            List<String> shortStatuses = Arrays.asList("0", "1");
 
             List<SysPrin> sysPrinsList = new ArrayList<>();
             int sysPrinCount = 2 + random.nextInt(4);
@@ -182,10 +184,8 @@ public class ClientDataGenerator {
                 sysPrinId.setSysPrin("SP" + (i + 1) + s);
                 sysPrin.setId(sysPrinId);
 
-                String[] custTypes = {"Full Processing", "Destroy All", "Return All"};
-                sysPrin.setCustType(custTypes[random.nextInt(custTypes.length)]);
+                sysPrin.setCustType(random.nextInt(3)); // "Full Processing" (0), "Destroy All" (1), "Return All" (2)
                 sysPrin.setUndeliverable(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
-
                 sysPrin.setStatA(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
                 sysPrin.setStatB(shortStatuses.get(random.nextInt(shortStatuses.size())));
                 sysPrin.setStatC(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
@@ -199,17 +199,17 @@ public class ClientDataGenerator {
                 sysPrin.setStatX(detailedStatuses.get(random.nextInt(detailedStatuses.size())));
                 sysPrin.setStatZ(shortStatuses.get(random.nextInt(shortStatuses.size())));
 
-                sysPrin.setPoBox("Return");
+                sysPrin.setPoBox(shortStatuses.get(random.nextInt(shortStatuses.size())));
                 sysPrin.setAddrFlag(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAway(100L + s);
                 sysPrin.setRps(random.nextBoolean() ? "Y" : "N");
-                sysPrin.setSession("Session" + s);
-                sysPrin.setBadState("Return");
-                sysPrin.setAStatRch(random.nextBoolean() ? "Y" : "N");
-                sysPrin.setNm13(random.nextBoolean() ? "Y" : "N");
+                sysPrin.setSession("A");
+                sysPrin.setBadState(String.valueOf(random.nextInt(2)));
+                sysPrin.setAStatRch(random.nextBoolean() ? "1" : "0");
+                sysPrin.setNm13(random.nextBoolean() ? "1" : "0");
                 sysPrin.setTempAwayAtts(200L + s);
-                sysPrin.setReportMethod("Email");
-                sysPrin.setActive("Y");
+                sysPrin.setReportMethod(0.00);
+                sysPrin.setActive(true);
                 sysPrin.setNotes("Note" + s);
                 String[] returnStatuses = {"A Status", "C Status", "E Status", "F Status"};
                 sysPrin.setReturnStatus(returnStatuses[random.nextInt(returnStatuses.length)]);
@@ -217,15 +217,19 @@ public class ClientDataGenerator {
                 String[] destroyStatuses = {"Destroy", "Return"};
                 sysPrin.setDestroyStatus(destroyStatuses[random.nextInt(destroyStatuses.length)]);
 
-                String[] specialOptions = {"Destroy", "Return"};
+ //               String[] specialOptions = {"Destroy", "Return"}; // 0, 1
+                String[] specialOptions = {"0", "1"}; // 0, 1
                 sysPrin.setSpecial(specialOptions[random.nextInt(specialOptions.length)]);
 
-                String[] pinMailerOptions = {"Destroy", "Return"};
+ //               String[] pinMailerOptions = {"Destroy", "Return"};
+                String[] pinMailerOptions = {"0", "1"};
                 sysPrin.setPinMailer(pinMailerOptions[random.nextInt(pinMailerOptions.length)]);
 
                 sysPrin.setHoldDays(10);
-                sysPrin.setNonUS("Return");
-                String[] forwardingAddressOptions = {"Re-Mail", "Research"};
+                Random random = new Random();
+                sysPrin.setNonUS(String.valueOf(random.nextInt(3)));
+//                String[] forwardingAddressOptions = {"Re-Mail", "Research"};
+                String[] forwardingAddressOptions = {"0", "1"};
                 sysPrin.setForwardingAddress(forwardingAddressOptions[random.nextInt(forwardingAddressOptions.length)]);
 
                 String sysPrinCode = sysPrin.getId().getSysPrin(); // get the String identifier

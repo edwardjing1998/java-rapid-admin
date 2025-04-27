@@ -6,7 +6,7 @@ public class SysPrinDTO {
     private String client;
     private String sysPrin;
 
-    private String custType;
+    private Integer custType;
     private String undeliverable;
 
     private String statA, statB, statC, statD, statE, statF, statI;
@@ -22,8 +22,8 @@ public class SysPrinDTO {
     private String aStatRch;
     private String nm13;
     private Long tempAwayAtts;
-    private String reportMethod;
-    private String active;
+    private Double reportMethod;
+    private Boolean active;
     private String notes;
     private String returnStatus;
     private String destroyStatus;
@@ -34,9 +34,13 @@ public class SysPrinDTO {
 
     private String forwardingAddress;
 
-    private List<InvalidDelivAreaDTO> invalidDelivAreas;
+    private String contact;
 
-    // Getters and Setters
+    private String phone;
+
+    private String entityCode;
+
+    private List<InvalidDelivAreaDTO> invalidDelivAreas;
 
     public String getClient() { return client; }
     public void setClient(String client) { this.client = client; }
@@ -44,8 +48,8 @@ public class SysPrinDTO {
     public String getSysPrin() { return sysPrin; }
     public void setSysPrin(String sysPrin) { this.sysPrin = sysPrin; }
 
-    public String getCustType() { return custType; }
-    public void setCustType(String custType) { this.custType = custType; }
+    public Integer getCustType() { return custType; }
+    public void setCustType(Integer custType) { this.custType = custType; }
 
     public String getUndeliverable() { return undeliverable; }
     public void setUndeliverable(String undeliverable) { this.undeliverable = undeliverable; }
@@ -93,10 +97,10 @@ public class SysPrinDTO {
     public void setNm13(String nm13) { this.nm13 = nm13; }
     public Long getTempAwayAtts() { return tempAwayAtts; }
     public void setTempAwayAtts(Long tempAwayAtts) { this.tempAwayAtts = tempAwayAtts; }
-    public String getReportMethod() { return reportMethod; }
-    public void setReportMethod(String reportMethod) { this.reportMethod = reportMethod; }
-    public String getActive() { return active; }
-    public void setActive(String active) { this.active = active; }
+    public Double getReportMethod() { return reportMethod; }
+    public void setReportMethod(Double reportMethod) { this.reportMethod = reportMethod; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
     public String getReturnStatus() { return returnStatus; }
@@ -128,5 +132,14 @@ public class SysPrinDTO {
     public void setForwardingAddress(String forwardingAddress) {
         this.forwardingAddress = forwardingAddress;
     }
+
+    public String getContact() { return contact; }
+    public void setContact(String contact) { this.contact = contact; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getEntityCode() { return entityCode; }
+    public void setEntityCode(String entityCode) { this.entityCode = entityCode; }
 
 }

@@ -56,6 +56,9 @@ public class SysPrinService {
             entity.setPinMailer(dto.getPinMailer());
             entity.setHoldDays(dto.getHoldDays());
             entity.setForwardingAddress(dto.getForwardingAddress());
+            entity.setContact(dto.getContact());
+            entity.setPhone(dto.getPhone());
+            entity.setEntityCode(dto.getEntityCode());
             return entity;
         }).collect(Collectors.toList());
 
