@@ -3,6 +3,7 @@ package admin.service;
 
 import admin.dto.SysPrinsPrefixRequest;
 import admin.model.SysPrinsPrefix;
+import admin.model.SysPrinsPrefixId;
 import admin.repository.SysPrinsPrefixRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,18 +17,20 @@ public class SysPrinsPrefixService {
         this.repository = repository;
     }
 
-    @Transactional // ✅ This ensures a transaction is created for delete operation
-    public void deleteByBillingSpAndPrefix(String billingSp, String prefix) {
-        repository.deleteByBillingSpAndPrefix(billingSp, prefix);
+    @Transactional
+    public void deleteByBillingSpPrefixAndAtmCashRule(String billingSp, String prefix, String atmCashRule) {
+        SysPrinsPrefixId id = new SysPrinsPrefixId(billingSp, prefix, atmCashRule);
+        repository.deleteById(id);
     }
 
     public SysPrinsPrefix save(SysPrinsPrefixRequest request) {
-        // Convert DTO to Entity
+        SysPrinsPrefixId id = new SysPrinsPrefixId(
+                request.getBillingSp(),
+                request.getPrefix(),
+                request.getAtmCashRule()
+        );
         SysPrinsPrefix entity = new SysPrinsPrefix();
-        entity.setBillingSp(request.getBillingSp());
-        entity.setPrefix(request.getPrefix());
-        entity.setAtmCashRule(request.getAtmCashRule());
-
+        entity.setId(id);
         return repository.save(entity);
     }
 }

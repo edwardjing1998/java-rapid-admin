@@ -77,12 +77,12 @@ public class ClientService {
                     }).collect(Collectors.toList());
             dto.setReportOptions(reportOptionDTOs);
 
-            List<SysPrinsPrefix> prefixes = sysPrinsPrefixRepository.findByBillingSp(client.getBillingSp());
+            List<SysPrinsPrefix> prefixes = sysPrinsPrefixRepository.findByIdBillingSp(client.getBillingSp());
             List<SysPrinsPrefixDTO> sysPrinsDTOs = prefixes.stream()
                     .map(sp -> new SysPrinsPrefixDTO(
-                            sp.getBillingSp(),
-                            sp.getPrefix(),
-                            sp.getAtmCashRule()
+                            sp.getId().getBillingSp(),
+                            sp.getId().getPrefix(),
+                            sp.getId().getAtmCashRule()
                     )).collect(Collectors.toList());
             dto.setSysPrinsPrefixes(sysPrinsDTOs);
 

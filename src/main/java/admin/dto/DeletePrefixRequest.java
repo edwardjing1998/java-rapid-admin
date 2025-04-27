@@ -1,11 +1,14 @@
-// DeletePrefixRequest.java
 package admin.dto;
 
 public class DeletePrefixRequest {
+
     private String billingSp;
     private String prefix;
+    private String atmCashRule;
 
-    // Getters and Setters
+    public DeletePrefixRequest() {
+    }
+
     public String getBillingSp() {
         return billingSp;
     }
@@ -20,5 +23,13 @@ public class DeletePrefixRequest {
 
     public void setPrefix(String prefix) {
         this.prefix = prefix;
+    }
+
+    public String getAtmCashRule() {
+        return atmCashRule;
+    }
+
+    public void setAtmCashRule(String atmCashRule) {
+        this.atmCashRule = atmCashRule;
     }
 }

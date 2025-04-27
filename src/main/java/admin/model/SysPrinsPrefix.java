@@ -1,66 +1,28 @@
 package admin.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SYS_PRINS_PREFIX")
 public class SysPrinsPrefix {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "prefix_id")
-    private Long prefixId;
+    @EmbeddedId
+    private SysPrinsPrefixId id;
 
-    @Column(name = "billing_sp", nullable = false)
-    private String billingSp;
-
-    @Column(name = "prefix", nullable = false)
-    private String prefix;
-
-    @Column(name = "atm_cash_rule")
-    private String atmCashRule;
-
-    // Constructors
     public SysPrinsPrefix() {
     }
 
-    public SysPrinsPrefix(String billingSp, String prefix, String atmCashRule) {
-        this.billingSp = billingSp;
-        this.prefix = prefix;
-        this.atmCashRule = atmCashRule;
+    public SysPrinsPrefix(SysPrinsPrefixId id) {
+        this.id = id;
     }
 
-    // Getters and Setters
-
-    public Long getPrefixId() {
-        return prefixId;
+    public SysPrinsPrefixId getId() {
+        return id;
     }
 
-    public void setPrefixId(Long prefixId) {
-        this.prefixId = prefixId;
-    }
-
-    public String getBillingSp() {
-        return billingSp;
-    }
-
-    public void setBillingSp(String billingSp) {
-        this.billingSp = billingSp;
-    }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    public String getAtmCashRule() {
-        return atmCashRule;
-    }
-
-    public void setAtmCashRule(String atmCashRule) {
-        this.atmCashRule = atmCashRule;
+    public void setId(SysPrinsPrefixId id) {
+        this.id = id;
     }
 }

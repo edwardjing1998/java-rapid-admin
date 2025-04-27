@@ -8,20 +8,23 @@
 
     <changeSet id="create-sys-prins-prefix-table" author="Edward Jing">
         <createTable tableName="SYS_PRINS_PREFIX">
-            <column name="prefix_id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-
-            <column name="billing_sp" type="VARCHAR(50)">
+            <column name="billing_sp" type="VARCHAR(8)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="prefix" type="VARCHAR(50)">
+            <column name="prefix" type="VARCHAR(8)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="atm_cash_rule" type="VARCHAR(50)"/>
+            <column name="atm_cash_rule" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <addPrimaryKey
+                tableName="SYS_PRINS_PREFIX"
+                columnNames="billing_sp, prefix, atm_cash_rule"
+                constraintName="pk_sys_prins_prefix"/>
     </changeSet>
 
 </databaseChangeLog>

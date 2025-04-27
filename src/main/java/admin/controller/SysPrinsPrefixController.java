@@ -20,13 +20,17 @@ public class SysPrinsPrefixController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<Void> deleteByBillingSpAndPrefix(@RequestBody DeletePrefixRequest request) {
-        service.deleteByBillingSpAndPrefix(request.getBillingSp(), request.getPrefix());
+    public ResponseEntity<Void> deleteByBillingSpPrefixAndAtmCashRule(@RequestBody DeletePrefixRequest request) {
+        service.deleteByBillingSpPrefixAndAtmCashRule(
+                request.getBillingSp(),
+                request.getPrefix(),
+                request.getAtmCashRule()
+        );
         return ResponseEntity.noContent().build(); // HTTP 204
     }
 
     @PostMapping("/add")
-    public SysPrinsPrefix addPrefix(@RequestBody SysPrinsPrefixRequest prefix) {
-        return service.save(prefix);
+    public SysPrinsPrefix addPrefix(@RequestBody SysPrinsPrefixRequest prefixRequest) {
+        return service.save(prefixRequest);
     }
 }

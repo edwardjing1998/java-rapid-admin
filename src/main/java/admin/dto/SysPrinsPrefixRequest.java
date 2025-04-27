@@ -1,10 +1,13 @@
-// SysPrinsPrefixRequest.java
 package admin.dto;
 
 public class SysPrinsPrefixRequest {
+
     private String billingSp;
     private String prefix;
     private String atmCashRule;
+
+    public SysPrinsPrefixRequest() {
+    }
 
     public String getBillingSp() {
         return billingSp;

@@ -67,9 +67,10 @@ public class Client {
     @OneToMany(mappedBy = "id.clientId", cascade = CascadeType.ALL)
     private List<ClientReportOption> reportOptions = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "billingSp", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "billing_sp", referencedColumnName = "client")
     private List<SysPrinsPrefix> sysPrinsPrefixes = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SysPrin> sysPrins = new ArrayList<>();
