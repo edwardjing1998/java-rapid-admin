@@ -3,6 +3,8 @@ package admin.service;
 import admin.dto.*;
 import admin.model.*;
 import admin.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class ClientService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ClientService.class);
+
     private final ClientRepository clientRepository;
     private final SysPrinRepository sysPrinRepository;
     private final SysPrinsPrefixRepository sysPrinsPrefixRepository;
     private final ClientEmailRepository clientEmailRepository;
-
     private final InvalidDelivAreaRepository invalidDelivAreaRepository;
 
     public ClientService(ClientRepository clientRepository,
@@ -31,7 +34,14 @@ public class ClientService {
     }
 
     public List<ClientDTO> getAllClientsWithDetails() {
-        return clientRepository.findAll().stream().map(client -> {
+        logger.info("Fetching all clients with full details...");
+        
+        List<Client> clients = clientRepository.findAll();
+        logger.info("Total clients found: {}", clients.size());
+
+        return clients.stream().map(client -> {
+            logger.debug("Processing client: {}", client.getClient());
+
             ClientDTO dto = new ClientDTO();
             dto.setClient(client.getClient());
             dto.setName(client.getName());
@@ -158,6 +168,7 @@ public class ClientService {
     }
 
     public Client saveClient(Client client) {
+        logger.info("Saving new client: {}", client.getClient());
         return clientRepository.save(client);
     }
 }
