@@ -9,7 +9,7 @@ import java.util.Objects;
 @Embeddable
 public class SysPrinsPrefixId implements Serializable {
 
-    @Column(name = "billing_sp", length = 8, nullable = false)
+    @Column(name = "BILLING_SP", insertable = false, updatable = false)
     private String billingSp;
 
     @Column(name = "prefix", length = 8, nullable = false)
