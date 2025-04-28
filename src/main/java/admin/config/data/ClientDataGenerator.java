@@ -46,12 +46,14 @@ public class ClientDataGenerator {
             "Mailing SysPrin - T", "SPS - First Data Rapid Daily Activity Web Report",
             "First Data Rapid Activity Report", "SendToMIT", "Custom Excel Report",
             "Product Group Report", "Account Transfer Rejects Daily Report", "Amex Remail - 1"
-            // 省略剩下部分，照你原来代码放...
+            // 可以继续放后面query names... (省略)
     };
 
     private final Random random = new Random();
 
-    public ClientDataGenerator(ClientRepository clientRepository, AdminQueryListRepository adminQueryListRepository, InvalidDelivAreaRepository invalidDelivAreaRepository) {
+    public ClientDataGenerator(ClientRepository clientRepository,
+                               AdminQueryListRepository adminQueryListRepository,
+                               InvalidDelivAreaRepository invalidDelivAreaRepository) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
@@ -62,7 +64,7 @@ public class ClientDataGenerator {
         for (int j = 1; j <= 5; j++) {
             AdminQueryList report = new AdminQueryList();
             report.setDefaultFileNm("Report " + j);
-            report.setReportByClientFlag(random.nextInt(2) == 1);
+            report.setReportByClientFlag(random.nextBoolean());
             report.setDbDriverType("SQL Server");
             report.setQueryName(queryNames[random.nextInt(queryNames.length)]);
             report.setInputDataFields("Field1, Field2");
@@ -73,7 +75,6 @@ public class ClientDataGenerator {
             report.setReportDbUserid("admin");
             report.setReportDbPasswrd("adminpass");
             report.setReportDbIpAndPort("127.0.0.1:1433");
-
             reports.add(report);
         }
         adminQueryListRepository.saveAll(reports);
@@ -82,6 +83,7 @@ public class ClientDataGenerator {
 
         for (int i = 0; i < usBanks.length; i++) {
             String clientId = String.valueOf(i + 1);
+            String billingSp = "BILL" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
             String zip = String.format("%05d", 10000 + random.nextInt(89999));
@@ -109,12 +111,12 @@ public class ClientDataGenerator {
             for (int k = 1; k <= 5 + random.nextInt(5); k++) {
                 String atmCashRule = random.nextBoolean() ? "0" : "1";
                 String prefixStr = "PREFIX" + k;
-                String cacheKey = clientId + "-" + atmCashRule + "-" + prefixStr;
+                String cacheKey = billingSp + "-" + atmCashRule + "-" + prefixStr;
 
                 SysPrinsPrefix existingPrefix = prefixCache.get(cacheKey);
                 if (existingPrefix == null) {
                     SysPrinsPrefixId prefixId = new SysPrinsPrefixId();
-                    prefixId.setBillingSp(clientId);
+                    prefixId.setBillingSp(billingSp); // Fix here!!
                     prefixId.setAtmCashRule(atmCashRule);
                     prefixId.setPrefix(prefixStr);
 
@@ -128,6 +130,31 @@ public class ClientDataGenerator {
                 }
             }
 
+            Client client = new Client(
+                    clientId,
+                    name,
+                    "123 " + city + " St.",
+                    city,
+                    state,
+                    zip,
+                    "Contact " + (i + 1),
+                    phone,
+                    (i + 1) % 2 == 0,
+                    "Fax-" + (i + 1),
+                    billingSp,
+                    (i + 1) % 2,
+                    (i + 1) % 3,
+                    (i + 1) % 2 == 0,
+                    (i + 1) % 2 == 1,
+                    (i + 1) % 2,
+                    "" + (i + 1),
+                    (i + 1) % 2 == 0,
+                    reportOptions,
+                    prefixes,
+                    new ArrayList<>(), // sysPrins
+                    new ArrayList<>()  // clientEmails
+            );
+
             List<SysPrin> sysPrinsList = new ArrayList<>();
             int sysPrinCount = 2 + random.nextInt(4);
             for (int s = 1; s <= sysPrinCount; s++) {
@@ -136,6 +163,7 @@ public class ClientDataGenerator {
                 sysPrinId.setClient(clientId);
                 sysPrinId.setSysPrin("SP" + (i + 1) + s);
                 sysPrin.setId(sysPrinId);
+
                 sysPrin.setCustType(random.nextInt(3));
                 sysPrin.setUndeliverable("0");
                 sysPrin.setStatA("1");
@@ -160,6 +188,7 @@ public class ClientDataGenerator {
                 sysPrin.setHoldDays(10);
                 sysPrin.setNonUS("0");
                 sysPrin.setForwardingAddress("1");
+                sysPrin.setClient(client); // Set client directly!!
 
                 String sysPrinCode = sysPrin.getId().getSysPrin();
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
@@ -170,37 +199,10 @@ public class ClientDataGenerator {
                 }
                 invalidDelivAreaRepository.saveAll(invalidAreas);
 
-                sysPrin.setClient(null); // 先null，后面再统一设置
                 sysPrinsList.add(sysPrin);
             }
+            client.setSysPrins(sysPrinsList);
 
-            // Step 1: New Client (先new client)
-            Client client = new Client(
-                    clientId,
-                    name,
-                    "123 " + city + " St.",
-                    city,
-                    state,
-                    zip,
-                    "Contact " + (i + 1),
-                    phone,
-                    (i + 1) % 2 == 0,
-                    "Fax-" + (i + 1),
-                    "BILL" + (i + 1),
-                    (i + 1) % 2,
-                    (i + 1) % 3,
-                    (i + 1) % 2 == 0,
-                    (i + 1) % 2 == 1,
-                    (i + 1) % 2,
-                    "" + (i + 1),
-                    (i + 1) % 2 == 0,
-                    reportOptions,
-                    prefixes,
-                    sysPrinsList,
-                    new ArrayList<>()
-            );
-
-            // Step 2: Generate emails and set client
             List<ClientEmail> emails = new ArrayList<>();
             for (int e = 1; e <= 3 + random.nextInt(3); e++) {
                 ClientEmail email = new ClientEmail();
@@ -213,15 +215,11 @@ public class ClientDataGenerator {
                 email.setCarbonCopyFlag(e % 2 == 0);
                 email.setActiveFlag(true);
                 email.setMailServerId((long) random.nextInt(2));
-                email.setClient(client); // 关键行！！
+                email.setClient(client); // Set client directly!!
                 emails.add(email);
             }
             client.setClientEmails(emails);
 
-            // Step 3: sysPrins set client
-            sysPrinsList.forEach(sp -> sp.setClient(client));
-
-            // Step 4: Add to final list
             clients.add(client);
         }
 
