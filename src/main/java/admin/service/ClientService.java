@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,12 +105,11 @@ public class ClientService {
                     .collect(Collectors.toList());
 
             // ✅ 2. One query to fetch all InvalidDelivAreas
-            List<InvalidDelivArea> allInvalidDelivAreas = invalidDelivAreaRepository.findByIdSysPrinIn(sysPrinIds);
+            List<InvalidDelivArea> allInvalidDelivAreas = findInvalidDelivAreasInBatches(sysPrinIds);
 
             // ✅ 3. Group by sysPrin
             var invalidDelivAreaMap = allInvalidDelivAreas.stream()
                     .collect(Collectors.groupingBy(InvalidDelivArea::getSysPrin));
-
 
             List<SysPrinDTO> sysPrinDTOs = sysPrins.stream().map(sp -> {
                 SysPrinDTO sysDto = new SysPrinDTO();
@@ -189,4 +189,22 @@ public class ClientService {
         logger.info("Saving new client: {}", client.getClient());
         return clientRepository.save(client);
     }
+
+    private static final int BATCH_SIZE = 2000; // SQL Server limit is 2100, be safe use 2000
+
+    private List<InvalidDelivArea> findInvalidDelivAreasInBatches(List<String> sysPrins) {
+        List<InvalidDelivArea> results = new ArrayList<>();
+
+        for (int i = 0; i < sysPrins.size(); i += BATCH_SIZE) {
+            int end = Math.min(i + BATCH_SIZE, sysPrins.size());
+            List<String> batch = sysPrins.subList(i, end);
+
+            List<InvalidDelivArea> batchResult = invalidDelivAreaRepository.findByIdSysPrinIn(batch);
+            results.addAll(batchResult);
+        }
+
+        return results;
+    }
+
+
 }
