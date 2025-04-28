@@ -39,7 +39,7 @@ public class ClientService {
     public List<ClientDTO> getAllClientsWithDetails(Pageable pageable) {
         logger.info("Fetching all clients with full details...");
         
-        List<Client> clients = clientRepository.findAll(pageable).getContent();
+        List<Client> clients = clientRepository.findAllValidClients(pageable).getContent();
 
         logger.info("Total clients found: {}", clients.size());
 
