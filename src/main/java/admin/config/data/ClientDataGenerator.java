@@ -164,7 +164,7 @@ public class ClientDataGenerator {
                 sysPrinId.setSysPrin("SP" + (i + 1) + s);
                 sysPrin.setId(sysPrinId);
 
-                sysPrin.setCustType(random.nextInt(3));
+                sysPrin.setCustType(String.valueOf(random.nextInt(3)));
                 sysPrin.setUndeliverable("0");
                 sysPrin.setStatA("1");
                 sysPrin.setStatB("0");

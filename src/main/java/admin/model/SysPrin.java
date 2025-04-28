@@ -16,7 +16,7 @@ public class SysPrin {
     @JoinColumn(name = "client", referencedColumnName = "client", insertable = false, updatable = false)
     private Client client;
 
-    @Column(name = "CUST_TYPE") private Integer custType;
+    @Column(name = "CUST_TYPE") private String custType;
 
     @Column(name = "UNDELIVERABLE") private String undeliverable;
 
@@ -69,8 +69,8 @@ public class SysPrin {
     public Client getClient() { return client; }
     public void setClient(Client client) { this.client = client; }
 
-    public Integer getCustType() { return custType; }
-    public void setCustType(Integer custType) { this.custType = custType; }
+    public String getCustType() { return custType; }
+    public void setCustType(String custType) { this.custType = custType; }
 
     public String getUndeliverable() { return undeliverable; }
     public void setUndeliverable(String undeliverable) { this.undeliverable = undeliverable; }

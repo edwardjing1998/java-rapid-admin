@@ -6,7 +6,7 @@ public class SysPrinDTO {
     private String client;
     private String sysPrin;
 
-    private Integer custType;
+    private String custType;
     private String undeliverable;
 
     private String statA, statB, statC, statD, statE, statF, statI;
@@ -48,8 +48,8 @@ public class SysPrinDTO {
     public String getSysPrin() { return sysPrin; }
     public void setSysPrin(String sysPrin) { this.sysPrin = sysPrin; }
 
-    public Integer getCustType() { return custType; }
-    public void setCustType(Integer custType) { this.custType = custType; }
+    public String getCustType() { return custType; }
+    public void setCustType(String custType) { this.custType = custType; }
 
     public String getUndeliverable() { return undeliverable; }
     public void setUndeliverable(String undeliverable) { this.undeliverable = undeliverable; }

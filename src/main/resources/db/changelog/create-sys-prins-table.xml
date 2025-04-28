@@ -41,8 +41,8 @@
             <column name="REPORT_METHOD" type="FLOAT"/>
             <column name="ACTIVE" type="Boolean"/>
             <column name="NOTES" type="VARCHAR(255)"/>
-            <column name="RET_STAT" type="VARCHAR(255)"/>
-            <column name="DES_STAT" type="VARCHAR(255)"/>
+            <column name="RET_STAT" type="VARCHAR(1)"/>
+            <column name="DES_STAT" type="VARCHAR(1)"/>
             <column name="NON_US" type="VARCHAR(1)"/>
             <column name="SPECIAL" type="VARCHAR(1)"/>
             <column name="PIN" type="VARCHAR(1)"/>
