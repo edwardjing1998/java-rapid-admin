@@ -3,6 +3,8 @@ package admin.controller;
 import admin.dto.ClientDTO;
 import admin.model.Client;
 import admin.service.ClientService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,12 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    public List<ClientDTO> getAllClients() {
-        return clientService.getAllClientsWithDetails();
+    public List<ClientDTO> getAllClients(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return clientService.getAllClientsWithDetails(pageable);
     }
 
     @PostMapping("/client/save")

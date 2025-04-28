@@ -5,6 +5,8 @@ import admin.model.*;
 import admin.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,10 +36,11 @@ public class ClientService {
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
     }
 
-    public List<ClientDTO> getAllClientsWithDetails() {
+    public List<ClientDTO> getAllClientsWithDetails(Pageable pageable) {
         logger.info("Fetching all clients with full details...");
         
-        List<Client> clients = clientRepository.findAll();
+        List<Client> clients = clientRepository.findAll(pageable).getContent();
+
         logger.info("Total clients found: {}", clients.size());
 
         return clients.stream().map(client -> {
