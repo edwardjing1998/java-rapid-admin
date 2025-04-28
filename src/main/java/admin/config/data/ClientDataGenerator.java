@@ -73,7 +73,7 @@ public class ClientDataGenerator {
                 option.setFileTypeCd(random.nextInt(3));
                 option.setEmailFlag(random.nextInt(3));
                 option.setReportPasswordTx("pass" + j);
-                option.setReport(reports.get((j - 1) % reports.size()));
+        //      option.setReport(reports.get((j - 1) % reports.size()));
                 option.setEmailBodyTx("Email body for " + clientId + " item " + j);
                 reportOptions.add(option);
             }
