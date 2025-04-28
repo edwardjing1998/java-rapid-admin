@@ -64,4 +64,55 @@ public class SysPrinService {
 
         return sysPrinRepository.saveAll(entities);
     }
+
+// File: SysPrinService.java
+
+    public List<SysPrinDTO> getSysPrinsByClient(String clientId) {
+        List<SysPrin> sysPrins = sysPrinRepository.findByIdClient(clientId);
+
+        return sysPrins.stream().map(sp -> {
+            SysPrinDTO dto = new SysPrinDTO();
+            dto.setClient(sp.getId().getClient());
+            dto.setSysPrin(sp.getId().getSysPrin());
+            dto.setCustType(sp.getCustType());
+            dto.setUndeliverable(sp.getUndeliverable());
+            dto.setStatA(sp.getStatA());
+            dto.setStatB(sp.getStatB());
+            dto.setStatC(sp.getStatC());
+            dto.setStatD(sp.getStatD());
+            dto.setStatE(sp.getStatE());
+            dto.setStatF(sp.getStatF());
+            dto.setStatI(sp.getStatI());
+            dto.setStatL(sp.getStatL());
+            dto.setStatO(sp.getStatO());
+            dto.setStatU(sp.getStatU());
+            dto.setStatX(sp.getStatX());
+            dto.setStatZ(sp.getStatZ());
+            dto.setPoBox(sp.getPoBox());
+            dto.setAddrFlag(sp.getAddrFlag());
+            dto.setTempAway(sp.getTempAway());
+            dto.setRps(sp.getRps());
+            dto.setSession(sp.getSession());
+            dto.setBadState(sp.getBadState());
+            dto.setAStatRch(sp.getAStatRch());
+            dto.setNm13(sp.getNm13());
+            dto.setTempAwayAtts(sp.getTempAwayAtts());
+            dto.setReportMethod(sp.getReportMethod());
+            dto.setActive(sp.getActive());
+            dto.setNotes(sp.getNotes());
+            dto.setReturnStatus(sp.getReturnStatus());
+            dto.setDestroyStatus(sp.getDestroyStatus());
+            dto.setNonUS(sp.getNonUS());
+            dto.setSpecial(sp.getSpecial());
+            dto.setPinMailer(sp.getPinMailer());
+            dto.setHoldDays(sp.getHoldDays());
+            dto.setForwardingAddress(sp.getForwardingAddress());
+            dto.setContact(sp.getContact());
+            dto.setPhone(sp.getPhone());
+            dto.setEntityCode(sp.getEntityCode());
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
 }

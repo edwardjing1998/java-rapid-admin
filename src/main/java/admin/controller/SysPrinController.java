@@ -1,6 +1,7 @@
 package admin.controller;
 
 import admin.dto.SysPrinDTO;
+import admin.model.SysPrin;
 import admin.service.SysPrinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,10 @@ public class SysPrinController {
                     .internalServerError()
                     .body("Error saving SysPrins for client: " + clientId + " - " + e.getMessage());
         }
+    }
+
+    @GetMapping("/{clientId}")
+    public List<SysPrinDTO> getSysPrinsByClient(@PathVariable String clientId) {
+        return sysPrinService.getSysPrinsByClient(clientId);
     }
 }
