@@ -169,6 +169,17 @@ public class ClientDataGenerator {
                 sysPrin.setStatA("1");
                 sysPrin.setStatB("0");
                 sysPrin.setStatC("1");
+
+                sysPrin.setStatD("1");
+                sysPrin.setStatE("0");
+                sysPrin.setStatF("1");
+                sysPrin.setStatI("1");
+                sysPrin.setStatL("0");
+                sysPrin.setStatO("1");
+                sysPrin.setStatU("1");
+                sysPrin.setStatX("0");
+                sysPrin.setStatZ("1");
+
                 sysPrin.setPoBox("0");
                 sysPrin.setAddrFlag("Y");
                 sysPrin.setTempAway(100L + s);
@@ -188,7 +199,10 @@ public class ClientDataGenerator {
                 sysPrin.setHoldDays(10);
                 sysPrin.setNonUS("0");
                 sysPrin.setForwardingAddress("1");
-                sysPrin.setClient(client); // Set client directly!!
+                sysPrin.setContact("Contact");
+                sysPrin.setPhone("Phone");
+                sysPrin.setEntityCode("0");
+                sysPrin.setClient(client);
 
                 String sysPrinCode = sysPrin.getId().getSysPrin();
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
