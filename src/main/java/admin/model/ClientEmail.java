@@ -9,6 +9,11 @@ public class ClientEmail {
     @EmbeddedId
     private ClientEmailId id;
 
+    @MapsId("clientId") // 👈 重点！告诉Hibernate去找 @EmbeddedId 里的 clientId
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Client_ID", insertable = false, updatable = false)
+    private Client client; // 👈 这是新的字段！
+
     @Column(name = "Report_ID", nullable = false)
     private Long reportId;
 
@@ -42,6 +47,14 @@ public class ClientEmail {
 
     public void setId(ClientEmailId id) {
         this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Long getReportId() {

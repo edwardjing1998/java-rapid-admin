@@ -8,10 +8,10 @@ import java.util.Objects;
 @Embeddable
 public class ClientEmailId implements Serializable {
 
-    @Column(name = "Client_ID")
+    @Column(name = "Client_ID", nullable = false)
     private String clientId;
 
-    @Column(name = "Email_Address_tx")
+    @Column(name = "Email_Address_tx", nullable = false)
     private String emailAddressTx;
 
     public ClientEmailId() {
@@ -50,5 +50,13 @@ public class ClientEmailId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(clientId, emailAddressTx);
+    }
+
+    @Override
+    public String toString() {
+        return "ClientEmailId{" +
+                "clientId='" + clientId + '\'' +
+                ", emailAddressTx='" + emailAddressTx + '\'' +
+                '}';
     }
 }
