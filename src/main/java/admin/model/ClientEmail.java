@@ -1,5 +1,6 @@
 package admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,10 +10,11 @@ public class ClientEmail {
     @EmbeddedId
     private ClientEmailId id;
 
-    @MapsId("clientId") // 👈 重点！告诉Hibernate去找 @EmbeddedId 里的 clientId
+    @MapsId("clientId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Client_ID", insertable = false, updatable = false)
-    private Client client; // 👈 这是新的字段！
+    @JsonIgnore // 👉 add this
+    private Client client;
 
     @Column(name = "Report_ID", nullable = false)
     private Long reportId;

@@ -1,7 +1,10 @@
 package admin.service;
 
+import admin.model.Client;
 import admin.model.ClientEmail;
+import admin.model.ClientEmailId;
 import admin.repository.ClientEmailRepository;
+import admin.repository.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -12,8 +15,13 @@ public class ClientEmailService {
 
     private final ClientEmailRepository clientEmailRepository;
 
-    public ClientEmailService(ClientEmailRepository clientEmailRepository) {
+    private final ClientRepository clientRepository; // ✅ Add clientRepository
+
+
+    public ClientEmailService(ClientEmailRepository clientEmailRepository,
+                              ClientRepository clientRepository) { // ✅ Add in constructor
         this.clientEmailRepository = clientEmailRepository;
+        this.clientRepository = clientRepository;
     }
 
     public List<ClientEmail> getEmailsByClientId(String clientId) {
@@ -22,11 +30,18 @@ public class ClientEmailService {
 
     public ClientEmail saveClientEmail(ClientEmail email) {
         if (email.getId() == null) {
-            admin.model.ClientEmailId id = new admin.model.ClientEmailId();
+            ClientEmailId id = new ClientEmailId();
             id.setClientId(email.getId().getClientId());
             id.setEmailAddressTx(email.getId().getEmailAddressTx());
             email.setId(id);
         }
+
+        if (email.getClient() == null) {
+            Client client = clientRepository.findById(email.getId().getClientId())
+                    .orElseThrow(() -> new RuntimeException("Client not found: " + email.getId().getClientId()));
+            email.setClient(client);
+        }
+
         return clientEmailRepository.save(email);
     }
 
