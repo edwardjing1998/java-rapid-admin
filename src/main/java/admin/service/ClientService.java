@@ -97,6 +97,20 @@ public class ClientService {
             dto.setSysPrinsPrefixes(sysPrinsDTOs);
 
             List<SysPrin> sysPrins = sysPrinRepository.findByIdClient(client.getClient());
+
+            // ✅ 1. Collect all sysPrin IDs
+            List<String> sysPrinIds = sysPrins.stream()
+                    .map(sp -> sp.getId().getSysPrin())
+                    .collect(Collectors.toList());
+
+            // ✅ 2. One query to fetch all InvalidDelivAreas
+            List<InvalidDelivArea> allInvalidDelivAreas = invalidDelivAreaRepository.findByIdSysPrinIn(sysPrinIds);
+
+            // ✅ 3. Group by sysPrin
+            var invalidDelivAreaMap = allInvalidDelivAreas.stream()
+                    .collect(Collectors.groupingBy(InvalidDelivArea::getSysPrin));
+
+
             List<SysPrinDTO> sysPrinDTOs = sysPrins.stream().map(sp -> {
                 SysPrinDTO sysDto = new SysPrinDTO();
                 sysDto.setClient(sp.getId().getClient());
@@ -135,13 +149,17 @@ public class ClientService {
                 sysDto.setHoldDays(sp.getHoldDays());
                 sysDto.setForwardingAddress(sp.getForwardingAddress());
 
-                List<InvalidDelivArea> areas = invalidDelivAreaRepository.findByIdSysPrin(sp.getId().getSysPrin());
-                List<InvalidDelivAreaDTO> areaDTOs = areas.stream().map(area -> {
-                    InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
-                    areaDto.setArea(area.getArea());
-                    areaDto.setSysPrin(area.getSysPrin());
-                    return areaDto;
-                }).collect(Collectors.toList());
+
+                // ✅ 4. Now directly pick the list from map
+                List<InvalidDelivAreaDTO> areaDTOs = invalidDelivAreaMap.getOrDefault(sp.getId().getSysPrin(), List.of())
+                        .stream()
+                        .map(area -> {
+                            InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
+                            areaDto.setArea(area.getArea());
+                            areaDto.setSysPrin(area.getSysPrin());
+                            return areaDto;
+                        })
+                        .collect(Collectors.toList());
 
                 sysDto.setInvalidDelivAreas(areaDTOs);
 
