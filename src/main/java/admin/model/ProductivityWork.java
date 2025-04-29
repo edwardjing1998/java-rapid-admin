@@ -7,19 +7,15 @@ import java.time.LocalDateTime;
 @Table(name = "PRODUCTIVITY_WORK")
 public class ProductivityWork {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
-
-    @Column(name = "USERID", length = 10)
-    private String userId;
+    @EmbeddedId
+    @AttributeOverrides({
+            @AttributeOverride(name = "userId", column = @Column(name = "USERID")),
+            @AttributeOverride(name = "fromDate", column = @Column(name = "FROMDATE"))
+    })
+    private ProductivityWorkId id = new ProductivityWorkId();
 
     @Column(name = "USER_NAME", length = 25)
     private String userName;
-
-    @Column(name = "FROMDATE")
-    private LocalDateTime fromDate;
 
     @Column(name = "TODATE")
     private LocalDateTime toDate;
@@ -144,12 +140,14 @@ public class ProductivityWork {
     @Column(name = "ROBOT_LABEL_TOTAL")
     private Integer robotLabelTotal;
 
-    public String getUserId() {
-        return userId;
+    // --- Getters and Setters ---
+
+    public ProductivityWorkId getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(ProductivityWorkId id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -158,14 +156,6 @@ public class ProductivityWork {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public LocalDateTime getFromDate() {
-        return fromDate;
-    }
-
-    public void setFromDate(LocalDateTime fromDate) {
-        this.fromDate = fromDate;
     }
 
     public LocalDateTime getToDate() {
@@ -495,6 +485,4 @@ public class ProductivityWork {
     public void setRobotLabelTotal(Integer robotLabelTotal) {
         this.robotLabelTotal = robotLabelTotal;
     }
-
 }
-

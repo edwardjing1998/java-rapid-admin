@@ -10,7 +10,7 @@ import java.util.Objects;
 public class ClientReportOption {
 
     @EmbeddedId
-    private ClientReportOptionId id;
+    private ClientReportOptionId id = new ClientReportOptionId();
 
     @Column(name = "RECEIVE_FLAG", nullable = false)
     private Boolean receiveFlag;

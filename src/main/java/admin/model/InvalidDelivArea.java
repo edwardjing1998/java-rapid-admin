@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class InvalidDelivArea {
 
     @EmbeddedId
-    private InvalidDelivAreaId id;
+    private InvalidDelivAreaId id = new InvalidDelivAreaId();
 
     public InvalidDelivArea() {}
 

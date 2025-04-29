@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,88 +27,22 @@ public class ProductivityWorkService {
     }
 
     public List<ProductivityWorkDTO> getSelectedFieldsByAllUsers(LocalDateTime fromDate, LocalDateTime toDate) {
-        List<Object[]> rows = repository.findSelectedFieldsByAllUsers(fromDate, toDate);
-        List<ProductivityWorkDTO> results = new ArrayList<>();
-
-        for (Object[] row : rows) {
-            ProductivityWorkDTO dto = new ProductivityWorkDTO();
-            int i = 0;
-            dto.setUserId((String) row[i++]);
-            dto.setUserName((String) row[i++]);
-            dto.setFromDate((LocalDateTime) row[i++]);
-
-            dto.setMailedCount((Integer) row[i++]);
-            dto.setReturnedCount((Integer) row[i++]);
-            dto.setDestroyedCount((Integer) row[i++]);
-            dto.setResearchCount((Integer) row[i++]);
-            dto.setPaymentCount((Integer) row[i++]);
-            dto.setSpecialCount((Integer) row[i++]);
-            dto.setHoldCount((Integer) row[i++]);
-            dto.setBulkDestCount((Integer) row[i++]);
-            dto.setBulkRetCount((Integer) row[i++]);
-            dto.setPrivateLabelCount((Integer) row[i++]);
-
-            dto.setMailedCards((Integer) row[i++]);
-            dto.setReturnedCards((Integer) row[i++]);
-            dto.setDestroyedCards((Integer) row[i++]);
-            dto.setResearchCards((Integer) row[i++]);
-            dto.setHoldCards((Integer) row[i++]);
-            dto.setPaymentCards((Integer) row[i++]);
-            dto.setSpecialCards((Integer) row[i++]);
-            dto.setBulkDestCards((Integer) row[i++]);
-            dto.setBulkRetCards((Integer) row[i++]);
-            dto.setPrivateLabelCards((Integer) row[i++]);
-
-            results.add(dto);
-        }
-
-        return results;
+        return repository.findAllValidProductivityWork(fromDate, toDate).stream()
+                .map(this::toFullDTO)
+                .toList();
     }
 
     public List<ProductivityWorkDTO> getRecordsByUserId(String userId, LocalDateTime fromDate, LocalDateTime toDate) {
-        List<Object[]> rows = repository.findSelectedFieldsByUserId(userId, fromDate, toDate);
-        List<ProductivityWorkDTO> results = new ArrayList<>();
-
-        for (Object[] row : rows) {
-            ProductivityWorkDTO dto = new ProductivityWorkDTO();
-            int i = 0;
-            dto.setUserId((String) row[i++]);
-            dto.setUserName((String) row[i++]);
-            dto.setFromDate((LocalDateTime) row[i++]);
-
-            dto.setMailedCount((Integer) row[i++]);
-            dto.setReturnedCount((Integer) row[i++]);
-            dto.setDestroyedCount((Integer) row[i++]);
-            dto.setResearchCount((Integer) row[i++]);
-            dto.setPaymentCount((Integer) row[i++]);
-            dto.setSpecialCount((Integer) row[i++]);
-            dto.setHoldCount((Integer) row[i++]);
-            dto.setBulkDestCount((Integer) row[i++]);
-            dto.setBulkRetCount((Integer) row[i++]);
-            dto.setPrivateLabelCount((Integer) row[i++]);
-
-            dto.setMailedCards((Integer) row[i++]);
-            dto.setReturnedCards((Integer) row[i++]);
-            dto.setDestroyedCards((Integer) row[i++]);
-            dto.setResearchCards((Integer) row[i++]);
-            dto.setHoldCards((Integer) row[i++]);
-            dto.setPaymentCards((Integer) row[i++]);
-            dto.setSpecialCards((Integer) row[i++]);
-            dto.setBulkDestCards((Integer) row[i++]);
-            dto.setBulkRetCards((Integer) row[i++]);
-            dto.setPrivateLabelCards((Integer) row[i++]);
-
-            results.add(dto);
-        }
-
-        return results;
+        return repository.findValidProductivityWorkByUser(userId, fromDate, toDate).stream()
+                .map(this::toFullDTO)
+                .toList();
     }
 
     private ProductivityWorkDTO toFullDTO(ProductivityWork entity) {
         ProductivityWorkDTO dto = new ProductivityWorkDTO();
-        dto.setUserId(entity.getUserId());
+        dto.setUserId(entity.getId().getUserId());
         dto.setUserName(entity.getUserName());
-        dto.setFromDate(entity.getFromDate());
+        dto.setFromDate(entity.getId().getFromDate());
         dto.setToDate(entity.getToDate());
 
         dto.setMailedCount(entity.getMailedCount());
@@ -175,5 +108,4 @@ public class ProductivityWorkService {
         Long bulkDestCards = result != null ? ((Number) result.getBulkdestAccounts()).longValue() : 0L;
         return new BulkDestSummaryDTO(bulkDestCount, bulkDestCards);
     }
-
 }

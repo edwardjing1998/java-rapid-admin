@@ -50,10 +50,10 @@ public class ProductivityWorkDataGenerator {
                 for (int i = 1; i <= 2; i++) { // Generate fewer records per user/client pair
                     ProductivityWork pw = new ProductivityWork();
 
-                    pw.setUserId(userId);
+                    pw.getId().setUserId(userId);
                     pw.setUserName(userName);
 
-                    pw.setFromDate(randomDateBetween(firstDayOfLastMonth, lastDayOfLastMonth));
+                    pw.getId().setFromDate(randomDateBetween(firstDayOfLastMonth, lastDayOfLastMonth));
                     pw.setToDate(randomDateBetween(firstDayOfThisMonth, now));
 
                     pw.setMailedCount(randInt());

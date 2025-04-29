@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 public class SysPrinsPrefix {
 
     @EmbeddedId
-    private SysPrinsPrefixId id;
+    private SysPrinsPrefixId id = new SysPrinsPrefixId();
 
     public SysPrinsPrefix() {
     }
