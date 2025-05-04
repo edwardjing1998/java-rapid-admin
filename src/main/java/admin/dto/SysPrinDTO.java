@@ -1,5 +1,7 @@
 package admin.dto;
 
+import admin.model.SysPrin;
+
 import java.util.List;
 
 public class SysPrinDTO {
@@ -141,5 +143,47 @@ public class SysPrinDTO {
 
     public String getEntityCode() { return entityCode; }
     public void setEntityCode(String entityCode) { this.entityCode = entityCode; }
+
+    public void populateFromEntity(SysPrin sp) {
+        this.client = sp.getId().getClient();
+        this.sysPrin = sp.getId().getSysPrin();
+        this.custType = sp.getCustType();
+        this.undeliverable = sp.getUndeliverable();
+        this.statA = sp.getStatA();
+        this.statB = sp.getStatB();
+        this.statC = sp.getStatC();
+        this.statD = sp.getStatD();
+        this.statE = sp.getStatE();
+        this.statF = sp.getStatF();
+        this.statI = sp.getStatI();
+        this.statL = sp.getStatL();
+        this.statO = sp.getStatO();
+        this.statU = sp.getStatU();
+        this.statX = sp.getStatX();
+        this.statZ = sp.getStatZ();
+        this.poBox = sp.getPoBox();
+        this.addrFlag = sp.getAddrFlag();
+        this.tempAway = sp.getTempAway();
+        this.rps = sp.getRps();
+        this.session = sp.getSession();
+        this.badState = sp.getBadState();
+        this.aStatRch = sp.getAStatRch();
+        this.nm13 = sp.getNm13();
+        this.tempAwayAtts = sp.getTempAwayAtts();
+        this.reportMethod = sp.getReportMethod();
+        this.active = sp.getActive();
+        this.notes = sp.getNotes();
+        this.returnStatus = sp.getReturnStatus();
+        this.destroyStatus = sp.getDestroyStatus();
+        this.nonUS = sp.getNonUS();
+        this.special = sp.getSpecial();
+        this.pinMailer = sp.getPinMailer();
+        this.holdDays = sp.getHoldDays();
+        this.forwardingAddress = sp.getForwardingAddress();
+        this.contact = sp.getContact();
+        this.phone = sp.getPhone();
+        this.entityCode = sp.getEntityCode();
+    }
+
 
 }

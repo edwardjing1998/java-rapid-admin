@@ -16,7 +16,6 @@ import java.util.Random;
 public class ProductivityWorkDataGenerator {
 
     private final ProductivityWorkRepository productivityWorkRepository;
-    private final ClientRepository clientRepository;
     private final Random random = new Random();
 
     private final String[] names = {
@@ -24,15 +23,12 @@ public class ProductivityWorkDataGenerator {
             "frank", "grace", "henry", "irene", "jack"
     };
 
-    public ProductivityWorkDataGenerator(ProductivityWorkRepository productivityWorkRepository,
-                                         ClientRepository clientRepository) {
+    public ProductivityWorkDataGenerator(ProductivityWorkRepository productivityWorkRepository) {
         this.productivityWorkRepository = productivityWorkRepository;
-        this.clientRepository = clientRepository;
     }
 
     @PostConstruct
     public void generateProductivityWorkData() {
-        List<Client> clients = clientRepository.findAll();
         List<ProductivityWork> records = new ArrayList<>();
 
         LocalDateTime now = LocalDateTime.now();
@@ -46,7 +42,6 @@ public class ProductivityWorkDataGenerator {
             String userId = "user" + userIndex;
             String userName = names[userIndex % names.length].toUpperCase();
 
-            for (Client client : clients) {
                 for (int i = 1; i <= 2; i++) { // Generate fewer records per user/client pair
                     ProductivityWork pw = new ProductivityWork();
 
@@ -103,15 +98,12 @@ public class ProductivityWorkDataGenerator {
                     pw.setPrivateLabelCount(randInt());
                     pw.setPrivateLabelTime(randInt());
                     pw.setPrivateLabelCards(randInt());
-
                     pw.setMetalCardCount(randInt());
                     pw.setMetalCardTime(randInt());
                     pw.setMetalCards(randInt());
-
                     pw.setRobotLabelTotal(randInt());
 
                     records.add(pw);
-                }
             }
         }
 

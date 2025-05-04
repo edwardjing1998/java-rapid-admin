@@ -21,13 +21,18 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping("/clients")
-    public List<ClientDTO> getAllClients(
+    @GetMapping("/clients-paging")
+    public List<ClientDTO> getClientsWithPaginations(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "1000") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        return clientService.getAllClientsWithDetails(pageable);
+        return clientService.getClientsWithPaginations(pageable);
+    }
+
+    @GetMapping("/clients")
+    public List<ClientDTO> getAllClients() {
+        return clientService.getAllClients();
     }
 
     @PostMapping("/client/save")

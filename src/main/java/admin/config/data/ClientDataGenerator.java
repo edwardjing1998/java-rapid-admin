@@ -46,7 +46,6 @@ public class ClientDataGenerator {
             "Mailing SysPrin - T", "SPS - First Data Rapid Daily Activity Web Report",
             "First Data Rapid Activity Report", "SendToMIT", "Custom Excel Report",
             "Product Group Report", "Account Transfer Rejects Daily Report", "Amex Remail - 1"
-            // 可以继续放后面query names... (省略)
     };
 
     private final Random random = new Random();
@@ -61,7 +60,7 @@ public class ClientDataGenerator {
 
     public void generateClients() {
         List<AdminQueryList> reports = new ArrayList<>();
-        for (int j = 1; j <= 5; j++) {
+        for (int j = 1; j <= 10; j++) {
             AdminQueryList report = new AdminQueryList();
             report.setDefaultFileNm("Report " + j);
             report.setReportByClientFlag(random.nextBoolean());
@@ -81,17 +80,17 @@ public class ClientDataGenerator {
 
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 0; i < usBanks.length; i++) {
+        for (int i = 0; i < 1000; i++) {
             String clientId = String.valueOf(i + 1);
             String billingSp = "BILL" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
             String zip = String.format("%05d", 10000 + random.nextInt(89999));
             String phone = "555-" + (1000000 + random.nextInt(8999999));
-            String name = usBanks[i];
+            String name = usBanks[random.nextInt(usBanks.length)];
 
             List<ClientReportOption> reportOptions = new ArrayList<>();
-            for (int j = 1; j <= 5; j++) {
+            for (int j = 1; j <= 10; j++) {
                 ClientReportOption option = new ClientReportOption();
                 option.setId(new ClientReportOptionId());
                 option.getId().setClientId(clientId);
@@ -181,13 +180,13 @@ public class ClientDataGenerator {
                 sysPrin.setStatZ("1");
 
                 sysPrin.setPoBox("0");
-                sysPrin.setAddrFlag("Y");
+                sysPrin.setAddrFlag(new Random().nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAway(100L + s);
-                sysPrin.setRps("Y");
+                sysPrin.setRps(new Random().nextBoolean() ? "Y" : "N");
                 sysPrin.setSession("A");
                 sysPrin.setBadState("0");
-                sysPrin.setAStatRch("1");
-                sysPrin.setNm13("0");
+                sysPrin.setAStatRch(String.valueOf(new Random().nextInt(2)));
+                sysPrin.setNm13(String.valueOf(new Random().nextInt(2)));
                 sysPrin.setTempAwayAtts(200L + s);
                 sysPrin.setReportMethod(0.0);
                 sysPrin.setActive(true);
@@ -227,7 +226,8 @@ public class ClientDataGenerator {
                 email.setReportId((long) (1 + random.nextInt(5)));
                 email.setEmailNameTx("User" + e);
                 email.setCarbonCopyFlag(e % 2 == 0);
-                email.setActiveFlag(true);
+                Random random = new Random();
+                email.setActiveFlag(random.nextBoolean());
                 email.setMailServerId((long) random.nextInt(2));
                 email.setClient(client); // Set client directly!!
                 emails.add(email);

@@ -13,6 +13,12 @@ public interface ClientRepository extends JpaRepository<Client, String> {
     List<Client> findAllWithSysPrins();
 
     @Query("SELECT c FROM Client c WHERE c.client IS NOT NULL AND c.client <> ''")
-    Page<Client> findAllValidClients(Pageable pageable);
+    List<Client> findAllValidClients();
+
+    @Query("SELECT c FROM Client c WHERE c.client IS NOT NULL AND c.client <> ''")
+    Page<Client> getClientsWithPaginations(Pageable pageable);
+
+    @Query("SELECT c FROM Client c WHERE c.client IS NOT NULL AND c.client <> ''")
+    List<Client> getAllClients();
 }
 

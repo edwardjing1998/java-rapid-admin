@@ -67,16 +67,18 @@ public class Client {
     @OneToMany(mappedBy = "id.clientId", cascade = CascadeType.ALL)
     private List<ClientReportOption> reportOptions = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "billing_sp", referencedColumnName = "client")
+    @OneToMany(mappedBy = "id.billingSp", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SysPrinsPrefix> sysPrinsPrefixes = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SysPrin> sysPrins = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  /*  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "Client_ID", referencedColumnName = "client")
+    private List<ClientEmail> clientEmails = new ArrayList<>();*/
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientEmail> clientEmails = new ArrayList<>();
 
     public Client() {}

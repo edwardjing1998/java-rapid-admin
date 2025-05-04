@@ -29,21 +29,24 @@ public class ClientEmailService {
     }
 
     public ClientEmail saveClientEmail(ClientEmail email) {
-        if (email.getId() == null) {
-            ClientEmailId id = new ClientEmailId();
-            id.setClientId(email.getId().getClientId());
+        ClientEmailId id = email.getId();
+        if (id == null) {
+            id = new ClientEmailId();
+            id.setClientId(email.getClient().getClient());
             id.setEmailAddressTx(email.getId().getEmailAddressTx());
             email.setId(id);
         }
 
-        if (email.getClient() == null) {
-            Client client = clientRepository.findById(email.getId().getClientId())
-                    .orElseThrow(() -> new RuntimeException("Client not found: " + email.getId().getClientId()));
-            email.setClient(client);
-        }
+        Client client = clientRepository.findById(id.getClientId())
+                .orElseThrow(() -> new RuntimeException("Client not found: "));
+
+        email.setClient(client); // 🔐 Required for @ManyToOne
+        email.getId().setClientId(client.getClient()); // Ensure FK is in ID too
 
         return clientEmailRepository.save(email);
     }
+
+
 
     @Transactional
     public boolean deleteByClientIdAndEmailAddress(String clientId, String emailAddress) {

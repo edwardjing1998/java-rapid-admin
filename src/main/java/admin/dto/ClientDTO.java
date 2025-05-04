@@ -29,9 +29,6 @@ public class ClientDTO {
     private List<ClientEmailDTO> clientEmail;
     private List<SysPrinDTO> sysPrins;
 
-    // NEW: Invalid Delivery Areas
-    private List<InvalidDelivAreaDTO> invalidDelivAreas;
-
     // Getters and Setters
     public String getClient() { return client; }
     public void setClient(String client) { this.client = client; }
@@ -98,14 +95,6 @@ public class ClientDTO {
 
     public List<ClientEmailDTO> getClientEmail() { return clientEmail; }
     public void setClientEmail(List<ClientEmailDTO> clientEmail) { this.clientEmail = clientEmail; }
-
-    public List<InvalidDelivAreaDTO> getInvalidDelivAreas() {
-        return invalidDelivAreas;
-    }
-
-    public void setInvalidDelivAreas(List<InvalidDelivAreaDTO> invalidDelivAreas) {
-        this.invalidDelivAreas = invalidDelivAreas;
-    }
 
     @Override
     public String toString() {

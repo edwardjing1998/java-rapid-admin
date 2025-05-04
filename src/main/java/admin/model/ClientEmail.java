@@ -13,7 +13,7 @@ public class ClientEmail {
     @MapsId("clientId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Client_ID", insertable = false, updatable = false)
-    @JsonIgnore // 👉 add this
+    @JsonIgnore
     private Client client;
 
     @Column(name = "Report_ID", nullable = false)
