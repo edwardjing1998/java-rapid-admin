@@ -164,7 +164,7 @@ public class ClientDataGenerator {
                 sysPrin.setId(sysPrinId);
 
                 sysPrin.setCustType(String.valueOf(random.nextInt(3)));
-                sysPrin.setUndeliverable("0");
+                sysPrin.setUndeliverable(String.valueOf(1 + random.nextInt(4))); // "1", "2", or "3"
                 sysPrin.setStatA("1");
                 sysPrin.setStatB("0");
                 sysPrin.setStatC("1");
@@ -178,13 +178,12 @@ public class ClientDataGenerator {
                 sysPrin.setStatU("1");
                 sysPrin.setStatX("0");
                 sysPrin.setStatZ("1");
-
-                sysPrin.setPoBox("0");
+                sysPrin.setPoBox(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
                 sysPrin.setAddrFlag(new Random().nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAway(100L + s);
                 sysPrin.setRps(new Random().nextBoolean() ? "Y" : "N");
                 sysPrin.setSession("A");
-                sysPrin.setBadState("0");
+                sysPrin.setBadState(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
                 sysPrin.setAStatRch(String.valueOf(new Random().nextInt(2)));
                 sysPrin.setNm13(String.valueOf(new Random().nextInt(2)));
                 sysPrin.setTempAwayAtts(200L + s);
@@ -196,7 +195,7 @@ public class ClientDataGenerator {
                 sysPrin.setSpecial("1");
                 sysPrin.setPinMailer("0");
                 sysPrin.setHoldDays(10);
-                sysPrin.setNonUS("0");
+                sysPrin.setNonUS(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
                 sysPrin.setForwardingAddress("1");
                 sysPrin.setContact("Contact");
                 sysPrin.setPhone("Phone");
