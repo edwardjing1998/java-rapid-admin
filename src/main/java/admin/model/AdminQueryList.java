@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class AdminQueryList {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
     private Integer reportId;
 

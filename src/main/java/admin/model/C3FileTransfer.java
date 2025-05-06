@@ -2,9 +2,6 @@ package admin.model;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "c3_transfer_parameters")
 public class C3FileTransfer {
@@ -41,13 +38,13 @@ public class C3FileTransfer {
     private String ddNm;
 
     @Column(name = "org_type_cd", nullable = false, length = 100)
-    private String OrgTypeCd;
+    private Integer OrgTypeCd;
 
-    @Column(name = "member_cd", nullable = false, length = 100)
+    @Column(name = "member_cd", nullable = false)
     private String memberCd;
 
     @Column(name = "record_lgth_nr", nullable = false)
-    private Integer recordLgthNr;
+    private Integer recordLengthNr;
 
     @Column(name = "block_size_nr", nullable = false)
     private Integer blockSizeNr;
@@ -79,190 +76,209 @@ public class C3FileTransfer {
     @Column(name = "bin_file_CRLF_ind")
     private Byte binFileCRLFind;
 
+    @Column(name = "locate_file_nm")
+    private String localFileName;
+
     @OneToOne
     @JoinColumn(name = "file_trns_id", referencedColumnName = "report_id")
     private AdminQueryList adminQueryList;
 
-    public void SetFileTransId(Integer fileTransId) {
+    public void setAdminQueryList(AdminQueryList adminQueryList) {
+        this.adminQueryList = adminQueryList;
+    }
+    public AdminQueryList getAdminQueryList() {
+        return adminQueryList;
+    }
+
+    public void setFileTransId(Integer fileTransId) {
         this.fileTransId = fileTransId;
     }
-    public Integer GetFileTransId() {
+    public Integer getFileTransId() {
         return fileTransId;
     }
 
-    public void SetSequenceNr(Integer sequenceNr) {
+    public void setSequenceNr(Integer sequenceNr) {
         this.sequenceNr = sequenceNr;
     }
 
-    public Integer GetSequenceNr() {
+    public Integer getSequenceNr() {
         return sequenceNr;
     }
 
-    public void SetTransferCd(Integer transferCd) {
+    public void setTransferCd(Integer transferCd) {
         this.transferCd = transferCd;
     }
 
-    public Integer GetTransferCd() {
+    public Integer getTransferCd() {
         return transferCd;
     }
 
-    public void SetProtocolNm(String protocolNm) {
+    public void setProtocolNm(String protocolNm) {
         this.protocolNm = protocolNm;
     }
 
-    public String GetProtocolNm() {
+    public String getProtocolNm() {
         return protocolNm;
     }
 
-    public void SetTransPrgNm(String transPrgNm) {
+    public void setTransPrgNm(String transPrgNm) {
         this.transPrgNm = transPrgNm;
     }
 
-    public String GetTransPrgNm() {
+    public String getTransPrgNm() {
         return transPrgNm;
     }
 
-    public void SetModeNm(String modeNm) {
+    public void setModeNm(String modeNm) {
         this.modeNm = modeNm;
     }
-    public String GetModeNm() {
+    public String getModeNm() {
         return modeNm;
     }
 
-    public void SetSecurityNm(String securityNm) {
+    public void setSecurityNm(String securityNm) {
         this.securityNm = securityNm;
     }
 
-    public String GetSecurityNm() {
+    public String getSecurityNm() {
         return securityNm;
     }
 
-    public void SetIpPortCd(String ipPortCd) {
+    public void setIpPortCd(String ipPortCd) {
         this.ipPortCd = ipPortCd;
     }
 
-    public String GetIpPortCd() {
+    public String getIpPortCd() {
         return ipPortCd;
     }
 
-    public void SetListenerSrvNm(String listenerSrvNm) {
+    public void setListenerSrvNm(String listenerSrvNm) {
         this.listenerSrvNm = listenerSrvNm;
     }
 
-    public String GetListenerSrvNm() {
+    public String getListenerSrvNm() {
         return listenerSrvNm;
     }
 
-    public void SetDdNm(String ddNm) {
+    public void setDdNm(String ddNm) {
         this.ddNm = ddNm;
     }
 
-    public String GetDdNm() {
+    public String getDdNm() {
         return ddNm;
     }
 
-    public void SetOrgTypeCd(String orgTypeCd) {
+    public void setOrgTypeCd(Integer orgTypeCd) {
         this.OrgTypeCd = orgTypeCd;
     }
 
-    public String GetOrgTypeCd() {
+    public Integer getOrgTypeCd() {
         return OrgTypeCd;
     }
 
-    public void SetMemberCd(String memberCd) {
+    public void setMemberCd(String memberCd) {
         this.memberCd = memberCd;
     }
 
-    public String GetMemberCd() {
+    public String getMemberCd() {
         return memberCd;
     }
 
-    public void SetRecordLengthNr(Integer recordLengthNr) {
-        this.recordLgthNr = recordLgthNr;
+    public void setRecordLengthNr(Integer recordLengthNr) {
+        this.recordLengthNr = recordLengthNr;
     }
 
-    public Integer GetRecordLengthNr() {
-        return recordLgthNr;
+    public Integer getRecordLengthNr() {
+        return recordLengthNr;
     }
 
-    public void SetBlockSizeNr(Integer blockSizeNr) {
+    public void setBlockSizeNr(Integer blockSizeNr) {
         this.blockSizeNr = blockSizeNr;
     }
 
-    public Integer GetBlockSizeNr() {
+    public Integer getBlockSizeNr() {
         return blockSizeNr;
     }
 
-    public void SetConvertFileCd(Integer convertFileCd) {
+    public void setConvertFileCd(Integer convertFileCd) {
         this.convertFileCd = convertFileCd;
     }
 
-    public Integer GetConvertFileCd() {
+    public Integer getConvertFileCd() {
         return convertFileCd;
     }
 
-    public void SetXferFileNm(String xferFileNm) {
+    public void setXferFileNm(String xferFileNm) {
         this.xferFileNm = xferFileNm;
 
     }
 
-    public String GetXferFileNm() {
+    public String getXferFileNm() {
         return xferFileNm;
     }
 
-    public void SetJobNm(String jobNm) {
+    public void setJobNm(String jobNm) {
         this.jobNm = jobNm;
     }
 
-    public String GetJobNm() {
+    public String getJobNm() {
         return jobNm;
     }
 
-    public void SetProgramNm(String programNm) {
+    public void setProgramNm(String programNm) {
         this.programNm = programNm;
     }
 
-    public String GetProgramNm() {
+    public String getProgramNm() {
         return programNm;
     }
 
-    public void SetRemoteFileNm(String remoteFileNm) {
+    public void setRemoteFileNm(String remoteFileNm) {
         this.remoteFileNm = remoteFileNm;
     }
 
-    public String GetRemoteFileNm() {
+    public String getRemoteFileNm() {
         return remoteFileNm;
     }
 
-    public void SetLocalFileNm(String localFileNm) {
+    public void setLocalFileNm(String localFileNm) {
         this.localFileNm = localFileNm;
     }
 
-    public String GetLocalFileNm() {
+    public String getLocalFileNm() {
         return localFileNm;
     }
 
-    public void SetControlFileNm(String controlFileNm) {
+    public void setControlFileNm(String controlFileNm) {
         this.controlFileNm = controlFileNm;
     }
 
-    public String GetControlFileNm() {
+    public String getControlFileNm() {
         return controlFileNm;
     }
 
-    public void SetGatewayAccessCd(String gatewayAccessCd) {
+    public void setGatewayAccessCd(String gatewayAccessCd) {
         this.gatewayAccessCd = gatewayAccessCd;
     }
 
-    public String GetGatewayAccessCd() {
+    public String getGatewayAccessCd() {
         return gatewayAccessCd;
     }
 
-    public void SetBinFileCRLFind(Byte binFileCRLFind) {
+    public void setLocalFileName(String localFileName) {
+        this.localFileName = localFileName;
+    }
+
+    public String getLocalFileName() {
+        return localFileName;
+    }
+
+
+    public void setBinFileCRLFind(Byte binFileCRLFind) {
         this.binFileCRLFind = binFileCRLFind;
     }
 
-    public Byte GetBinFileCRLFind() {
+    public Byte getBinFileCRLFind() {
         return binFileCRLFind;
     }
 }

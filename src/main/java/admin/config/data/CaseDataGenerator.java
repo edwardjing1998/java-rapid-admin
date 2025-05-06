@@ -6,6 +6,7 @@ import admin.model.SysPrin;
 import admin.repository.CaseRepository;
 import admin.repository.ClientRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@Profile("local")
 public class CaseDataGenerator {
 
     private final CaseRepository caseRepository;

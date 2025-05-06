@@ -3,6 +3,7 @@ package admin.config.data;
 import admin.model.DailyMessage;
 import admin.repository.DailyMessageRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Profile("local")
 public class DailyMessageDataGenerator {
 
     private final DailyMessageRepository dailyMessageRepository;

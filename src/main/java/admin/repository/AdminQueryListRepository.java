@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AdminQueryListRepository extends JpaRepository<AdminQueryList, Long> {
+public interface AdminQueryListRepository extends JpaRepository<AdminQueryList, Integer> {
     List<AdminQueryList> findByReportByClientFlagTrue();
     List<AdminQueryList> findByReportByClientFlagFalse();
 }

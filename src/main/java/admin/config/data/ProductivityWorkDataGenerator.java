@@ -5,6 +5,7 @@ import admin.model.ProductivityWork;
 import admin.repository.ClientRepository;
 import admin.repository.ProductivityWorkRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 @Component
+@Profile("local")
 public class ProductivityWorkDataGenerator {
 
     private final ProductivityWorkRepository productivityWorkRepository;

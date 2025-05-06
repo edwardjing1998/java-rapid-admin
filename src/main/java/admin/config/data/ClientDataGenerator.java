@@ -64,6 +64,7 @@ public class ClientDataGenerator {
         List<AdminQueryList> reports = new ArrayList<>();
         for (int j = 1; j <= 10; j++) {
             AdminQueryList report = new AdminQueryList();
+            report.setReportId(j);
             report.setDefaultFileNm("Report " + j);
             report.setReportByClientFlag(random.nextBoolean());
             report.setDbDriverType("SQL Server");
