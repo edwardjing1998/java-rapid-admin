@@ -7,7 +7,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
 
 <changeSet id="create-admin-query-list" author="Edward Jing">
     <createTable tableName="ADMIN_QUERY_LIST">
-        <column name="report_id" type="SMALLINT" autoIncrement="true">
+        <column name="report_id" type="INT" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
         <column name="query_name" type="CHAR(50)">

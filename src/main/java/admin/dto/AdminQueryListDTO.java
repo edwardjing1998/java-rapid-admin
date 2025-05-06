@@ -38,7 +38,7 @@ public class AdminQueryListDTO {
     }
 
 
-    private Short reportId;
+    private Integer reportId;
     private String queryName;
     private String query;
     private String inputDataFields;
@@ -70,11 +70,11 @@ public class AdminQueryListDTO {
     public AdminQueryListDTO() {
     }
 
-    public Short getReportId() {
+    public Integer getReportId() {
         return reportId;
     }
 
-    public void setReportId(Short reportId) {
+    public void setReportId(Integer reportId) {
         this.reportId = reportId;
     }
 

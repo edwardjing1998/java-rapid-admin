@@ -4,11 +4,13 @@ import admin.model.*;
 import admin.repository.AdminQueryListRepository;
 import admin.repository.ClientRepository;
 import admin.repository.InvalidDelivAreaRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
+@Profile("local")
 public class ClientDataGenerator {
 
     private final ClientRepository clientRepository;
@@ -76,7 +78,10 @@ public class ClientDataGenerator {
             report.setReportDbIpAndPort("127.0.0.1:1433");
             reports.add(report);
         }
+
         adminQueryListRepository.saveAll(reports);
+        adminQueryListRepository.flush();
+        List<AdminQueryList> managedReports = adminQueryListRepository.findAll();
 
         List<Client> clients = new ArrayList<>();
 
@@ -92,15 +97,13 @@ public class ClientDataGenerator {
             List<ClientReportOption> reportOptions = new ArrayList<>();
             for (int j = 1; j <= 10; j++) {
                 ClientReportOption option = new ClientReportOption();
-                option.setId(new ClientReportOptionId());
-                option.getId().setClientId(clientId);
-                option.getId().setReportId(j);
+                option.setId(new ClientReportOptionId(clientId, j));
                 option.setReceiveFlag(j % 2 == 0);
                 option.setOutputTypeCd(random.nextInt(3));
                 option.setFileTypeCd(random.nextInt(3));
                 option.setEmailFlag(random.nextInt(3));
                 option.setReportPasswordTx("pass" + j);
-                option.setReport(reports.get((j - 1) % reports.size()));
+                option.setReport(managedReports.get((j - 1) % managedReports.size()));
                 option.setEmailBodyTx("Email body for " + clientId + " item " + j);
                 reportOptions.add(option);
             }
@@ -108,20 +111,15 @@ public class ClientDataGenerator {
             Map<String, SysPrinsPrefix> prefixCache = new HashMap<>();
             List<SysPrinsPrefix> prefixes = new ArrayList<>();
             for (int k = 1; k <= 5 + random.nextInt(5); k++) {
-                String atmCashRule = random.nextBoolean() ? "0" : "1";
-                String prefixStr = "PREFIX" + k;
+                String atmCashRule = random.nextBoolean() ? "0" : "1"; // 1-char
+                String prefixStr = "PR" + k; // shortened prefix name to avoid overflow
                 String cacheKey = billingSp + "-" + atmCashRule + "-" + prefixStr;
 
                 SysPrinsPrefix existingPrefix = prefixCache.get(cacheKey);
                 if (existingPrefix == null) {
-                    SysPrinsPrefixId prefixId = new SysPrinsPrefixId();
-                    prefixId.setBillingSp(billingSp); // Fix here!!
-                    prefixId.setAtmCashRule(atmCashRule);
-                    prefixId.setPrefix(prefixStr);
-
+                    SysPrinsPrefixId prefixId = new SysPrinsPrefixId(billingSp, prefixStr, atmCashRule);
                     SysPrinsPrefix newPrefix = new SysPrinsPrefix();
                     newPrefix.setId(prefixId);
-
                     prefixCache.put(cacheKey, newPrefix);
                     prefixes.add(newPrefix);
                 } else {
@@ -130,45 +128,23 @@ public class ClientDataGenerator {
             }
 
             Client client = new Client(
-                    clientId,
-                    name,
-                    "123 " + city + " St.",
-                    city,
-                    state,
-                    zip,
-                    "Contact " + (i + 1),
-                    phone,
-                    (i + 1) % 2 == 0,
-                    "Fax-" + (i + 1),
-                    billingSp,
-                    (i + 1) % 2,
-                    (i + 1) % 3,
-                    (i + 1) % 2 == 0,
-                    (i + 1) % 2 == 1,
-                    (i + 1) % 2,
-                    "" + (i + 1),
-                    (i + 1) % 2 == 0,
-                    reportOptions,
-                    prefixes,
-                    new ArrayList<>(), // sysPrins
-                    new ArrayList<>()  // clientEmails
+                    clientId, name, "123 " + city + " St.", city, state, zip,
+                    "Contact " + (i + 1), phone, (i + 1) % 2 == 0, "Fax-" + (i + 1), billingSp,
+                    (i + 1) % 2, (i + 1) % 3, (i + 1) % 2 == 0, (i + 1) % 2 == 1, (i + 1) % 2,
+                    "" + (i + 1), (i + 1) % 2 == 0, reportOptions, prefixes, new ArrayList<>(), new ArrayList<>()
             );
 
             List<SysPrin> sysPrinsList = new ArrayList<>();
             int sysPrinCount = 2 + random.nextInt(4);
             for (int s = 1; s <= sysPrinCount; s++) {
                 SysPrin sysPrin = new SysPrin();
-                SysPrinId sysPrinId = new SysPrinId();
-                sysPrinId.setClient(clientId);
-                sysPrinId.setSysPrin("SP" + (i + 1) + s);
+                SysPrinId sysPrinId = new SysPrinId(clientId, "SP" + (i + 1) + s);
                 sysPrin.setId(sysPrinId);
-
                 sysPrin.setCustType(String.valueOf(random.nextInt(3)));
-                sysPrin.setUndeliverable(String.valueOf(1 + random.nextInt(4))); // "1", "2", or "3"
+                sysPrin.setUndeliverable(String.valueOf(1 + random.nextInt(4)));
                 sysPrin.setStatA("1");
                 sysPrin.setStatB("0");
                 sysPrin.setStatC("1");
-
                 sysPrin.setStatD("1");
                 sysPrin.setStatE("0");
                 sysPrin.setStatF("1");
@@ -178,14 +154,14 @@ public class ClientDataGenerator {
                 sysPrin.setStatU("1");
                 sysPrin.setStatX("0");
                 sysPrin.setStatZ("1");
-                sysPrin.setPoBox(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
-                sysPrin.setAddrFlag(new Random().nextBoolean() ? "Y" : "N");
+                sysPrin.setPoBox(String.valueOf(1 + random.nextInt(3)));
+                sysPrin.setAddrFlag(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setTempAway(100L + s);
-                sysPrin.setRps(new Random().nextBoolean() ? "Y" : "N");
+                sysPrin.setRps(random.nextBoolean() ? "Y" : "N");
                 sysPrin.setSession("A");
-                sysPrin.setBadState(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
-                sysPrin.setAStatRch(String.valueOf(new Random().nextInt(2)));
-                sysPrin.setNm13(String.valueOf(new Random().nextInt(2)));
+                sysPrin.setBadState(String.valueOf(1 + random.nextInt(3)));
+                sysPrin.setAStatRch(String.valueOf(random.nextInt(2)));
+                sysPrin.setNm13(String.valueOf(random.nextInt(2)));
                 sysPrin.setTempAwayAtts(200L + s);
                 sysPrin.setReportMethod(0.0);
                 sysPrin.setActive(true);
@@ -195,18 +171,17 @@ public class ClientDataGenerator {
                 sysPrin.setSpecial("1");
                 sysPrin.setPinMailer("0");
                 sysPrin.setHoldDays(10);
-                sysPrin.setNonUS(String.valueOf(1 + random.nextInt(3))); // "1", "2", or "3"
+                sysPrin.setNonUS(String.valueOf(1 + random.nextInt(3)));
                 sysPrin.setForwardingAddress("1");
                 sysPrin.setContact("Contact");
                 sysPrin.setPhone("Phone");
                 sysPrin.setEntityCode("0");
                 sysPrin.setClient(client);
 
-                String sysPrinCode = sysPrin.getId().getSysPrin();
                 List<InvalidDelivArea> invalidAreas = new ArrayList<>();
                 for (int a = 1; a <= 5; a++) {
                     String randomState = usStates[random.nextInt(usStates.length)];
-                    InvalidDelivArea area = new InvalidDelivArea(new InvalidDelivAreaId(sysPrinCode, randomState));
+                    InvalidDelivArea area = new InvalidDelivArea(new InvalidDelivAreaId(sysPrin.getId().getSysPrin(), randomState));
                     invalidAreas.add(area);
                 }
                 invalidDelivAreaRepository.saveAll(invalidAreas);
@@ -218,17 +193,14 @@ public class ClientDataGenerator {
             List<ClientEmail> emails = new ArrayList<>();
             for (int e = 1; e <= 3 + random.nextInt(3); e++) {
                 ClientEmail email = new ClientEmail();
-                ClientEmailId emailId = new ClientEmailId();
-                emailId.setClientId(clientId);
-                emailId.setEmailAddressTx("user" + e + "@example.com");
+                ClientEmailId emailId = new ClientEmailId(clientId, "user" + e + "@example.com");
                 email.setId(emailId);
                 email.setReportId((long) (1 + random.nextInt(5)));
                 email.setEmailNameTx("User" + e);
                 email.setCarbonCopyFlag(e % 2 == 0);
-                Random random = new Random();
                 email.setActiveFlag(random.nextBoolean());
                 email.setMailServerId((long) random.nextInt(2));
-                email.setClient(client); // Set client directly!!
+                email.setClient(client);
                 emails.add(email);
             }
             client.setClientEmails(emails);

@@ -10,7 +10,7 @@ public class AdminQueryList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
-    private Short reportId;
+    private Integer reportId;
 
     @Column(name = "query_name", nullable = false, length = 50)
     private String queryName;
@@ -41,6 +41,9 @@ public class AdminQueryList {
 
     @Column(name = "report_db_userid", nullable = false, length = 50)
     private String reportDbUserid;
+
+    @OneToOne(mappedBy = "adminQueryList", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private C3FileTransfer c3FileTransferParam;
 
     @Column(name = "report_db_passwrd", nullable = false, length = 100)
     private String reportDbPasswrd;
@@ -97,11 +100,11 @@ public class AdminQueryList {
     }
 
     // ------ Getter and Setter Methods ------
-    public Short getReportId() {
+    public Integer getReportId() {
         return reportId;
     }
 
-    public void setReportId(Short reportId) {
+    public void setReportId(Integer reportId) {
         this.reportId = reportId;
     }
 

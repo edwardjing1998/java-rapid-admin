@@ -19,6 +19,7 @@
     <include file="db/changelog/create-dailymessages-table.xml"/>
     <include file="db/changelog/create-productivity-work-table.xml"/>
     <include file="db/changelog/create-users-table.xml"/>
+    <include file="db/changelog/create-c3-transfer-parameters.xml"/>
 </databaseChangeLog>
 
 

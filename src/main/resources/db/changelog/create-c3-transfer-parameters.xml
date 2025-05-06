@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-c3-transfer-parameters" author="harish c baswapuram">
+        <createTable tableName="c3_transfer_parameters">
+            <column name="file_trns_id" type="INT" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_nr" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transfer_cd" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="protocol_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trans_prg_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mode_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="security_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip_port_cd" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="listener_srv_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dd_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="org_type_cd" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="member_cd" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="record_lgth_nr" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="block_size_nr" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="convert_file_cd" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="xfer_file_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="job_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="program_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remote_file_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="locate_file_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="control_file_nm" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gateway_access_cd" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bin_file_CRLF_ind" type="BIT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="local_file_nm" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
