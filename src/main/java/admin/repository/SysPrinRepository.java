@@ -15,4 +15,9 @@ public interface SysPrinRepository extends JpaRepository<SysPrin, SysPrinId> {
 
     // Optional: Find all SysPrins for multiple clients
     List<SysPrin> findByIdClientIn(List<String> clients);
+
+
+    // ✅ Find all records by a single sysPrin
+    List<SysPrin> findByIdSysPrin(String sysPrin);
+
 }

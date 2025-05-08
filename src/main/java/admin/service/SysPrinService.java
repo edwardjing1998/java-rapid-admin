@@ -4,14 +4,15 @@ import admin.dto.SysPrinDTO;
 import admin.model.SysPrin;
 import admin.model.SysPrinId;
 import admin.repository.SysPrinRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class SysPrinService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SysPrinService.class);
 
     private final SysPrinRepository sysPrinRepository;
 
@@ -114,5 +115,25 @@ public class SysPrinService {
             return dto;
         }).collect(Collectors.toList());
     }
+
+    public List<SysPrinDTO> getSysPrinsBySysPrin(String sysPrin) {
+        logger.info("sysprin in getSysPrinsBySysPrin {}", sysPrin);
+        List<SysPrin> sysPrins = sysPrinRepository.findByIdSysPrin(sysPrin);
+        logger.info("sysprin size in getSysPrinsBySysPrin {}", sysPrins.size());
+        return sysPrins.stream().map(sp -> {
+            SysPrinDTO dto = new SysPrinDTO();
+            dto.populateFromEntity(sp);
+
+            // Set all client IDs that share the same sysPrin
+            List<String> allClientIds = sysPrins.stream()
+                    .map(p -> p.getId().getClient())
+                    .distinct()
+                    .collect(Collectors.toList());
+            dto.setClientIds(allClientIds);
+            logger.info("allClientIds size in getSysPrinsBySysPrin {}", dto.getClientIds().size());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
 
 }

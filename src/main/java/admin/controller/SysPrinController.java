@@ -39,4 +39,10 @@ public class SysPrinController {
     public List<SysPrinDTO> getSysPrinsByClient(@PathVariable String clientId) {
         return sysPrinService.getSysPrinsByClient(clientId);
     }
+
+    @GetMapping("/bySysprin/{sysPrin}")
+    public List<SysPrinDTO> getSysPrinsBySysPrin(@PathVariable String sysPrin) {
+        return sysPrinService.getSysPrinsBySysPrin(sysPrin);
+    }
+
 }

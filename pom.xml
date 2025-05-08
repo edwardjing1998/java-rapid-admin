@@ -67,6 +67,17 @@
 		  <version>12.10.0.jre11</version> <!-- Match the DLL version -->
 		</dependency>
 
+		<!-- Spring Boot Starter for caching -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<!-- Caffeine cache library -->
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
 
 	</dependencies>
 

@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 public class ClientService {
@@ -35,6 +35,7 @@ public class ClientService {
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
     }
 
+    @Cacheable("allClients")
     public List<ClientDTO> getClientsWithPaginations(Pageable pageable) {
         logger.info("Fetching paginated clients with full details...");
         Page<Client> page = clientRepository.getClientsWithPaginations(pageable);
@@ -44,6 +45,7 @@ public class ClientService {
         return clients.stream().map(this::mapClientToDto).collect(Collectors.toList());
     }
 
+    @Cacheable("allClients")
     public List<ClientDTO> getAllClients() {
         logger.info("Fetching All clients with full details...");
         List<Client> clients = clientRepository.getAllClients();

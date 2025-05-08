@@ -86,9 +86,9 @@ public class ClientDataGenerator {
 
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 0; i < 1000; i++) {
-            String clientId = String.valueOf(i + 1);
-            String billingSp = "BILL" + (i + 1);
+        for (int i = 0; i < 20000; i++) {
+            String clientId = generateBase35Id(i);
+            String billingSp = "B" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
             String state = usStates[random.nextInt(usStates.length)];
             String zip = String.format("%05d", 10000 + random.nextInt(89999));
@@ -132,14 +132,14 @@ public class ClientDataGenerator {
                     clientId, name, "123 " + city + " St.", city, state, zip,
                     "Contact " + (i + 1), phone, (i + 1) % 2 == 0, "Fax-" + (i + 1), billingSp,
                     (i + 1) % 2, (i + 1) % 3, (i + 1) % 2 == 0, (i + 1) % 2 == 1, (i + 1) % 2,
-                    "" + (i + 1), (i + 1) % 2 == 0, reportOptions, prefixes, new ArrayList<>(), new ArrayList<>()
+                    "" + generateBase35Id(i + 1), (i + 1) % 2 == 0, reportOptions, prefixes, new ArrayList<>(), new ArrayList<>()
             );
 
             List<SysPrin> sysPrinsList = new ArrayList<>();
             int sysPrinCount = 2 + random.nextInt(4);
             for (int s = 1; s <= sysPrinCount; s++) {
                 SysPrin sysPrin = new SysPrin();
-                SysPrinId sysPrinId = new SysPrinId(clientId, "SP" + (i + 1) + s);
+                SysPrinId sysPrinId = new SysPrinId(clientId, "SP" + (s + 1));
                 sysPrin.setId(sysPrinId);
                 sysPrin.setCustType(String.valueOf(random.nextInt(3)));
                 sysPrin.setUndeliverable(String.valueOf(1 + random.nextInt(4)));
@@ -210,5 +210,18 @@ public class ClientDataGenerator {
         }
 
         clientRepository.saveAll(clients);
+    }
+
+
+    private String generateBase35Id(int index) {
+        char[] base35Chars = "123456789abcdefghijklmnopqrstuvwxyz".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        int value = index;
+        do {
+            sb.insert(0, base35Chars[value % base35Chars.length]);
+            value /= base35Chars.length;
+        } while (value > 0);
+        while (sb.length() < 4) sb.insert(0, '1'); // pad to 4 characters
+        return sb.toString();
     }
 }

@@ -6,6 +6,9 @@ import java.util.List;
 
 public class SysPrinDTO {
     private String client;
+
+    private List<String> clientIds;
+
     private String sysPrin;
 
     private String custType;
@@ -46,6 +49,9 @@ public class SysPrinDTO {
 
     public String getClient() { return client; }
     public void setClient(String client) { this.client = client; }
+
+    public List<String> getClientIds() { return clientIds; }
+    public void setClientIds(List<String> clientIds) { this.clientIds = clientIds; }
 
     public String getSysPrin() { return sysPrin; }
     public void setSysPrin(String sysPrin) { this.sysPrin = sysPrin; }
