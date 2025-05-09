@@ -1,7 +1,7 @@
 package admin.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 @Entity
 @Table(name = "CASES")
 public class Case {
@@ -62,16 +62,16 @@ public class Case {
     private Integer inHour;
 
     @Column(name = "in_date")
-    private LocalDate inDate;
+    private LocalDateTime inDate;
 
     @Column(name = "next_date")
-    private LocalDate nextDate;
+    private LocalDateTime nextDate;
 
     @Column(name = "out_date")
-    private LocalDate outDate;
+    private LocalDateTime outDate;
 
     @Column(name = "auto_date")
-    private LocalDate autoDate;
+    private LocalDateTime autoDate;
 
     @Column(name = "num_cards")
     private Integer numCards;
@@ -104,7 +104,7 @@ public class Case {
     private String issuanceCd;
 
     @Column(name = "issuance_dt")
-    private LocalDate issuanceDt;
+    private LocalDateTime issuanceDt;
 
     @Column(name = "workstation_name_tx", length = 18)
     private String workstationNameTx;
@@ -143,7 +143,7 @@ public class Case {
     private String bscSpplmntlId;
 
     @Column(name = "orig_ml_dt")
-    private LocalDate origMlDt;
+    private LocalDateTime origMlDt;
 
     @Column(name = "msg_id", length = 40)
     private String msgId;
@@ -319,35 +319,35 @@ public class Case {
         this.inHour = inHour;
     }
 
-    public LocalDate getInDate() {
+    public LocalDateTime getInDate() {
         return inDate;
     }
 
-    public void setInDate(LocalDate inDate) {
+    public void setInDate(LocalDateTime inDate) {
         this.inDate = inDate;
     }
 
-    public LocalDate getNextDate() {
+    public LocalDateTime getNextDate() {
         return nextDate;
     }
 
-    public void setNextDate(LocalDate nextDate) {
+    public void setNextDate(LocalDateTime nextDate) {
         this.nextDate = nextDate;
     }
 
-    public LocalDate getOutDate() {
+    public LocalDateTime getOutDate() {
         return outDate;
     }
 
-    public void setOutDate(LocalDate outDate) {
+    public void setOutDate(LocalDateTime outDate) {
         this.outDate = outDate;
     }
 
-    public LocalDate getAutoDate() {
+    public LocalDateTime getAutoDate() {
         return autoDate;
     }
 
-    public void setAutoDate(LocalDate autoDate) {
+    public void setAutoDate(LocalDateTime autoDate) {
         this.autoDate = autoDate;
     }
 
@@ -431,11 +431,11 @@ public class Case {
         this.issuanceCd = issuanceCd;
     }
 
-    public LocalDate getIssuanceDt() {
+    public LocalDateTime getIssuanceDt() {
         return issuanceDt;
     }
 
-    public void setIssuanceDt(LocalDate issuanceDt) {
+    public void setIssuanceDt(LocalDateTime issuanceDt) {
         this.issuanceDt = issuanceDt;
     }
 
@@ -535,11 +535,11 @@ public class Case {
         this.bscSpplmntlId = bscSpplmntlId;
     }
 
-    public LocalDate getOrigMlDt() {
+    public LocalDateTime getOrigMlDt() {
         return origMlDt;
     }
 
-    public void setOrigMlDt(LocalDate origMlDt) {
+    public void setOrigMlDt(LocalDateTime origMlDt) {
         this.origMlDt = origMlDt;
     }
 

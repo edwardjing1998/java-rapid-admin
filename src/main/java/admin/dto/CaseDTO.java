@@ -1,6 +1,6 @@
 package admin.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CaseDTO {
     private String caseNumber;
@@ -21,10 +21,10 @@ public class CaseDTO {
     private Integer subreason;
     private Character disposition;
     private Integer inHour;
-    private LocalDate inDate;
-    private LocalDate nextDate;
-    private LocalDate outDate;
-    private LocalDate autoDate;
+    private LocalDateTime inDate;
+    private LocalDateTime nextDate;
+    private LocalDateTime outDate;
+    private LocalDateTime autoDate;
     private Integer numCards;
     private Integer finalActionCardsNr;
     private Integer deliveryId;
@@ -35,7 +35,7 @@ public class CaseDTO {
     private String contactPhNr;
     private String returnReasonCd;
     private String issuanceCd;
-    private LocalDate issuanceDt;
+    private LocalDateTime issuanceDt;
     private String workstationNameTx;
     private String operatorCd;
     private String barcodeTypeCd;
@@ -48,7 +48,7 @@ public class CaseDTO {
     private String as400ClientId;
     private String as400SystemId;
     private String bscSpplmntlId;
-    private LocalDate origMlDt;
+    private LocalDateTime origMlDt;
     private String msgId;
     private String mlMthd;
     private String sourceFile;
@@ -151,10 +151,10 @@ public class CaseDTO {
         private Integer subreason;
         private Character disposition;
         private Integer inHour;
-        private LocalDate inDate;
-        private LocalDate nextDate;
-        private LocalDate outDate;
-        private LocalDate autoDate;
+        private LocalDateTime inDate;
+        private LocalDateTime nextDate;
+        private LocalDateTime outDate;
+        private LocalDateTime autoDate;
         private Integer numCards;
         private Integer finalActionCardsNr;
         private Integer deliveryId;
@@ -165,7 +165,7 @@ public class CaseDTO {
         private String contactPhNr;
         private String returnReasonCd;
         private String issuanceCd;
-        private LocalDate issuanceDt;
+        private LocalDateTime issuanceDt;
         private String workstationNameTx;
         private String operatorCd;
         private String barcodeTypeCd;
@@ -178,7 +178,7 @@ public class CaseDTO {
         private String as400ClientId;
         private String as400SystemId;
         private String bscSpplmntlId;
-        private LocalDate origMlDt;
+        private LocalDateTime origMlDt;
         private String msgId;
         private String mlMthd;
         private String sourceFile;
@@ -210,10 +210,10 @@ public class CaseDTO {
         public Builder subreason(Integer subreason) { this.subreason = subreason; return this; }
         public Builder disposition(Character disposition) { this.disposition = disposition; return this; }
         public Builder inHour(Integer inHour) { this.inHour = inHour; return this; }
-        public Builder inDate(LocalDate inDate) { this.inDate = inDate; return this; }
-        public Builder nextDate(LocalDate nextDate) { this.nextDate = nextDate; return this; }
-        public Builder outDate(LocalDate outDate) { this.outDate = outDate; return this; }
-        public Builder autoDate(LocalDate autoDate) { this.autoDate = autoDate; return this; }
+        public Builder inDate(LocalDateTime inDate) { this.inDate = inDate; return this; }
+        public Builder nextDate(LocalDateTime nextDate) { this.nextDate = nextDate; return this; }
+        public Builder outDate(LocalDateTime outDate) { this.outDate = outDate; return this; }
+        public Builder autoDate(LocalDateTime autoDate) { this.autoDate = autoDate; return this; }
         public Builder numCards(Integer numCards) { this.numCards = numCards; return this; }
         public Builder finalActionCardsNr(Integer finalActionCardsNr) { this.finalActionCardsNr = finalActionCardsNr; return this; }
         public Builder deliveryId(Integer deliveryId) { this.deliveryId = deliveryId; return this; }
@@ -224,7 +224,7 @@ public class CaseDTO {
         public Builder contactPhNr(String ph) { this.contactPhNr = ph; return this; }
         public Builder returnReasonCd(String cd) { this.returnReasonCd = cd; return this; }
         public Builder issuanceCd(String cd) { this.issuanceCd = cd; return this; }
-        public Builder issuanceDt(LocalDate dt) { this.issuanceDt = dt; return this; }
+        public Builder issuanceDt(LocalDateTime dt) { this.issuanceDt = dt; return this; }
         public Builder workstationNameTx(String tx) { this.workstationNameTx = tx; return this; }
         public Builder operatorCd(String cd) { this.operatorCd = cd; return this; }
         public Builder barcodeTypeCd(String cd) { this.barcodeTypeCd = cd; return this; }
@@ -237,7 +237,7 @@ public class CaseDTO {
         public Builder as400ClientId(String id) { this.as400ClientId = id; return this; }
         public Builder as400SystemId(String id) { this.as400SystemId = id; return this; }
         public Builder bscSpplmntlId(String id) { this.bscSpplmntlId = id; return this; }
-        public Builder origMlDt(LocalDate dt) { this.origMlDt = dt; return this; }
+        public Builder origMlDt(LocalDateTime dt) { this.origMlDt = dt; return this; }
         public Builder msgId(String id) { this.msgId = id; return this; }
         public Builder mlMthd(String method) { this.mlMthd = method; return this; }
         public Builder sourceFile(String file) { this.sourceFile = file; return this; }
@@ -403,35 +403,35 @@ public class CaseDTO {
         this.inHour = inHour;
     }
 
-    public LocalDate getInDate() {
+    public LocalDateTime getInDate() {
         return inDate;
     }
 
-    public void setInDate(LocalDate inDate) {
+    public void setInDate(LocalDateTime inDate) {
         this.inDate = inDate;
     }
 
-    public LocalDate getNextDate() {
+    public LocalDateTime getNextDate() {
         return nextDate;
     }
 
-    public void setNextDate(LocalDate nextDate) {
+    public void setNextDate(LocalDateTime nextDate) {
         this.nextDate = nextDate;
     }
 
-    public LocalDate getOutDate() {
+    public LocalDateTime getOutDate() {
         return outDate;
     }
 
-    public void setOutDate(LocalDate outDate) {
+    public void setOutDate(LocalDateTime outDate) {
         this.outDate = outDate;
     }
 
-    public LocalDate getAutoDate() {
+    public LocalDateTime getAutoDate() {
         return autoDate;
     }
 
-    public void setAutoDate(LocalDate autoDate) {
+    public void setAutoDate(LocalDateTime autoDate) {
         this.autoDate = autoDate;
     }
 
@@ -515,11 +515,11 @@ public class CaseDTO {
         this.issuanceCd = issuanceCd;
     }
 
-    public LocalDate getIssuanceDt() {
+    public LocalDateTime getIssuanceDt() {
         return issuanceDt;
     }
 
-    public void setIssuanceDt(LocalDate issuanceDt) {
+    public void setIssuanceDt(LocalDateTime issuanceDt) {
         this.issuanceDt = issuanceDt;
     }
 
@@ -619,11 +619,11 @@ public class CaseDTO {
         this.bscSpplmntlId = bscSpplmntlId;
     }
 
-    public LocalDate getOrigMlDt() {
+    public LocalDateTime getOrigMlDt() {
         return origMlDt;
     }
 
-    public void setOrigMlDt(LocalDate origMlDt) {
+    public void setOrigMlDt(LocalDateTime origMlDt) {
         this.origMlDt = origMlDt;
     }
 

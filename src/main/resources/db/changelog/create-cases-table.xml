@@ -29,10 +29,10 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         <column name="subreason" type="int"/>
         <column name="disposition" type="char(1)"/>
         <column name="in_hour" type="int"/>
-        <column name="in_date" type="date"/>
-        <column name="next_date" type="date"/>
-        <column name="out_date" type="date"/>
-        <column name="auto_date" type="date"/>
+        <column name="in_date" type="DATETIME"/>
+        <column name="next_date" type="DATETIME"/>
+        <column name="out_date" type="DATETIME"/>
+        <column name="auto_date" type="DATETIME"/>
         <column name="num_cards" type="int"/>
         <column name="final_action_cards_nr" type="int"/>
         <column name="delivery_id" type="int"/>
@@ -43,7 +43,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         <column name="Contact_Ph_nr" type="char(18)"/>
         <column name="Return_Reason_cd" type="char(2)"/>
         <column name="Issuance_cd" type="char(1)"/>
-        <column name="issuance_dt" type="date"/>
+        <column name="issuance_dt" type="DATETIME"/>
         <column name="workstation_name_tx" type="char(18)"/>
         <column name="Operator_CD" type="char(2)"/>
         <column name="Barcode_Type_CD" type="char(1)"/>
@@ -56,7 +56,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         <column name="AS400_client_id" type="char(4)"/>
         <column name="AS400_system_id" type="char(8)"/>
         <column name="bsc_spplmntl_id" type="char(1)"/>
-        <column name="orig_ml_dt" type="date"/>
+        <column name="orig_ml_dt" type="DATETIME"/>
         <column name="msg_id" type="char(40)"/>
         <column name="ml_mthd" type="char(30)"/>
         <column name="source_file" type="char(16)"/>

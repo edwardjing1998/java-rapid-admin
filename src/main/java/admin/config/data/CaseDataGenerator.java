@@ -9,7 +9,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,19 +67,19 @@ public class CaseDataGenerator {
                 char[] statuses = {'A', 'X', 'D', 'Z'};
                 c.setStatus(statuses[random.nextInt(statuses.length)]);
                 c.setNumCards(random.nextInt(5) + 1);
-                c.setNextDate(LocalDate.now().plusDays(i));
+                c.setNextDate(LocalDateTime.now().plusDays(i));
                 char[] reasons = {'0', '1', '2', '3', '4', '5'};
                 c.setReason(reasons[random.nextInt(reasons.length)]);
                 c.setDisposition(disposition);
-                c.setInDate(LocalDate.now());
+                c.setInDate(LocalDateTime.now());
                 c.setDeliveryId(i);
                 c.setSysPrin(sysPrinCode);
-                c.setOutDate(LocalDate.now().plusDays(5));
+                c.setOutDate(LocalDateTime.now().plusDays(5));
                 char[] cycles = {'C', '0'};
                 c.setCycle(cycles[random.nextInt(cycles.length)]);
                 c.setActive(random.nextBoolean());
                 c.setInHour(1);
-                c.setAutoDate(LocalDate.now().plusDays(2));
+                c.setAutoDate(LocalDateTime.now().plusDays(2));
                 c.setSubreason(i);
                 allCases.add(c);
             }
