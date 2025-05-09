@@ -1,6 +1,7 @@
 package admin.controller;
 
 import admin.dto.ClientDTO;
+import admin.dto.ClientSearchDTO;
 import admin.model.Client;
 import admin.service.ClientService;
 import org.springframework.data.domain.PageRequest;
@@ -38,5 +39,10 @@ public class ClientController {
     @PostMapping("/client/save")
     public Client createClient(@RequestBody Client client) {
         return clientService.saveClient(client);
+    }
+
+    @GetMapping("/client-search")
+    public List<ClientSearchDTO> getSimpleClients() {
+        return clientService.getClientSearch();
     }
 }

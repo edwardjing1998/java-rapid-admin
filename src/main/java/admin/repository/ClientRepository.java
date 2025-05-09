@@ -20,5 +20,9 @@ public interface ClientRepository extends JpaRepository<Client, String> {
 
     @Query("SELECT c FROM Client c WHERE c.client IS NOT NULL AND c.client <> ''")
     List<Client> getAllClients();
+
+    // ✅ Native SQL query: select * from CLIENTS
+    @Query(value = "SELECT CLIENT, NAME FROM CLIENTS", nativeQuery = true)
+    List<Object[]> findAllClientNamesNative();
 }
 

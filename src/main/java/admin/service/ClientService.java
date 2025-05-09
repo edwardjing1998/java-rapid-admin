@@ -169,4 +169,16 @@ public class ClientService {
         logger.info("Saving new client: {}", client.getClient());
         return clientRepository.save(client);
     }
+
+    public List<ClientSearchDTO> getClientSearch() {
+        logger.info("Fetching All clients in getClientSearch...");
+        List<Object[]> rawResults = clientRepository.findAllClientNamesNative();
+        logger.info("All clients {} in getClientSearch...", rawResults.size());
+        return rawResults.stream()
+                .map(row -> new ClientSearchDTO(
+                        (String) row[0],
+                        (String) row[1]
+                ))
+                .collect(Collectors.toList());
+    }
 }
