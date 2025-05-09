@@ -1,5 +1,6 @@
 package admin.repository;
 
+import admin.dto.ClientSearchDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,9 @@ public interface ClientRepository extends JpaRepository<Client, String> {
     // ✅ Native SQL query: select * from CLIENTS
     @Query(value = "SELECT CLIENT, NAME FROM CLIENTS", nativeQuery = true)
     List<Object[]> findAllClientNamesNative();
+
+    @Query("SELECT new admin.dto.ClientSearchDTO(c.client, c.name) FROM Client c")
+    List<ClientSearchDTO> findForSearch();
+
 }
 

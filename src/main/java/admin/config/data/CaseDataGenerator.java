@@ -81,6 +81,8 @@ public class CaseDataGenerator {
                 c.setInHour(1);
                 c.setAutoDate(LocalDateTime.now().plusDays(2));
                 c.setSubreason(i);
+                c.setHmPhone("416-hm-" + i);
+                c.setWkPhone("416-wk-" + i);
                 allCases.add(c);
             }
         }
