@@ -20,6 +20,7 @@
     <include file="db/changelog/create-productivity-work-table.xml"/>
     <include file="db/changelog/create-users-table.xml"/>
     <include file="db/changelog/create-c3-transfer-parameters.xml"/>
+    <include file="db/changelog/create-account-transaction-table.xml"/>
 </databaseChangeLog>
 
 

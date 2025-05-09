@@ -2,194 +2,624 @@ package admin.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-
 @Entity
 @Table(name = "CASES")
 public class Case {
 
     @Id
-    @Column(name = "case_number")
+    @Column(name = "case_number", length = 12, nullable = false)
     private String caseNumber;
 
+    @Column(name = "pi_id", length = 16)
+    private String piId;
+
+    @Column(name = "customer_id", length = 24)
+    private String customerId;
+
+    @Column(name = "primary_pi_id", length = 16)
+    private String primaryPiId;
+
+    @Column(name = "account", length = 16)
     private String account;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 20)
     private String lastName;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 16)
     private String firstName;
 
-    private String addr1;
-    private String addr2;
-    private String city;
-    private String state;
-    private String zip;
+    @Column(name = "hm_phone", length = 14)
+    private String hmPhone;
 
-    @Column(name = "hm_phone")
-    private String homePhone;
+    @Column(name = "wk_phone", length = 14)
+    private String wkPhone;
 
-    @Column(name = "wk_phone")
-    private String workPhone;
+    @Column(name = "entity_cd", length = 1)
+    private String entityCd;
 
-    private String status;
+    @Column(name = "role_cd", length = 2)
+    private String roleCd;
 
-    @Column(name = "num_cards")
-    private Integer numCards;
+    @Column(name = "pi_status", length = 1)
+    private String piStatus;
 
-    @Column(name = "next_date")
-    private LocalDate nextDate;
+    @Column(name = "status", length = 1)
+    private Character status;
 
-    @Column(name = "no_renewal")
-    private Boolean noRenewal;
+    @Column(name = "active", nullable = false)
+    private Boolean active;
 
-    private String reason;
-    private String disposition;
+    @Column(name = "reason", length = 1)
+    private Character reason;
+
+    @Column(name = "subreason")
+    private Integer subreason;
+
+    @Column(name = "disposition", length = 1)
+    private Character disposition;
+
+    @Column(name = "in_hour")
+    private Integer inHour;
 
     @Column(name = "in_date")
     private LocalDate inDate;
 
-    @Column(name = "delivery_id")
-    private String deliveryId;
-
-    @Column(name = "sys_prin")
-    private String sysPrin;
+    @Column(name = "next_date")
+    private LocalDate nextDate;
 
     @Column(name = "out_date")
     private LocalDate outDate;
 
-    private String cycle;
-    private Boolean active;
-
-    @Column(name = "in_hour")
-    private LocalTime inHour;
-
     @Column(name = "auto_date")
     private LocalDate autoDate;
 
-    private String subreason;
+    @Column(name = "num_cards")
+    private Integer numCards;
 
-    @Column(name = "prod_type")
-    private String prodType;
+    @Column(name = "final_action_cards_nr")
+    private Integer finalActionCardsNr;
 
-    public Case() {}
+    @Column(name = "delivery_id")
+    private Integer deliveryId;
 
-    public Case(String caseNumber, String account, String lastName, String firstName,
-                String addr1, String addr2, String city, String state, String zip,
-                String homePhone, String workPhone, String status, Integer numCards,
-                LocalDate nextDate, Boolean noRenewal, String reason, String disposition,
-                LocalDate inDate, String deliveryId, String sysPrin, LocalDate outDate,
-                String cycle, Boolean active, LocalTime inHour, LocalDate autoDate,
-                String subreason, String prodType) {
-        this.caseNumber = caseNumber;
-        this.account = account;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.addr1 = addr1;
-        this.addr2 = addr2;
-        this.city = city;
-        this.state = state;
-        this.zip = zip;
-        this.homePhone = homePhone;
-        this.workPhone = workPhone;
-        this.status = status;
-        this.numCards = numCards;
-        this.nextDate = nextDate;
-        this.noRenewal = noRenewal;
-        this.reason = reason;
-        this.disposition = disposition;
-        this.inDate = inDate;
-        this.deliveryId = deliveryId;
-        this.sysPrin = sysPrin;
-        this.outDate = outDate;
-        this.cycle = cycle;
-        this.active = active;
-        this.inHour = inHour;
-        this.autoDate = autoDate;
-        this.subreason = subreason;
-        this.prodType = prodType;
+    @Column(name = "sys_prin", length = 8)
+    private String sysPrin;
+
+    @Column(name = "cycle", length = 1)
+    private Character cycle;
+
+    @Column(name = "Frst_Updt_Vend_id", length = 3)
+    private String frstUpdtVendId;
+
+    @Column(name = "Contact_cd", length = 1)
+    private String contactCd;
+
+    @Column(name = "Contact_Ph_nr", length = 18)
+    private String contactPhNr;
+
+    @Column(name = "Return_Reason_cd", length = 2)
+    private String returnReasonCd;
+
+    @Column(name = "Issuance_cd", length = 1)
+    private String issuanceCd;
+
+    @Column(name = "issuance_dt")
+    private LocalDate issuanceDt;
+
+    @Column(name = "workstation_name_tx", length = 18)
+    private String workstationNameTx;
+
+    @Column(name = "Operator_CD", length = 2)
+    private String operatorCd;
+
+    @Column(name = "Barcode_Type_CD", length = 1)
+    private String barcodeTypeCd;
+
+    @Column(name = "file_sent", length = 1)
+    private String fileSent;
+
+    @Column(name = "Postage_Billed", length = 1)
+    private String postageBilled;
+
+    @Column(name = "Issued_by_Amex")
+    private Boolean issuedByAmex;
+
+    @Column(name = "rec_typ_tx", length = 2)
+    private String recTypTx;
+
+    @Column(name = "srvc_typ_tx", length = 3)
+    private String srvcTypTx;
+
+    @Column(name = "mailer_id", length = 9)
+    private String mailerId;
+
+    @Column(name = "AS400_client_id", length = 4)
+    private String as400ClientId;
+
+    @Column(name = "AS400_system_id", length = 8)
+    private String as400SystemId;
+
+    @Column(name = "bsc_spplmntl_id", length = 1)
+    private String bscSpplmntlId;
+
+    @Column(name = "orig_ml_dt")
+    private LocalDate origMlDt;
+
+    @Column(name = "msg_id", length = 40)
+    private String msgId;
+
+    @Column(name = "ml_mthd", length = 30)
+    private String mlMthd;
+
+    @Column(name = "source_file", length = 16)
+    private String sourceFile;
+
+    @Column(name = "cust_id", length = 9)
+    private String custId;
+
+    @Column(name = "ms_issue_date", length = 5)
+    private String msIssueDate;
+
+    @Column(name = "cust_id2", length = 9)
+    private String custId2;
+
+    @Column(name = "mkt_cd", length = 2)
+    private String mktCd;
+
+    @Column(name = "account_tokenid", length = 16)
+    private String accountTokenid;
+
+    @Column(name = "pi_id_tokenid", length = 16)
+    private String piIdTokenid;
+
+    @Column(name = "primary_pi_id_tokenid", length = 16)
+    private String primaryPiIdTokenid;
+
+    public String getCaseNumber() {
+        return caseNumber;
     }
 
-    // Getters and Setters...
+    public void setCaseNumber(String caseNumber) {
+        this.caseNumber = caseNumber;
+    }
 
-    public String getCaseNumber() { return caseNumber; }
-    public void setCaseNumber(String caseNumber) { this.caseNumber = caseNumber; }
+    public String getPiId() {
+        return piId;
+    }
 
-    public String getAccount() { return account; }
-    public void setAccount(String account) { this.account = account; }
+    public void setPiId(String piId) {
+        this.piId = piId;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getCustomerId() {
+        return customerId;
+    }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
-    public String getAddr1() { return addr1; }
-    public void setAddr1(String addr1) { this.addr1 = addr1; }
+    public String getPrimaryPiId() {
+        return primaryPiId;
+    }
 
-    public String getAddr2() { return addr2; }
-    public void setAddr2(String addr2) { this.addr2 = addr2; }
+    public void setPrimaryPiId(String primaryPiId) {
+        this.primaryPiId = primaryPiId;
+    }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public String getAccount() {
+        return account;
+    }
 
-    public String getState() { return state; }
-    public void setState(String state) { this.state = state; }
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-    public String getZip() { return zip; }
-    public void setZip(String zip) { this.zip = zip; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getHomePhone() { return homePhone; }
-    public void setHomePhone(String homePhone) { this.homePhone = homePhone; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public String getWorkPhone() { return workPhone; }
-    public void setWorkPhone(String workPhone) { this.workPhone = workPhone; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public Integer getNumCards() { return numCards; }
-    public void setNumCards(Integer numCards) { this.numCards = numCards; }
+    public String getHmPhone() {
+        return hmPhone;
+    }
 
-    public LocalDate getNextDate() { return nextDate; }
-    public void setNextDate(LocalDate nextDate) { this.nextDate = nextDate; }
+    public void setHmPhone(String hmPhone) {
+        this.hmPhone = hmPhone;
+    }
 
-    public Boolean getNoRenewal() { return noRenewal; }
-    public void setNoRenewal(Boolean noRenewal) { this.noRenewal = noRenewal; }
+    public String getWkPhone() {
+        return wkPhone;
+    }
 
-    public String getReason() { return reason; }
-    public void setReason(String reason) { this.reason = reason; }
+    public void setWkPhone(String wkPhone) {
+        this.wkPhone = wkPhone;
+    }
 
-    public String getDisposition() { return disposition; }
-    public void setDisposition(String disposition) { this.disposition = disposition; }
+    public String getEntityCd() {
+        return entityCd;
+    }
 
-    public LocalDate getInDate() { return inDate; }
-    public void setInDate(LocalDate inDate) { this.inDate = inDate; }
+    public void setEntityCd(String entityCd) {
+        this.entityCd = entityCd;
+    }
 
-    public String getDeliveryId() { return deliveryId; }
-    public void setDeliveryId(String deliveryId) { this.deliveryId = deliveryId; }
+    public String getRoleCd() {
+        return roleCd;
+    }
 
-    public String getSysPrin() { return sysPrin; }
-    public void setSysPrin(String sysPrin) { this.sysPrin = sysPrin; }
+    public void setRoleCd(String roleCd) {
+        this.roleCd = roleCd;
+    }
 
-    public LocalDate getOutDate() { return outDate; }
-    public void setOutDate(LocalDate outDate) { this.outDate = outDate; }
+    public String getPiStatus() {
+        return piStatus;
+    }
 
-    public String getCycle() { return cycle; }
-    public void setCycle(String cycle) { this.cycle = cycle; }
+    public void setPiStatus(String piStatus) {
+        this.piStatus = piStatus;
+    }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public Character getStatus() {
+        return status;
+    }
 
-    public LocalTime getInHour() { return inHour; }
-    public void setInHour(LocalTime inHour) { this.inHour = inHour; }
+    public void setStatus(Character status) {
+        this.status = status;
+    }
 
-    public LocalDate getAutoDate() { return autoDate; }
-    public void setAutoDate(LocalDate autoDate) { this.autoDate = autoDate; }
+    public Boolean getActive() {
+        return active;
+    }
 
-    public String getSubreason() { return subreason; }
-    public void setSubreason(String subreason) { this.subreason = subreason; }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
-    public String getProdType() { return prodType; }
-    public void setProdType(String prodType) { this.prodType = prodType; }
+    public Character getReason() {
+        return reason;
+    }
+
+    public void setReason(Character reason) {
+        this.reason = reason;
+    }
+
+    public Integer getSubreason() {
+        return subreason;
+    }
+
+    public void setSubreason(Integer subreason) {
+        this.subreason = subreason;
+    }
+
+    public Character getDisposition() {
+        return disposition;
+    }
+
+    public void setDisposition(Character disposition) {
+        this.disposition = disposition;
+    }
+
+    public Integer getInHour() {
+        return inHour;
+    }
+
+    public void setInHour(Integer inHour) {
+        this.inHour = inHour;
+    }
+
+    public LocalDate getInDate() {
+        return inDate;
+    }
+
+    public void setInDate(LocalDate inDate) {
+        this.inDate = inDate;
+    }
+
+    public LocalDate getNextDate() {
+        return nextDate;
+    }
+
+    public void setNextDate(LocalDate nextDate) {
+        this.nextDate = nextDate;
+    }
+
+    public LocalDate getOutDate() {
+        return outDate;
+    }
+
+    public void setOutDate(LocalDate outDate) {
+        this.outDate = outDate;
+    }
+
+    public LocalDate getAutoDate() {
+        return autoDate;
+    }
+
+    public void setAutoDate(LocalDate autoDate) {
+        this.autoDate = autoDate;
+    }
+
+    public Integer getNumCards() {
+        return numCards;
+    }
+
+    public void setNumCards(Integer numCards) {
+        this.numCards = numCards;
+    }
+
+    public Integer getFinalActionCardsNr() {
+        return finalActionCardsNr;
+    }
+
+    public void setFinalActionCardsNr(Integer finalActionCardsNr) {
+        this.finalActionCardsNr = finalActionCardsNr;
+    }
+
+    public Integer getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(Integer deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public String getSysPrin() {
+        return sysPrin;
+    }
+
+    public void setSysPrin(String sysPrin) {
+        this.sysPrin = sysPrin;
+    }
+
+    public Character getCycle() {
+        return cycle;
+    }
+
+    public void setCycle(Character cycle) {
+        this.cycle = cycle;
+    }
+
+    public String getFrstUpdtVendId() {
+        return frstUpdtVendId;
+    }
+
+    public void setFrstUpdtVendId(String frstUpdtVendId) {
+        this.frstUpdtVendId = frstUpdtVendId;
+    }
+
+    public String getContactCd() {
+        return contactCd;
+    }
+
+    public void setContactCd(String contactCd) {
+        this.contactCd = contactCd;
+    }
+
+    public String getContactPhNr() {
+        return contactPhNr;
+    }
+
+    public void setContactPhNr(String contactPhNr) {
+        this.contactPhNr = contactPhNr;
+    }
+
+    public String getReturnReasonCd() {
+        return returnReasonCd;
+    }
+
+    public void setReturnReasonCd(String returnReasonCd) {
+        this.returnReasonCd = returnReasonCd;
+    }
+
+    public String getIssuanceCd() {
+        return issuanceCd;
+    }
+
+    public void setIssuanceCd(String issuanceCd) {
+        this.issuanceCd = issuanceCd;
+    }
+
+    public LocalDate getIssuanceDt() {
+        return issuanceDt;
+    }
+
+    public void setIssuanceDt(LocalDate issuanceDt) {
+        this.issuanceDt = issuanceDt;
+    }
+
+    public String getWorkstationNameTx() {
+        return workstationNameTx;
+    }
+
+    public void setWorkstationNameTx(String workstationNameTx) {
+        this.workstationNameTx = workstationNameTx;
+    }
+
+    public String getOperatorCd() {
+        return operatorCd;
+    }
+
+    public void setOperatorCd(String operatorCd) {
+        this.operatorCd = operatorCd;
+    }
+
+    public String getBarcodeTypeCd() {
+        return barcodeTypeCd;
+    }
+
+    public void setBarcodeTypeCd(String barcodeTypeCd) {
+        this.barcodeTypeCd = barcodeTypeCd;
+    }
+
+    public String getFileSent() {
+        return fileSent;
+    }
+
+    public void setFileSent(String fileSent) {
+        this.fileSent = fileSent;
+    }
+
+    public String getPostageBilled() {
+        return postageBilled;
+    }
+
+    public void setPostageBilled(String postageBilled) {
+        this.postageBilled = postageBilled;
+    }
+
+    public Boolean getIssuedByAmex() {
+        return issuedByAmex;
+    }
+
+    public void setIssuedByAmex(Boolean issuedByAmex) {
+        this.issuedByAmex = issuedByAmex;
+    }
+
+    public String getRecTypTx() {
+        return recTypTx;
+    }
+
+    public void setRecTypTx(String recTypTx) {
+        this.recTypTx = recTypTx;
+    }
+
+    public String getSrvcTypTx() {
+        return srvcTypTx;
+    }
+
+    public void setSrvcTypTx(String srvcTypTx) {
+        this.srvcTypTx = srvcTypTx;
+    }
+
+    public String getMailerId() {
+        return mailerId;
+    }
+
+    public void setMailerId(String mailerId) {
+        this.mailerId = mailerId;
+    }
+
+    public String getAs400ClientId() {
+        return as400ClientId;
+    }
+
+    public void setAs400ClientId(String as400ClientId) {
+        this.as400ClientId = as400ClientId;
+    }
+
+    public String getAs400SystemId() {
+        return as400SystemId;
+    }
+
+    public void setAs400SystemId(String as400SystemId) {
+        this.as400SystemId = as400SystemId;
+    }
+
+    public String getBscSpplmntlId() {
+        return bscSpplmntlId;
+    }
+
+    public void setBscSpplmntlId(String bscSpplmntlId) {
+        this.bscSpplmntlId = bscSpplmntlId;
+    }
+
+    public LocalDate getOrigMlDt() {
+        return origMlDt;
+    }
+
+    public void setOrigMlDt(LocalDate origMlDt) {
+        this.origMlDt = origMlDt;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
+
+    public String getMlMthd() {
+        return mlMthd;
+    }
+
+    public void setMlMthd(String mlMthd) {
+        this.mlMthd = mlMthd;
+    }
+
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public void setSourceFile(String sourceFile) {
+        this.sourceFile = sourceFile;
+    }
+
+    public String getCustId() {
+        return custId;
+    }
+
+    public void setCustId(String custId) {
+        this.custId = custId;
+    }
+
+    public String getMsIssueDate() {
+        return msIssueDate;
+    }
+
+    public void setMsIssueDate(String msIssueDate) {
+        this.msIssueDate = msIssueDate;
+    }
+
+    public String getCustId2() {
+        return custId2;
+    }
+
+    public void setCustId2(String custId2) {
+        this.custId2 = custId2;
+    }
+
+    public String getMktCd() {
+        return mktCd;
+    }
+
+    public void setMktCd(String mktCd) {
+        this.mktCd = mktCd;
+    }
+
+    public String getAccountTokenid() {
+        return accountTokenid;
+    }
+
+    public void setAccountTokenid(String accountTokenid) {
+        this.accountTokenid = accountTokenid;
+    }
+
+    public String getPiIdTokenid() {
+        return piIdTokenid;
+    }
+
+    public void setPiIdTokenid(String piIdTokenid) {
+        this.piIdTokenid = piIdTokenid;
+    }
+
+    public String getPrimaryPiIdTokenid() {
+        return primaryPiIdTokenid;
+    }
+
+    public void setPrimaryPiIdTokenid(String primaryPiIdTokenid) {
+        this.primaryPiIdTokenid = primaryPiIdTokenid;
+    }
 }

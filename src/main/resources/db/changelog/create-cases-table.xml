@@ -1,40 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.7.xsd">
+xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="create-cases-table" author="yourname">
-        <createTable tableName="CASES">
-            <column name="case_number" type="VARCHAR(50)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="account" type="VARCHAR(50)"/>
-            <column name="last_name" type="VARCHAR(100)"/>
-            <column name="first_name" type="VARCHAR(100)"/>
-            <column name="addr1" type="VARCHAR(255)"/>
-            <column name="addr2" type="VARCHAR(255)"/>
-            <column name="city" type="VARCHAR(100)"/>
-            <column name="state" type="VARCHAR(50)"/>
-            <column name="zip" type="VARCHAR(20)"/>
-            <column name="hm_phone" type="VARCHAR(30)"/>
-            <column name="wk_phone" type="VARCHAR(30)"/>
-            <column name="status" type="VARCHAR(50)"/>
-            <column name="num_cards" type="INT"/>
-            <column name="next_date" type="DATE"/>
-            <column name="no_renewal" type="BOOLEAN"/>
-            <column name="reason" type="VARCHAR(255)"/>
-            <column name="disposition" type="VARCHAR(255)"/>
-            <column name="in_date" type="DATE"/>
-            <column name="delivery_id" type="VARCHAR(100)"/>
-            <column name="sys_prin" type="VARCHAR(255)"/>
-            <column name="out_date" type="DATE"/>
-            <column name="cycle" type="VARCHAR(50)"/>
-            <column name="active" type="BOOLEAN"/>
-            <column name="in_hour" type="TIME"/>
-            <column name="auto_date" type="DATE"/>
-            <column name="subreason" type="VARCHAR(255)"/>
-            <column name="prod_type" type="VARCHAR(50)"/>
-        </createTable>
-    </changeSet>
+<changeSet id="create-cases-table" author="edward">
+    <createTable tableName="CASES">
+        <column name="case_number" type="char(12)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="pi_id" type="char(16)"/>
+        <column name="customer_id" type="char(24)"/>
+        <column name="primary_pi_id" type="char(16)"/>
+        <column name="account" type="char(16)"/>
+        <column name="last_name" type="char(20)"/>
+        <column name="first_name" type="char(16)"/>
+        <column name="hm_phone" type="char(14)"/>
+        <column name="wk_phone" type="char(14)"/>
+        <column name="entity_cd" type="char(1)"/>
+        <column name="role_cd" type="char(2)"/>
+        <column name="pi_status" type="char(1)"/>
+        <column name="status" type="char(1)"/>
+        <column name="active" type="bit">
+            <constraints nullable="false"/>
+        </column>
+        <column name="reason" type="char(1)"/>
+        <column name="subreason" type="int"/>
+        <column name="disposition" type="char(1)"/>
+        <column name="in_hour" type="int"/>
+        <column name="in_date" type="date"/>
+        <column name="next_date" type="date"/>
+        <column name="out_date" type="date"/>
+        <column name="auto_date" type="date"/>
+        <column name="num_cards" type="int"/>
+        <column name="final_action_cards_nr" type="int"/>
+        <column name="delivery_id" type="int"/>
+        <column name="sys_prin" type="char(8)"/>
+        <column name="cycle" type="char(1)"/>
+        <column name="Frst_Updt_Vend_id" type="char(3)"/>
+        <column name="Contact_cd" type="char(1)"/>
+        <column name="Contact_Ph_nr" type="char(18)"/>
+        <column name="Return_Reason_cd" type="char(2)"/>
+        <column name="Issuance_cd" type="char(1)"/>
+        <column name="issuance_dt" type="date"/>
+        <column name="workstation_name_tx" type="char(18)"/>
+        <column name="Operator_CD" type="char(2)"/>
+        <column name="Barcode_Type_CD" type="char(1)"/>
+        <column name="file_sent" type="char(1)"/>
+        <column name="Postage_Billed" type="char(1)"/>
+        <column name="Issued_by_Amex" type="bit"/>
+        <column name="rec_typ_tx" type="char(2)"/>
+        <column name="srvc_typ_tx" type="char(3)"/>
+        <column name="mailer_id" type="char(9)"/>
+        <column name="AS400_client_id" type="char(4)"/>
+        <column name="AS400_system_id" type="char(8)"/>
+        <column name="bsc_spplmntl_id" type="char(1)"/>
+        <column name="orig_ml_dt" type="date"/>
+        <column name="msg_id" type="char(40)"/>
+        <column name="ml_mthd" type="char(30)"/>
+        <column name="source_file" type="char(16)"/>
+        <column name="cust_id" type="char(9)"/>
+        <column name="ms_issue_date" type="char(5)"/>
+        <column name="cust_id2" type="char(9)"/>
+        <column name="mkt_cd" type="char(2)"/>
+        <column name="account_tokenid" type="char(16)"/>
+        <column name="pi_id_tokenid" type="char(16)"/>
+        <column name="primary_pi_id_tokenid" type="char(16)"/>
+    </createTable>
+</changeSet>
+
 </databaseChangeLog>
+

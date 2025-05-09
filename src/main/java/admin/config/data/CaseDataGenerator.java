@@ -23,7 +23,7 @@ public class CaseDataGenerator {
     private final ClientRepository clientRepository;
     private final Random random = new Random();
 
-    private final String[] dispositions = {"R", "H", "D", "B", "S"};
+    private final Character[] dispositions = {'R', 'H', 'D', 'B', 'S'};
 
     public CaseDataGenerator(CaseRepository caseRepository, ClientRepository clientRepository) {
         this.caseRepository = caseRepository;
@@ -53,44 +53,34 @@ public class CaseDataGenerator {
 
             for (int i = 1; i <= 10; i++) {
                 int dispositionIndex = i % dispositions.length;
-                String disposition = dispositions[dispositionIndex];
+                Character disposition = dispositions[dispositionIndex];
 
                 SysPrin sysPrin = sysPrins.get(dispositionIndex % sysPrins.size());
                 String sysPrinCode = sysPrin.getId().getSysPrin();
 
                 Case c = new Case();
-                c.setCaseNumber(client.getClient() + "-" + disposition + "-CASE-" + i);
+                c.setCaseNumber(client.getClient() + disposition + "C" + i);
                 c.setAccount("ACC" + random.nextInt(10000));
                 c.setLastName("Doe" + i);
                 c.setFirstName("John" + i);
 
-                c.setAddr2("Suite " + i);
-
-                int addrIndex = (i + dispositionIndex) % sampleAddresses.length;
-                String[] addrData = sampleAddresses[addrIndex];
-                c.setAddr1(addrData[0]);
-                c.setCity(addrData[1]);
-                c.setState(addrData[2]);
-
-                c.setZip(String.format("%05d", 10000 + random.nextInt(89999)));
-                c.setHomePhone("555-100" + i);
-                c.setWorkPhone("555-200" + i);
-                c.setStatus("Active");
+                char[] statuses = {'A', 'X', 'D', 'Z'};
+                c.setStatus(statuses[random.nextInt(statuses.length)]);
                 c.setNumCards(random.nextInt(5) + 1);
                 c.setNextDate(LocalDate.now().plusDays(i));
-                c.setNoRenewal(i % 2 == 0);
-                c.setReason("Reason" + i);
+                char[] reasons = {'0', '1', '2', '3', '4', '5'};
+                c.setReason(reasons[random.nextInt(reasons.length)]);
                 c.setDisposition(disposition);
                 c.setInDate(LocalDate.now());
-                c.setDeliveryId("DLY" + i);
+                c.setDeliveryId(i);
                 c.setSysPrin(sysPrinCode);
                 c.setOutDate(LocalDate.now().plusDays(5));
-                c.setCycle("Cycle" + (i % 4));
-                c.setActive(true);
-                c.setInHour(LocalTime.now());
+                char[] cycles = {'C', '0'};
+                c.setCycle(cycles[random.nextInt(cycles.length)]);
+                c.setActive(random.nextBoolean());
+                c.setInHour(1);
                 c.setAutoDate(LocalDate.now().plusDays(2));
-                c.setSubreason("Subreason" + i);
-                c.setProdType("Type" + (i % 2));
+                c.setSubreason(i);
                 allCases.add(c);
             }
         }
