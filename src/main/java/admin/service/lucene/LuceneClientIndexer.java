@@ -56,7 +56,13 @@ public class LuceneClientIndexer {
 
         try (DirectoryReader reader = DirectoryReader.open(memoryIndex)) {
             IndexSearcher searcher = new IndexSearcher(reader);
-            TopDocs topDocs = searcher.search(query, 100);
+
+            TotalHitCountCollector countCollector = new TotalHitCountCollector();
+            searcher.search(query, countCollector);
+            int totalHits = countCollector.getTotalHits();
+
+            TopDocs topDocs = searcher.search(query, totalHits); // fetch all matches
+
 
             for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
                 Document doc = searcher.doc(scoreDoc.doc);
