@@ -56,7 +56,6 @@ public class C3FileTransferDataGenerator {
                 t.setControlFileNm("control_" + i + ".ctl");
                 t.setGatewayAccessCd("GATEWAY_" + i);
                 t.setBinFileCRLFind((byte) (1000 % 2));
-                t.setLocateFileNm("locate_file.txt " + i);
                 transfers.add(t);
             }
         }

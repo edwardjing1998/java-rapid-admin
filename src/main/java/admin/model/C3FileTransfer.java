@@ -76,8 +76,6 @@ public class C3FileTransfer {
     @Column(name = "bin_file_CRLF_ind")
     private Byte binFileCRLFind;
 
-    @Column(name = "locate_file_nm")
-    private String locateFileNm;
     @OneToOne
     @JoinColumn(name = "file_trns_id", referencedColumnName = "report_id")
     private AdminQueryList adminQueryList;
@@ -277,14 +275,6 @@ public class C3FileTransfer {
         return binFileCRLFind;
     }
 
-    public String getLocateFileNm() {
-        return locateFileNm;
-    }
-
-    public void setLocateFileNm(String locateFileNm) {
-        this.locateFileNm = locateFileNm;
-    }
-
     @Override
     public String toString() {
         return "C3FileTransfer{" +
@@ -311,7 +301,6 @@ public class C3FileTransfer {
                 ", controlFileNm='" + controlFileNm + '\'' +
                 ", gatewayAccessCd='" + gatewayAccessCd + '\'' +
                 ", binFileCRLFind=" + binFileCRLFind +
-                ", locateFileNm='" + locateFileNm + '\'' +
                 ", adminQueryList=" + (adminQueryList != null ? adminQueryList.getReportId() : "null") +
                 '}';
     }

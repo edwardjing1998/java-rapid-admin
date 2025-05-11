@@ -64,9 +64,6 @@
             <column name="remote_file_nm" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="locate_file_nm" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
             <column name="control_file_nm" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>

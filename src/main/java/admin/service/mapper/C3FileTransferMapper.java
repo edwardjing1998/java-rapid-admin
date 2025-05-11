@@ -72,7 +72,6 @@ public class C3FileTransferMapper {
         entity.setGatewayAccessCd(dto.getGatewayAccessCd());
         entity.setBinFileCRLFind(dto.getBinFileCRLFInf());
         entity.setAdminQueryList(dto.getAdminQueryList());
-        entity.setLocateFileNm(dto.getLocalFileNm());
         return entity;
     }
 }
