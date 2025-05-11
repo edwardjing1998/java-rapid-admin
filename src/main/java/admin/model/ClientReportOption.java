@@ -1,5 +1,6 @@
 package admin.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Where;
 
@@ -35,6 +36,7 @@ public class ClientReportOption {
     @ManyToOne
     @JoinColumn(name = "REPORT_ID", referencedColumnName = "REPORT_ID", insertable = false, updatable = false)
     @Where(clause = "REPORT_BY_CLIENT_FLAG = 1")
+    @JsonBackReference
     private AdminQueryList report;
 
     public ClientReportOption() {}

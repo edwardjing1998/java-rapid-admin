@@ -1,7 +1,11 @@
 package admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ADMIN_QUERY_LIST")
@@ -9,6 +13,7 @@ public class AdminQueryList {
 
     @Id
     @Column(name = "report_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer reportId;
 
     @Column(name = "query_name", nullable = false, length = 50)
@@ -40,9 +45,6 @@ public class AdminQueryList {
 
     @Column(name = "report_db_userid", nullable = false, length = 50)
     private String reportDbUserid;
-
-    @OneToOne(mappedBy = "adminQueryList", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    private C3FileTransfer c3FileTransferParam;
 
     @Column(name = "report_db_passwrd", nullable = false, length = 100)
     private String reportDbPasswrd;
@@ -95,16 +97,37 @@ public class AdminQueryList {
     @Column(name = "num_sheets")
     private Integer numSheets;
 
+    @OneToOne(mappedBy = "adminQueryList", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JsonIgnore
+    private C3FileTransfer c3FileTransfer;
+
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ClientReportOption> clientReportOptions = new ArrayList<>();
+
     public AdminQueryList() {
+
+    }
+
+    public List<ClientReportOption>  getClientReportOptions() {
+        return clientReportOptions;
+    }
+
+    public void setClientReportOptions(List<ClientReportOption> clientReportOptions) {
+        this.clientReportOptions = clientReportOptions;
     }
 
     // ------ Getter and Setter Methods ------
-    public Integer getReportId() {
-        return reportId;
+    public C3FileTransfer getC3FileTransfer() {
+        return c3FileTransfer;
     }
 
-    public void setReportId(Integer reportId) {
-        this.reportId = reportId;
+    public void setC3FileTransfer(C3FileTransfer c3FileTransfer) {
+        this.c3FileTransfer = c3FileTransfer;
+    }
+
+    public Integer getReportId() {
+        return reportId;
     }
 
     public String getQueryName() {
@@ -321,5 +344,39 @@ public class AdminQueryList {
 
     public void setNumSheets(Integer numSheets) {
         this.numSheets = numSheets;
+    }
+
+    @Override
+    public String toString() {
+        return "AdminQueryList{" +
+                "reportId=" + reportId +
+                ", queryName='" + queryName + '\'' +
+                ", query='" + query + '\'' +
+                ", inputDataFields='" + inputDataFields + '\'' +
+                ", fileExt='" + fileExt + '\'' +
+                ", dbDriverType='" + dbDriverType + '\'' +
+                ", fileHeaderInd=" + fileHeaderInd +
+                ", defaultFileNm='" + defaultFileNm + '\'' +
+                ", reportDbServer='" + reportDbServer + '\'' +
+                ", reportDb='" + reportDb + '\'' +
+                ", reportDbUserid='" + reportDbUserid + '\'' +
+                ", reportDbPasswrd='[PROTECTED]'" + // mask password
+                ", fileTransferType=" + fileTransferType +
+                ", reportDbIpAndPort='" + reportDbIpAndPort + '\'' +
+                ", reportByClientFlag=" + reportByClientFlag +
+                ", rerunDateRangeStart=" + rerunDateRangeStart +
+                ", rerunDateRangeEnd=" + rerunDateRangeEnd +
+                ", rerunClientId='" + rerunClientId + '\'' +
+                ", emailFromAddress='" + emailFromAddress + '\'' +
+                ", emailEventId='" + emailEventId + '\'' +
+                ", tabDelimitedFlag=" + tabDelimitedFlag +
+                ", inputFileTx='" + inputFileTx + '\'' +
+                ", inputFileKeyStartPos=" + inputFileKeyStartPos +
+                ", inputFileKeyLength=" + inputFileKeyLength +
+                ", accessLevel=" + accessLevel +
+                ", isActive=" + isActive +
+                ", isVisible=" + isVisible +
+                ", numSheets=" + numSheets +
+                '}';
     }
 }

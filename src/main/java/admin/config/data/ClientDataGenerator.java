@@ -63,21 +63,22 @@ public class ClientDataGenerator {
     public void generateClients() {
         List<AdminQueryList> reports = new ArrayList<>();
         for (int j = 1; j <= 10; j++) {
-            AdminQueryList report = new AdminQueryList();
-            report.setReportId(j);
-            report.setDefaultFileNm("Report " + j);
-            report.setReportByClientFlag(random.nextBoolean());
-            report.setDbDriverType("SQL Server");
-            report.setQueryName(queryNames[random.nextInt(queryNames.length)]);
-            report.setInputDataFields("Field1, Field2");
-            report.setFileExt(random.nextBoolean() ? "TXT" : "XLT");
-            report.setFileHeaderInd(1);
-            report.setReportDbServer("localhost");
-            report.setReportDb("demoDb");
-            report.setReportDbUserid("admin");
-            report.setReportDbPasswrd("adminpass");
-            report.setReportDbIpAndPort("127.0.0.1:1433");
-            reports.add(report);
+            if (!adminQueryListRepository.existsById(j)) {
+                AdminQueryList report = new AdminQueryList();
+                report.setDefaultFileNm("Report " + j);
+                report.setReportByClientFlag(random.nextBoolean());
+                report.setDbDriverType("SQL Server");
+                report.setQueryName(queryNames[random.nextInt(queryNames.length)]);
+                report.setInputDataFields("Field1, Field2");
+                report.setFileExt(random.nextBoolean() ? "TXT" : "XLT");
+                report.setFileHeaderInd(1);
+                report.setReportDbServer("localhost");
+                report.setReportDb("demoDb");
+                report.setReportDbUserid("admin");
+                report.setReportDbPasswrd("adminpass");
+                report.setReportDbIpAndPort("127.0.0.1:1433");
+                reports.add(report);
+            }
         }
 
         adminQueryListRepository.saveAll(reports);

@@ -40,11 +40,11 @@ public class C3FileTransfer {
     @Column(name = "org_type_cd", nullable = false, length = 100)
     private Integer OrgTypeCd;
 
-    @Column(name = "member_cd", nullable = false)
+    @Column(name = "member_cd" , nullable = false )
     private String memberCd;
 
     @Column(name = "record_lgth_nr", nullable = false)
-    private Integer recordLengthNr;
+    private Integer recordLgthNr;
 
     @Column(name = "block_size_nr", nullable = false)
     private Integer blockSizeNr;
@@ -77,15 +77,17 @@ public class C3FileTransfer {
     private Byte binFileCRLFind;
 
     @Column(name = "locate_file_nm")
-    private String localFileName;
-
+    private String locateFileNm;
     @OneToOne
     @JoinColumn(name = "file_trns_id", referencedColumnName = "report_id")
     private AdminQueryList adminQueryList;
 
+
+
     public void setAdminQueryList(AdminQueryList adminQueryList) {
         this.adminQueryList = adminQueryList;
     }
+
     public AdminQueryList getAdminQueryList() {
         return adminQueryList;
     }
@@ -93,6 +95,7 @@ public class C3FileTransfer {
     public void setFileTransId(Integer fileTransId) {
         this.fileTransId = fileTransId;
     }
+
     public Integer getFileTransId() {
         return fileTransId;
     }
@@ -185,11 +188,11 @@ public class C3FileTransfer {
     }
 
     public void setRecordLengthNr(Integer recordLengthNr) {
-        this.recordLengthNr = recordLengthNr;
+        this.recordLgthNr = recordLengthNr;
     }
 
     public Integer getRecordLengthNr() {
-        return recordLengthNr;
+        return recordLgthNr;
     }
 
     public void setBlockSizeNr(Integer blockSizeNr) {
@@ -265,20 +268,52 @@ public class C3FileTransfer {
         return gatewayAccessCd;
     }
 
-    public void setLocalFileName(String localFileName) {
-        this.localFileName = localFileName;
-    }
-
-    public String getLocalFileName() {
-        return localFileName;
-    }
-
-
     public void setBinFileCRLFind(Byte binFileCRLFind) {
         this.binFileCRLFind = binFileCRLFind;
     }
 
-    public Byte getBinFileCRLFind() {
+    public Byte getBinFileCRLFind()
+    {
         return binFileCRLFind;
     }
+
+    public String getLocateFileNm() {
+        return locateFileNm;
+    }
+
+    public void setLocateFileNm(String locateFileNm) {
+        this.locateFileNm = locateFileNm;
+    }
+
+    @Override
+    public String toString() {
+        return "C3FileTransfer{" +
+                "fileTransId=" + fileTransId +
+                ", sequenceNr=" + sequenceNr +
+                ", transferCd=" + transferCd +
+                ", protocolNm='" + protocolNm + '\'' +
+                ", transPrgNm='" + transPrgNm + '\'' +
+                ", modeNm='" + modeNm + '\'' +
+                ", securityNm='" + securityNm + '\'' +
+                ", ipPortCd='" + ipPortCd + '\'' +
+                ", listenerSrvNm='" + listenerSrvNm + '\'' +
+                ", ddNm='" + ddNm + '\'' +
+                ", OrgTypeCd=" + OrgTypeCd +
+                ", memberCd='" + memberCd + '\'' +
+                ", recordLgthNr=" + recordLgthNr +
+                ", blockSizeNr=" + blockSizeNr +
+                ", convertFileCd=" + convertFileCd +
+                ", xferFileNm='" + xferFileNm + '\'' +
+                ", jobNm='" + jobNm + '\'' +
+                ", programNm='" + programNm + '\'' +
+                ", remoteFileNm='" + remoteFileNm + '\'' +
+                ", localFileNm='" + localFileNm + '\'' +
+                ", controlFileNm='" + controlFileNm + '\'' +
+                ", gatewayAccessCd='" + gatewayAccessCd + '\'' +
+                ", binFileCRLFind=" + binFileCRLFind +
+                ", locateFileNm='" + locateFileNm + '\'' +
+                ", adminQueryList=" + (adminQueryList != null ? adminQueryList.getReportId() : "null") +
+                '}';
+    }
+
 }

@@ -21,6 +21,8 @@
     <include file="db/changelog/create-users-table.xml"/>
     <include file="db/changelog/create-c3-transfer-parameters.xml"/>
     <include file="db/changelog/create-account-transaction-table.xml"/>
+    <include file="db/changelog/create-file-load-dest-table.xml"/>
+    <include file="db/changelog/create-admin-query-data-def-table.xml"/>
 </databaseChangeLog>
 
 
