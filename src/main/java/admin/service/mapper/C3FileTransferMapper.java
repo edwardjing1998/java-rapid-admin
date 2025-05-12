@@ -2,7 +2,6 @@ package admin.service.mapper;
 
 import admin.dto.C3FileTransferDTO;
 import admin.model.C3FileTransfer;
-import admin.service.ClientService;
 import org.springframework.stereotype.Component;
 
 import org.slf4j.Logger;

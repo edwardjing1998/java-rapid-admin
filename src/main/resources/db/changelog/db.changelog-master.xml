@@ -23,6 +23,7 @@
     <include file="db/changelog/create-account-transaction-table.xml"/>
     <include file="db/changelog/create-file-load-dest-table.xml"/>
     <include file="db/changelog/create-admin-query-data-def-table.xml"/>
+    <include file="db/changelog/create-addresses-table.xml"/>
 </databaseChangeLog>
 
 

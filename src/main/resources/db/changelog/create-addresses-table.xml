@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+       http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-addresses-table" author="your_name">
+        <createTable tableName="addresses">
+            <column name="case_number_id" type="CHAR(12)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="address_entity_cd" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alternate_name_tx" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="addr1_tx" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="addr2_tx" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="city_tx" type="VARCHAR(25)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="state_tx" type="CHAR(2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="zip_cd" type="CHAR(10)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="Delivery_Point_CD" type="CHAR(2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="addr3_tx" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="addr4_tx" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
