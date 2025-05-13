@@ -1,6 +1,7 @@
 package admin.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class CaseDTO {
     private String caseNumber;
@@ -61,6 +62,9 @@ public class CaseDTO {
     private String primaryPiIdTokenid;
 
     private String client;
+
+    private List<AccountTransactionDTO> accountTransactions;
+
 
 
     public String getClient() {
@@ -130,6 +134,7 @@ public class CaseDTO {
         this.piIdTokenid = builder.piIdTokenid;
         this.primaryPiIdTokenid = builder.primaryPiIdTokenid;
         this.client = builder.client;
+        this.accountTransactions = builder.accountTransactions; // ✅ add this line
     }
 
     public static class Builder {
@@ -191,6 +196,7 @@ public class CaseDTO {
         private String primaryPiIdTokenid;
 
         private String client;
+        private List<AccountTransactionDTO> accountTransactions;
 
         public Builder caseNumber(String caseNumber) { this.caseNumber = caseNumber; return this; }
         public Builder piId(String piId) { this.piId = piId; return this; }
@@ -251,7 +257,10 @@ public class CaseDTO {
 
         public Builder client(String client) { this.client = client; return this; }
 
-
+        public Builder accountTransactions(List<AccountTransactionDTO> accountTransactions) {
+            this.accountTransactions = accountTransactions;
+            return this;
+        }
 
         public CaseDTO build() {
             return new CaseDTO(this);
@@ -705,5 +714,13 @@ public class CaseDTO {
 
     public void setPrimaryPiIdTokenid(String primaryPiIdTokenid) {
         this.primaryPiIdTokenid = primaryPiIdTokenid;
+    }
+
+    public List<AccountTransactionDTO> getAccountTransactions() {
+        return accountTransactions;
+    }
+
+    public void setAccountTransactions(List<AccountTransactionDTO> accountTransactions) {
+        this.accountTransactions = accountTransactions;
     }
 }

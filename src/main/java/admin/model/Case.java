@@ -2,6 +2,9 @@ package admin.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "CASES")
 public class Case {
@@ -174,6 +177,9 @@ public class Case {
 
     @Column(name = "primary_pi_id_tokenid", length = 16)
     private String primaryPiIdTokenid;
+
+    @OneToMany(mappedBy = "caseEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AccountTransaction> accountTransactions = new ArrayList<>();
 
     public String getCaseNumber() {
         return caseNumber;
@@ -621,5 +627,13 @@ public class Case {
 
     public void setPrimaryPiIdTokenid(String primaryPiIdTokenid) {
         this.primaryPiIdTokenid = primaryPiIdTokenid;
+    }
+
+    public List<AccountTransaction> getAccountTransactions() {
+        return accountTransactions;
+    }
+
+    public void setAccountTransactions(List<AccountTransaction> accountTransactions) {
+        this.accountTransactions = accountTransactions;
     }
 }

@@ -16,7 +16,7 @@ public interface CaseRepository extends JpaRepository<Case, String> {
            c.case_number, c.account, c.last_name, c.first_name, c.hm_phone, c.wk_phone,
            c.status, c.num_cards, c.next_date, c.reason, c.disposition,
            c.in_date, c.delivery_id, c.sys_prin, c.out_date, c.cycle,
-           c.active, c.in_hour, c.auto_date, c.subreason
+           c.active, c.in_hour, c.auto_date, c.subreason, c.pi_id, c.account
     FROM CASES c
     JOIN SYS_PRINS s ON c.sys_prin = s.sys_prin
     WHERE c.disposition IN (:dispositions)

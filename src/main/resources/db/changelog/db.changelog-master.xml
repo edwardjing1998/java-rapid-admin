@@ -24,6 +24,8 @@
     <include file="db/changelog/create-file-load-dest-table.xml"/>
     <include file="db/changelog/create-admin-query-data-def-table.xml"/>
     <include file="db/changelog/create-addresses-table.xml"/>
+    <include file="db/changelog/create-failed-trans-work-table.xml"/>
+    <include file="db/changelog/create-failed-trans-table.xml"/>
 </databaseChangeLog>
 
 

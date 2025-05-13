@@ -50,6 +50,10 @@ public class AccountTransaction {
 
     @Column(name = "Member_Seq_ID", length = 5)
     private String memberSeqId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("caseNumber")
+    @JoinColumn(name = "case_number")
+    private Case caseEntity;
 
     // Getters and setters for all fields...
 
@@ -163,6 +167,14 @@ public class AccountTransaction {
 
     public void setMemberSeqId(String memberSeqId) {
         this.memberSeqId = memberSeqId;
+    }
+
+    public Case getCaseEntity() {
+        return caseEntity;
+    }
+
+    public void setCaseEntity(Case caseEntity) {
+        this.caseEntity = caseEntity;
     }
 }
 

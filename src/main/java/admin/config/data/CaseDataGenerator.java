@@ -69,6 +69,7 @@ public class CaseDataGenerator {
 
                 Case c = new Case();
                 c.setCaseNumber(client.getClient() + disposition + "C" + i);
+                c.setPiId("PI" + i);
                 c.setAccount("ACC" + random.nextInt(10000));
                 c.setLastName("Doe" + i);
                 c.setFirstName("John" + i);
@@ -117,9 +118,10 @@ public class CaseDataGenerator {
                 );
 
                 AccountTransaction tx = new AccountTransaction();
+                tx.setCaseEntity(c);
                 tx.setId(txId);
-                tx.setPiId("PI" + i);
-                tx.setAccount("ACC" + i);
+                tx.setPiId(c.getPiId());
+                tx.setAccount(c.getAccount());
                 tx.setActionId("ROA");
                 tx.setUid("UID" + i);
                 tx.setDocumentNo("DOC" + i);

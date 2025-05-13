@@ -1,10 +1,7 @@
 package admin.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import admin.dto.CaseDTO;
 import admin.service.CaseService;
 
@@ -34,5 +31,10 @@ public class CaseController {
     @GetMapping("/inventory-received")
     public ResponseEntity<Map<String, List<CaseDTO>>> inventoryReceived() {
         return ResponseEntity.ok(caseService.getCasesByDisposition(Arrays.asList("R", "H", "D", "B", "S")));
+    }
+
+    @GetMapping("/with-transactions/{caseNumber}")
+    public CaseDTO getCaseWithTransactions(@PathVariable String caseNumber) {
+        return caseService.getCaseWithTransactions(caseNumber);
     }
 }
