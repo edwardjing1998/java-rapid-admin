@@ -87,7 +87,7 @@ public class ClientDataGenerator {
 
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             String clientId = generateBase35Id(i);
             String billingSp = "B" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];

@@ -40,8 +40,8 @@ public class ClientService {
         logger.info("Fetching paginated clients with full details...");
         Page<Client> page = clientRepository.getClientsWithPaginations(pageable);
         List<Client> clients = page.getContent();
-
         logger.info("Total clients found: {}", clients.size());
+        logger.info("The first record {}", clients.get(0));
         return clients.stream().map(this::mapClientToDto).collect(Collectors.toList());
     }
 
@@ -52,6 +52,12 @@ public class ClientService {
         logger.info("Total clients found: {}", clients.size());
         return clients.stream().map(this::mapClientToDto).collect(Collectors.toList());
     }
+
+    public Optional<ClientDTO> getClientById(String clientId) {
+        return clientRepository.findById(clientId)
+                .map(this::mapClientToDto);
+    }
+
 
     private ClientDTO mapClientToDto(Client client) {
         logger.debug("Processing client: {}", client.getClient());
@@ -181,4 +187,11 @@ public class ClientService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    public List<ClientDTO> searchClientsByWildcard(String keyword) {
+        List<Client> clients = clientRepository.searchClientsByKeyword(keyword);
+        logger.info("the size of records {} in ClientService::searchClientsByWildcard", clients.size());
+        return clients.stream().map(this::mapClientToDto).collect(Collectors.toList());
+    }
+
 }

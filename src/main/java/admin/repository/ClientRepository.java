@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import admin.model.Client;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public interface ClientRepository extends JpaRepository<Client, String> {
 
     @Query("SELECT new admin.dto.ClientSearchDTO(c.client, c.name) FROM Client c")
     List<ClientSearchDTO> findForSearch();
+
+    @Query("SELECT c FROM Client c WHERE LOWER(c.client) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Client> searchClientsByKeyword(@Param("keyword") String keyword);
 
 }
 
