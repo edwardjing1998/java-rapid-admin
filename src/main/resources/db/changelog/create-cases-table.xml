@@ -36,7 +36,7 @@ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         <column name="num_cards" type="int"/>
         <column name="final_action_cards_nr" type="int"/>
         <column name="delivery_id" type="int"/>
-        <column name="sys_prin" type="char(8)"/>
+        <column name="sys_prin" type="char(12)"/>
         <column name="cycle" type="char(1)"/>
         <column name="Frst_Updt_Vend_id" type="char(3)"/>
         <column name="Contact_cd" type="char(1)"/>

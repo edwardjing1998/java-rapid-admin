@@ -10,7 +10,8 @@ import admin.repository.CaseRepository;
 import admin.repository.FailedTransRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
 @Component
 public class FailedTransDataGenerator {
 
+    private static final Logger logger = LoggerFactory.getLogger(FailedTransDataGenerator.class);
     private final FailedTransRepository failedTransRepository;
     private final AccountTransactionRepository accountTransactionRepository;
     private final CaseRepository caseRepository;
@@ -52,7 +54,7 @@ public class FailedTransDataGenerator {
         }
 
         failedTransRepository.saveAll(sampleData);
-        System.out.println("✅ Inserted sample FAILED_TRANS records.");
+        logger.info("✅ Inserted sample FAILED_TRANS records.");
 
         // (Leave your existing AccountTransaction/Case setup below unchanged)
         for (FailedTrans ft : sampleData) {
@@ -99,7 +101,7 @@ public class FailedTransDataGenerator {
             accountTransactionRepository.save(tx);
         }
 
-        System.out.println("✅ Inserted sample ACCOUNT_TRANS records.");
+        logger.info("✅ Inserted sample ACCOUNT_TRANS records.");
     }
 
 

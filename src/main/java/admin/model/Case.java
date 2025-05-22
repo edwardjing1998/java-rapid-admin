@@ -85,7 +85,7 @@ public class Case {
     @Column(name = "delivery_id")
     private Integer deliveryId;
 
-    @Column(name = "sys_prin", length = 8)
+    @Column(name = "sys_prin", length = 12)
     private String sysPrin;
 
     @Column(name = "cycle", length = 1)

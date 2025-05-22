@@ -9,7 +9,8 @@ import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.springframework.stereotype.Component;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Component
 public class LuceneClientIndexer {
-
+    private static final Logger logger = LoggerFactory.getLogger(LuceneClientIndexer.class);
     private final Directory memoryIndex = new RAMDirectory();
     private final StandardAnalyzer analyzer = new StandardAnalyzer();
     private boolean indexInitialized = false; // 👈 flag to ensure search only works after indexing
@@ -38,7 +39,7 @@ public class LuceneClientIndexer {
             writer.commit(); // ✅ Ensure all documents are committed
         }
         indexInitialized = true;
-        System.out.println("Lucene indexing completed. Total indexed: " + clients.size());
+        logger.info("Lucene indexing completed. Total indexed: {}" , clients.size());
     }
 
     public List<ClientSearchDTO> searchClients(String keyword) throws Exception {
@@ -61,18 +62,20 @@ public class LuceneClientIndexer {
             searcher.search(query, countCollector);
             int totalHits = countCollector.getTotalHits();
 
-            TopDocs topDocs = searcher.search(query, totalHits); // fetch all matches
+            if (totalHits == 0) {
+                return results; // 👈 return empty list
+            }
 
+            TopDocs topDocs = searcher.search(query, totalHits);
 
             for (ScoreDoc scoreDoc : topDocs.scoreDocs) {
                 Document doc = searcher.doc(scoreDoc.doc);
                 String client = doc.get("client");
                 String name = doc.get("name");
 
-                // Create a unique signature for deduplication
                 String key = client + "::" + name;
 
-                if (seen.add(key)) { // only add if not seen
+                if (seen.add(key)) {
                     results.add(new ClientSearchDTO(client, name));
                 }
             }
@@ -80,5 +83,4 @@ public class LuceneClientIndexer {
 
         return results;
     }
-
 }
