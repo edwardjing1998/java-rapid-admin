@@ -17,8 +17,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/robotLabel/users")
+    public List<UserDTO> getUsersByFdrid() {
+        return userService.getUsersByFdrid("PROD");
     }
 }

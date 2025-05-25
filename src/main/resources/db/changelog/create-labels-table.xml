@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.com/xml/ns/pro"
+        xsi:schemaLocation="
+       http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+       http://www.liquibase.com/xml/ns/pro
+       https://www.liquibase.com/xml/ns/pro/liquibase-pro-latest.xsd">
+
+<changeSet id="create-labels-table" author="yourname">
+    <createTable tableName="labels">
+        <column name="text1" type="VARCHAR(50)"/>
+        <column name="text2" type="VARCHAR(50)"/>
+        <column name="text3" type="VARCHAR(50)"/>
+        <column name="text4" type="VARCHAR(50)"/>
+        <column name="text5" type="VARCHAR(50)"/>
+        <column name="status" type="BIT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="type" type="VARCHAR(10)"/>
+        <column name="case_number" type="CHAR(16)"/>
+        <column name="card_type_tx" type="CHAR(7)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="bar_code_tx" type="VARCHAR(70)"/>
+        <column name="text3_addr3" type="CHAR(50)"/>
+        <column name="text3_addr4" type="CHAR(50)"/>
+    </createTable>
+</changeSet>
+
+</databaseChangeLog>

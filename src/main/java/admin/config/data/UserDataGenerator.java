@@ -16,7 +16,6 @@ import java.util.Random;
 public class UserDataGenerator {
 
     private final UserRepository userRepository;
-    private final Random random = new Random();
 
     private final String[] names = {
             "alice", "bob", "charlie", "david", "eve",
@@ -42,7 +41,7 @@ public class UserDataGenerator {
             user.setUserName(userName);
             user.setCurrentPassword("Current@123" + i);
             user.setAccessLevel(String.valueOf((char) ('A' + (i % 3))));
-            user.setFdrid("FDR" + String.format("%05d", i));
+            user.setFdrid("PROD");
             user.setFdrpwd("PWD" + String.format("%04d", i));
             user.setFdrpwdexp((short) (30 + i));
             user.setActive(i % 2 == 0);
