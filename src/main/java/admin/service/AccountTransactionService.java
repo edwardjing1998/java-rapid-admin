@@ -7,13 +7,16 @@ import admin.repository.AccountTransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AccountTransactionService {
 
-    private final AccountTransactionRepository accountTransactionRepository;
+    private final AccountTransactionRepository repository;
 
-    public AccountTransactionService(AccountTransactionRepository accountTransactionRepository) {
-        this.accountTransactionRepository = accountTransactionRepository;
+    public AccountTransactionService(AccountTransactionRepository repository) {
+        this.repository = repository;
     }
 
     @Transactional
@@ -42,6 +45,37 @@ public class AccountTransactionService {
         entity.setAltAcctId(dto.getAltAcctId());
         entity.setMemberSeqId(dto.getMemberSeqId());
 
-        return accountTransactionRepository.save(entity);
+        return repository.save(entity);
     }
+
+    @Transactional
+    public void deleteByAccount(String account) {
+        repository.deleteByAccount(account);
+    }
+
+
+    public List<AccountTransactionDTO> getAllAccountTransactions() {
+        return repository.findAll().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private AccountTransactionDTO mapToDTO(AccountTransaction entity) {
+        AccountTransactionDTO dto = new AccountTransactionDTO();
+        dto.setCaseNumber(entity.getId().getCaseNumber());
+        dto.setTransNo(entity.getId().getTransNo());
+        dto.setDateTime(entity.getId().getDateTime());
+        dto.setAccount(entity.getAccount());
+        dto.setActionId(entity.getActionId());
+        dto.setUid(entity.getUid());
+        dto.setDocumentNo(entity.getDocumentNo());
+        dto.setSysPrin(entity.getSysPrin());
+        dto.setNoCards(entity.getNoCards());
+        dto.setActionReason(entity.getActionReason());
+        dto.setOperatorTime(entity.getOperatorTime());
+        dto.setWorkstationName(entity.getWorkstationName());
+        dto.setPostageCategoryCd(entity.getPostageCategoryCd());
+        return dto;
+    }
+
 }

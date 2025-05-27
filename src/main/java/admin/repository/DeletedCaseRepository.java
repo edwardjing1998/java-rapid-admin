@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeletedCaseRepository extends JpaRepository<DeletedCase, String> {
-    // No need for extra methods; JpaRepository gives us findAll()
+    void deleteByAccount(String account);
 }

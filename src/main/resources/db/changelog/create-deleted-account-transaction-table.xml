@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create-account-transaction-table" author="edward Jing">
+        <createTable tableName="DELETED_ACCOUNT_TRANS">
+            <column name="PI_ID" type="CHAR(16)"/>
+            <column name="account" type="CHAR(16)"/>
+            <column name="case_number" type="CHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action_id" type="CHAR(3)"/>
+            <column name="uid" type="CHAR(10)"/>
+            <column name="date_time" type="DATETIME" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_no" type="CHAR(25)"/>
+            <column name="sys_prin" type="CHAR(12)"/>
+            <column name="trans_no" type="NUMERIC">
+                <constraints nullable="false"/>
+            </column>
+            <column name="no_cards" type="INT"/>
+            <column name="action_reason" type="VARCHAR(255)"/>
+            <column name="Operator_Time" type="INT"/>
+            <column name="workstation_name_tx" type="CHAR(18)"/>
+            <column name="Postage_Category_cd" type="SMALLINT"/>
+        </createTable>
+
+        <addPrimaryKey
+                tableName="DELETED_ACCOUNT_TRANS"
+                columnNames="case_number, trans_no, date_time"
+                constraintName="pk_deleted_account_trans"/>
+
+    </changeSet>
+
+</databaseChangeLog>

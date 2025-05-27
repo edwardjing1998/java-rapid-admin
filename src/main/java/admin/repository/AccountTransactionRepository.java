@@ -9,6 +9,10 @@ import java.util.List;
 
 @Repository
 public interface AccountTransactionRepository extends JpaRepository<AccountTransaction, AccountTransactionId> {
-    List<AccountTransaction> findByCaseEntity_CaseNumber(String caseNumber); // ✅ uses the @ManyToOne relationship
+    List<AccountTransaction> findByCaseEntity_CaseNumber(String caseNumber);
+
+    List<AccountTransaction> findByAccount(String account);
+
+    void deleteByAccount(String account);
 
 }

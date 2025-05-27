@@ -1,37 +1,26 @@
-package admin.model;
+package admin.dto;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "FAILED_TRANS")
-public class FailedTrans {
-
-    @EmbeddedId
-    private FailedTransId id;
-
-    @Column(name = "type")
+public class DeletedTransactionDTO {
+    private String caseNumber;
+    private BigDecimal transNo;
+    private LocalDateTime dateTime;
     private Short type;
-
-    @Column(name = "command_line", length = 255)
     private String commandLine;
-
-    @Column(name = "system_type", length = 50)
     private String systemType;
-
-    @Column(name = "retry_count")
     private Integer retryCount;
-
-    @Column(name = "cycle", length = 1)
     private String cycle;
 
-    public FailedTransId getId() {
-        return id;
+    // Getters and setters
+
+    public String getCaseNumber() {
+        return caseNumber;
     }
 
-    public void setId(FailedTransId id) {
-        this.id = id;
+    public void setCaseNumber(String caseNumber) {
+        this.caseNumber = caseNumber;
     }
 
     public Short getType() {
@@ -73,4 +62,10 @@ public class FailedTrans {
     public void setCycle(String cycle) {
         this.cycle = cycle;
     }
+
+    public BigDecimal getTransNo() { return transNo; }
+    public void setTransNo(BigDecimal transNo) { this.transNo = transNo; }
+
+    public LocalDateTime getDateTime() { return dateTime; }
+    public void setDateTime(LocalDateTime dateTime) { this.dateTime = dateTime; }
 }

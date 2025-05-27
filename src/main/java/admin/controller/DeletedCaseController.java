@@ -21,4 +21,10 @@ public class DeletedCaseController {
     public List<DeletedCaseDTO> getAllDeletedCases() {
         return deletedCaseService.getAllDeletedCases();
     }
+
+    @DeleteMapping("/delete-by-account/{account}")
+    public String deleteDeletedCasesByAccount(@PathVariable String account) {
+        deletedCaseService.deleteDeletedCasesByAccount(account);
+        return "Deleted DeletedCase records with account: " + account;
+    }
 }

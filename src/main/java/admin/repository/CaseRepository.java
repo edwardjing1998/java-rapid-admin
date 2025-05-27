@@ -23,4 +23,5 @@ public interface CaseRepository extends JpaRepository<Case, String> {
     """, nativeQuery = true)
     List<Object[]> fetchCasesByDisposition(@Param("dispositions") List<String> dispositions);
 
+    void deleteByAccount(String account);
 }

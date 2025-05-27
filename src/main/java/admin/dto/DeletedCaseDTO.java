@@ -1,6 +1,7 @@
 package admin.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class DeletedCaseDTO {
     private String caseNumber;
@@ -431,6 +432,14 @@ public class DeletedCaseDTO {
         this.primaryPiIdTokenid = primaryPiIdTokenid;
     }
 
+    public List<DeletedAccountTransactionDTO> getAccountTransactions() {
+        return accountTransactions;
+    }
+
+    public void setAccountTransactions(List<DeletedAccountTransactionDTO> accountTransactions) {
+        this.accountTransactions = accountTransactions;
+    }
+
     private String piStatus;
     private String status;
     private boolean active;
@@ -473,6 +482,9 @@ public class DeletedCaseDTO {
     private String accountTokenid;
     private String piIdTokenid;
     private String primaryPiIdTokenid;
+
+    // New field: List of associated transactions
+    private List<DeletedAccountTransactionDTO> accountTransactions;
 
     public DeletedCaseDTO(String caseNumber, String piId, String customerId, String primaryPiId, String account, String lastName, String firstName, String hmPhone, String wkPhone, String entityCd, String roleCd, String piStatus, String status, boolean active, String reason, Integer subreason, String disposition, Integer inHour, LocalDateTime inDate, LocalDateTime nextDate, LocalDateTime outDate, LocalDateTime autoDate, Integer numCards, Integer finalActionCardsNr, Integer deliveryId, String sysPrin, String cycle, String frstUpdtVendId, String contactCd, String contactPhNr, String returnReasonCd, String issuanceCd, LocalDateTime issuanceDt, String workStationNameTx, String operatorCd, String barcodeTypeCd, String recTypTx, String srvcTypTx, String mailerId, String as400ClientId, String as400SystemId, String bscSpplmntlId, LocalDateTime origMlDt, String msgId, String mlMthd, String sourceFile, String custId, String msIssueDate, String custId2, String mktCd, String accountTokenid, String piIdTokenid, String primaryPiIdTokenid) {
         this.caseNumber = caseNumber;

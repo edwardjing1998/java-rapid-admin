@@ -60,7 +60,7 @@ public class CaseDataGenerator {
             List<SysPrin> sysPrins = client.getSysPrins();
             if (sysPrins == null || sysPrins.isEmpty()) continue;
 
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 5; i++) {
                 int dispositionIndex = i % dispositions.length;
                 Character disposition = dispositions[dispositionIndex];
 

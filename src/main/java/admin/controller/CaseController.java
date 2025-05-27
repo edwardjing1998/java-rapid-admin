@@ -1,5 +1,6 @@
 package admin.controller;
 
+import admin.model.Case;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import admin.dto.CaseDTO;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/case")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CaseController {
 
@@ -36,5 +37,11 @@ public class CaseController {
     @GetMapping("/with-transactions/{caseNumber}")
     public CaseDTO getCaseWithTransactions(@PathVariable String caseNumber) {
         return caseService.getCaseWithTransactions(caseNumber);
+    }
+
+    @DeleteMapping("/deletedByAccount/{account}")
+    public ResponseEntity<Void> deleteCasesByAccount(@PathVariable String account) {
+        caseService.deleteCasesByAccount(account);
+        return ResponseEntity.noContent().build();
     }
 }

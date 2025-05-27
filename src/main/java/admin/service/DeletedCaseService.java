@@ -1,8 +1,11 @@
 package admin.service;
 
+import admin.dto.DeletedAccountTransactionDTO;
 import admin.dto.DeletedCaseDTO;
+import admin.model.DeletedAccountTransaction;
 import admin.model.DeletedCase;
 import admin.repository.DeletedCaseRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +20,6 @@ public class DeletedCaseService {
         this.deletedCaseRepository = deletedCaseRepository;
     }
 
-    // Updated method to return DTO list
     public List<DeletedCaseDTO> getAllDeletedCases() {
         List<DeletedCase> cases = deletedCaseRepository.findAll();
         return cases.stream()
@@ -25,7 +27,11 @@ public class DeletedCaseService {
                 .collect(Collectors.toList());
     }
 
-    // Helper method to map entity to DTO
+    @Transactional
+    public void deleteDeletedCasesByAccount(String account) {
+        deletedCaseRepository.deleteByAccount(account);
+    }
+
     private DeletedCaseDTO mapToDTO(DeletedCase deletedCase) {
         DeletedCaseDTO dto = new DeletedCaseDTO();
         dto.setCaseNumber(deletedCase.getCaseNumber());
@@ -41,7 +47,7 @@ public class DeletedCaseService {
         dto.setRoleCd(deletedCase.getRoleCode());
         dto.setPiStatus(deletedCase.getPiStatus());
         dto.setStatus(deletedCase.getStatus());
-        dto.setActive(deletedCase.getActive());
+        dto.setActive(deletedCase.getActive() != null && deletedCase.getActive());
         dto.setReason(deletedCase.getReason());
         dto.setSubreason(deletedCase.getSubreason());
         dto.setDisposition(deletedCase.getDisposition());
@@ -74,14 +80,40 @@ public class DeletedCaseService {
         dto.setMsgId(deletedCase.getMessageId());
         dto.setMlMthd(deletedCase.getMailMethod());
         dto.setSourceFile(deletedCase.getSourceFile());
-        dto.setCustomerId(deletedCase.getCustomerId());
+        dto.setCustomerId(deletedCase.getCustomerIdField());
         dto.setMsIssueDate(deletedCase.getMsIssueDate());
         dto.setCustomerId2(deletedCase.getCustomerId2());
         dto.setMarketCode(deletedCase.getMarketCode());
         dto.setAccountTokenid(deletedCase.getAccountTokenId());
         dto.setPiIdTokenId(deletedCase.getPiIdTokenId());
         dto.setPrimaryPiIdTokenId(deletedCase.getPrimaryPiIdTokenId());
+
+        // Map related DeletedAccountTransactions
+        List<DeletedAccountTransactionDTO> transactions = deletedCase.getAccountTransactions()
+                .stream()
+                .map(this::mapToTransactionDTO)
+                .collect(Collectors.toList());
+        dto.setAccountTransactions(transactions);
+
         return dto;
     }
 
+    private DeletedAccountTransactionDTO mapToTransactionDTO(DeletedAccountTransaction tx) {
+        DeletedAccountTransactionDTO dto = new DeletedAccountTransactionDTO();
+        dto.setCaseNumber(tx.getId().getCaseNumber());
+        dto.setTransNo(tx.getId().getTransNo());
+        dto.setDateTime(tx.getId().getDateTime());
+        dto.setPiId(tx.getPiId());
+        dto.setAccount(tx.getAccount());
+        dto.setActionId(tx.getActionId());
+        dto.setUid(tx.getUid());
+        dto.setDocumentNo(tx.getDocumentNo());
+        dto.setSysPrin(tx.getSysPrin());
+        dto.setNoCards(tx.getNoCards());
+        dto.setActionReason(tx.getActionReason());
+        dto.setOperatorTime(tx.getOperatorTime());
+        dto.setWorkstationName(tx.getWorkstationName());
+        dto.setPostageCategoryCd(tx.getPostageCategoryCd());
+        return dto;
+    }
 }

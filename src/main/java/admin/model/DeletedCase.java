@@ -2,6 +2,8 @@ package admin.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "deleted_cases")
@@ -166,6 +168,9 @@ public class DeletedCase {
 
     @Column(name = "primary_pi_id_tokenid", length = 16)
     private String primaryPiIdTokenId;
+
+    @OneToMany(mappedBy = "caseEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DeletedAccountTransaction> accountTransactions = new ArrayList<>();
 
     // Default constructor
     public DeletedCase() {}
@@ -593,5 +598,14 @@ public class DeletedCase {
 
     public void setPrimaryPiIdTokenId(String primaryPiIdTokenId) {
         this.primaryPiIdTokenId = primaryPiIdTokenId;
+    }
+
+
+    public List<DeletedAccountTransaction> getAccountTransactions() {
+        return accountTransactions;
+    }
+
+    public void setAccountTransactions(List<DeletedAccountTransaction> accountTransactions) {
+        this.accountTransactions = accountTransactions;
     }
 }

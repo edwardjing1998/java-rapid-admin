@@ -3,6 +3,7 @@ package admin.service;
 import admin.dto.AccountTransactionDTO;
 import admin.model.AccountTransaction;
 import admin.repository.AccountTransactionRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import admin.dto.CaseDTO;
 import admin.repository.CaseRepository;
@@ -41,6 +42,11 @@ public class CaseService {
                         row -> (String) row[0],
                         Collectors.mapping(this::mapToCaseDTO, Collectors.toList())
                 ));
+    }
+
+    @Transactional
+    public void deleteCasesByAccount(String account) {
+        caseRepository.deleteByAccount(account);
     }
 
     private CaseDTO mapToCaseDTO(Object[] row) {

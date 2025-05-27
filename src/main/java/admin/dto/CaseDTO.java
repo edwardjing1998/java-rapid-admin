@@ -134,7 +134,7 @@ public class CaseDTO {
         this.piIdTokenid = builder.piIdTokenid;
         this.primaryPiIdTokenid = builder.primaryPiIdTokenid;
         this.client = builder.client;
-        this.accountTransactions = builder.accountTransactions; // ✅ add this line
+        this.accountTransactions = builder.accountTransactions;
     }
 
     public static class Builder {

@@ -1,30 +1,29 @@
 package admin.model;
 
-import jakarta.persistence.Embeddable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Embeddable
-public class FailedTransId implements Serializable {
-
+public class DeletedTransactionId implements Serializable {
+    @Column(name = "case_number", insertable = false, updatable = false)
     private String caseNumber;
+    @Column(name = "trans_no")
     private BigDecimal transNo;
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    // Getters, Setters, equals() and hashCode()
+    public DeletedTransactionId() {}
 
-    // Constructors
-    public FailedTransId() {}
-
-    public FailedTransId(String caseNumber, BigDecimal transNo, LocalDateTime dateTime) {
+    public DeletedTransactionId(String caseNumber, BigDecimal transNo, LocalDateTime dateTime) {
         this.caseNumber = caseNumber;
         this.transNo = transNo;
         this.dateTime = dateTime;
     }
-
-    // Getters and setters
 
     public String getCaseNumber() { return caseNumber; }
     public void setCaseNumber(String caseNumber) { this.caseNumber = caseNumber; }
@@ -38,7 +37,7 @@ public class FailedTransId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof FailedTransId that)) return false;
+        if (!(o instanceof DeletedTransactionId that)) return false;
         return Objects.equals(caseNumber, that.caseNumber) &&
                 Objects.equals(transNo, that.transNo) &&
                 Objects.equals(dateTime, that.dateTime);

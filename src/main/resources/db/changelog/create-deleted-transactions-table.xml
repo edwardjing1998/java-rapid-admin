@@ -6,7 +6,7 @@
      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="create-failed-trans-table" author="Edward Jing">
-        <createTable tableName="FAILED_TRANS">
+        <createTable tableName="DELETED_TRANSACTIONS">
             <column name="case_number" type="CHAR(12)">
                 <constraints nullable="false"/>
             </column>
@@ -24,9 +24,9 @@
         </createTable>
 
         <addPrimaryKey
-                tableName="FAILED_TRANS"
+                tableName="DELETED_TRANSACTIONS"
                 columnNames="case_number, trans_no, date_time"
-                constraintName="pk_failed_trans"/>
+                constraintName="pk_deleted_trans"/>
     </changeSet>
 
 </databaseChangeLog>

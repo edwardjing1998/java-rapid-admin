@@ -25,11 +25,12 @@
     <include file="db/changelog/create-admin-query-data-def-table.xml"/>
     <include file="db/changelog/create-addresses-table.xml"/>
     <include file="db/changelog/create-failed-trans-work-table.xml"/>
-    <include file="db/changelog/create-failed-trans-table.xml"/>
+    <include file="/db/changelog/create-transactions-table.xml"/>
     <include file="/db/changelog/create-deletedcases-table.xml"/>
     <include file="/db/changelog/create-labels-table.xml"/>
     <include file="/db/changelog/create-robot-labels-table.xml"/>
-
+    <include file="/db/changelog/create-deleted-transactions-table.xml"/>
+    <include file="/db/changelog/create-deleted-account-transaction-table.xml"/>
 </databaseChangeLog>
 
 

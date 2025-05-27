@@ -1,34 +1,29 @@
 package admin.config.data;
 
-import admin.model.AccountTransaction;
-import admin.model.AccountTransactionId;
-import admin.model.Case;
-import admin.model.FailedTrans;
-import admin.model.FailedTransId;
-import admin.repository.AccountTransactionRepository;
-import admin.repository.CaseRepository;
-import admin.repository.FailedTransRepository;
+import admin.model.*;
+import admin.repository.*;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class FailedTransDataGenerator {
+public class DeletedCaseTransactionsDataGenerator {
 
-    private static final Logger logger = LoggerFactory.getLogger(FailedTransDataGenerator.class);
-    private final FailedTransRepository failedTransRepository;
-    private final AccountTransactionRepository accountTransactionRepository;
-    private final CaseRepository caseRepository;
+    private static final Logger logger = LoggerFactory.getLogger(DeletedCaseTransactionsDataGenerator.class);
+    private final DeletedTransactionRepository deletedTransRepository;
+    private final DeletedAccountTransactionRepository accountTransactionRepository;
+    private final DeletedCaseRepository caseRepository;
 
-    public FailedTransDataGenerator(FailedTransRepository failedTransRepository,
-                                    AccountTransactionRepository accountTransactionRepository,
-                                    CaseRepository caseRepository) {
-        this.failedTransRepository = failedTransRepository;
+    public DeletedCaseTransactionsDataGenerator(DeletedTransactionRepository deletedTransRepository,
+                                                DeletedAccountTransactionRepository accountTransactionRepository,
+                                                DeletedCaseRepository caseRepository) {
+        this.deletedTransRepository = deletedTransRepository;
         this.accountTransactionRepository = accountTransactionRepository;
         this.caseRepository = caseRepository;
     }
@@ -42,7 +37,7 @@ public class FailedTransDataGenerator {
                 "EXEC FRPC 'CNONMON','4470431112096227','698','00',,'BLL1','F',,,,,,,'4543 KNOLLCROFT ROAD',' ',,,'TROTWOOD','OH','USA','45426-1936',,,,,'P',,,,,'U'"
         );
 
-        List<FailedTrans> sampleData = new ArrayList<>();
+        List<DeletedTransaction> sampleData = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
             String caseNum = String.format("CASE%03d", i);
             String cycle = String.valueOf((char) ('A' + (i % 26)));
@@ -53,14 +48,13 @@ public class FailedTransDataGenerator {
                     (short) (i % 5 + 1), randomCommand, "OS" + i, (i % 3), cycle));
         }
 
-        failedTransRepository.saveAll(sampleData);
-        logger.info("✅ Inserted sample FAILED_TRANS records.");
+        deletedTransRepository.saveAll(sampleData);
+        logger.info("✅ Inserted sample DeletedTransaction records.");
 
-        // (Leave your existing AccountTransaction/Case setup below unchanged)
-        for (FailedTrans ft : sampleData) {
-            Case caseEntity = caseRepository.findById(ft.getId().getCaseNumber()).orElse(null);
+        for (DeletedTransaction ft : sampleData) {
+            DeletedCase caseEntity = caseRepository.findById(ft.getId().getCaseNumber()).orElse(null);
             if (caseEntity == null) {
-                caseEntity = new Case();
+                caseEntity = new DeletedCase();
                 caseEntity.setCaseNumber(ft.getId().getCaseNumber());
                 caseEntity.setActive(true);
                 caseEntity.setFirstName("John");
@@ -68,44 +62,49 @@ public class FailedTransDataGenerator {
                 caseEntity.setAccount("ACC" + ft.getCycle());
                 caseEntity.setPiId("PI" + ft.getCycle());
                 caseEntity.setPrimaryPiId("PPI" + ft.getCycle());
-                caseEntity.setHmPhone("5551234567");
-                caseEntity.setWkPhone("5559876543");
+                caseEntity.setHomePhone("5551234567");
+                caseEntity.setWorkPhone("5559876543");
                 caseEntity.setSysPrin("SP001");
-                caseEntity.setCycle(ft.getCycle().charAt(0));
-                caseEntity.setStatus('A');
+                caseEntity.setCycle(String.valueOf(ft.getCycle().charAt(0)));
+                caseEntity.setStatus("A");
                 caseEntity.setInDate(LocalDateTime.now().minusDays(1));
                 caseEntity.setNextDate(LocalDateTime.now().plusDays(1));
                 caseEntity.setOutDate(LocalDateTime.now());
 
                 caseRepository.save(caseEntity);
             }
+               for(int k = 0; k <= 3; k++) {
+                   DeletedAccountTransaction tx = new DeletedAccountTransaction();
 
-            AccountTransaction tx = new AccountTransaction();
-            AccountTransactionId txId = new AccountTransactionId(ft.getId().getCaseNumber(), ft.getId().getTransNo(), ft.getId().getDateTime());
-            tx.setId(txId);
-            tx.setCaseEntity(caseEntity);
-            tx.setPiId("PI" + ft.getCycle());
-            tx.setAccount("ACC" + ft.getCycle());
-            tx.setActionId("ACT");
-            tx.setUid("user123");
-            tx.setDocumentNo("DOC" + ft.getCycle());
-            tx.setSysPrin("SP001");
-            tx.setNoCards(1);
-            tx.setActionReason("Reason for " + ft.getCycle());
-            tx.setOperatorTime(120);
-            tx.setWorkstationName("WS-1");
-            tx.setPostageCategoryCd((short) 1);
-            tx.setAltAcctId("ALT123");
-            tx.setMemberSeqId("SEQ1");
+                   LocalDateTime currentDateTime = LocalDateTime.now();
+                   DeletedAccountTransactionId txId = new DeletedAccountTransactionId(
+                           ft.getId().getCaseNumber(),
+                           ft.getId().getTransNo(),
+                           currentDateTime
+                   );
 
-            accountTransactionRepository.save(tx);
+                   tx.setId(txId);
+                   tx.setCaseEntity(caseEntity);
+                   tx.setPiId("PI" + ft.getCycle());
+                   tx.setAccount(caseEntity.getAccount());
+                   tx.setActionId("ACT");
+                   tx.setUid("user123");
+                   tx.setDocumentNo("DOC" + ft.getCycle());
+                   tx.setSysPrin("SP001");
+                   tx.setNoCards(1);
+                   tx.setActionReason("Reason for " + ft.getCycle() + " " + k);
+                   tx.setOperatorTime(120);
+                   tx.setWorkstationName("WS-1");
+                   tx.setPostageCategoryCd((short) 1);
+                   accountTransactionRepository.save(tx);
+               }
         }
 
-        logger.info("✅ Inserted sample ACCOUNT_TRANS records.");
+        logger.info("✅ Inserted sample DELETED_ACCOUNT_TRANS records.");
     }
 
 
-    private FailedTrans createEntry(String caseNumber,
+    private DeletedTransaction createEntry(String caseNumber,
                                     BigDecimal transNo,
                                     LocalDateTime dateTime,
                                     Short type,
@@ -113,8 +112,8 @@ public class FailedTransDataGenerator {
                                     String systemType,
                                     Integer retryCount,
                                     String cycle) {
-        FailedTransId id = new FailedTransId(caseNumber, transNo, dateTime);
-        FailedTrans ft = new FailedTrans();
+        DeletedTransactionId id = new DeletedTransactionId(caseNumber, transNo, dateTime);
+        DeletedTransaction ft = new DeletedTransaction();
         ft.setId(id);
         ft.setType(type);
         ft.setCommandLine(commandLine);
