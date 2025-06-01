@@ -47,6 +47,17 @@ public class SysPrinDTO {
 
     private List<InvalidDelivAreaDTO> invalidDelivAreas;
 
+    // inside SysPrinDTO
+    private List<VendorSentToDTO> vendorSentTo;
+
+    public List<VendorSentToDTO> getVendorSentTo()           { return vendorSentTo; }
+    public void setVendorSentTo(List<VendorSentToDTO> list)  { this.vendorSentTo = list; }
+
+    private List<VendorRecivedFromDTO> vendorReceivedFrom;
+
+    public List<VendorRecivedFromDTO> getVendorReceivedFrom()           { return vendorReceivedFrom; }
+    public void setVendorReceivedFrom(List<VendorRecivedFromDTO> list)  { this.vendorReceivedFrom = list; }
+
     public String getClient() { return client; }
     public void setClient(String client) { this.client = client; }
 

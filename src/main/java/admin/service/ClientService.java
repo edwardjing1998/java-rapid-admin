@@ -23,16 +23,26 @@ public class ClientService {
     private final ClientEmailRepository clientEmailRepository;
     private final InvalidDelivAreaRepository invalidDelivAreaRepository;
 
+    private final VendorRepository vendorRepository;
+
+
+    private final VendorSentToRepository     vendorSentToRepository;
+
+
     public ClientService(ClientRepository clientRepository,
                          SysPrinRepository sysPrinRepository,
                          SysPrinsPrefixRepository sysPrinsPrefixRepository,
                          ClientEmailRepository clientEmailRepository,
-                         InvalidDelivAreaRepository invalidDelivAreaRepository) {
+                         InvalidDelivAreaRepository invalidDelivAreaRepository,
+                         VendorSentToRepository     vendorSentToRepository,
+                         VendorRepository vendorRepository) {
         this.clientRepository = clientRepository;
         this.sysPrinRepository = sysPrinRepository;
         this.sysPrinsPrefixRepository = sysPrinsPrefixRepository;
         this.clientEmailRepository = clientEmailRepository;
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
+        this.vendorSentToRepository = vendorSentToRepository;
+        this.vendorRepository = vendorRepository;
     }
 
     @Cacheable("allClients")
@@ -123,26 +133,107 @@ public class ClientService {
 
     private List<SysPrinDTO> mapSysPrinsDtos(Client client) {
         List<SysPrin> sysPrins = sysPrinRepository.findByIdClient(client.getClient());
-        List<String> sysPrinIds = sysPrins.stream().map(sp -> sp.getId().getSysPrin()).collect(Collectors.toList());
+        List<String> sysPrinIds = sysPrins.stream()
+                .map(sp -> sp.getId().getSysPrin())
+                .toList();
+
         List<InvalidDelivArea> allInvalidDelivAreas = findInvalidDelivAreasInBatches(sysPrinIds);
-        Map<String, List<InvalidDelivArea>> invalidDelivAreaMap = allInvalidDelivAreas.stream()
+        List<VendorSentTo> allVendorSentTo = findVendorSentToInBatches(sysPrinIds);
+
+        Map<String, List<InvalidDelivArea>> invalidMap = allInvalidDelivAreas.stream()
                 .collect(Collectors.groupingBy(InvalidDelivArea::getSysPrin));
 
+        Map<String, List<VendorSentTo>> vendorMap = allVendorSentTo.stream()
+                .collect(Collectors.groupingBy(v -> v.getId().getSysPrin()));
+
+
+
         return sysPrins.stream().map(sp -> {
-            SysPrinDTO sysDto = new SysPrinDTO();
-            sysDto.populateFromEntity(sp);
+            SysPrinDTO dto = new SysPrinDTO();
+            dto.populateFromEntity(sp);
 
-            List<InvalidDelivAreaDTO> areaDTOs = invalidDelivAreaMap.getOrDefault(sp.getId().getSysPrin(), List.of())
-                    .stream().map(area -> {
-                        InvalidDelivAreaDTO areaDto = new InvalidDelivAreaDTO();
-                        areaDto.setArea(area.getArea());
-                        areaDto.setSysPrin(area.getSysPrin());
-                        return areaDto;
-                    }).collect(Collectors.toList());
+            List<InvalidDelivAreaDTO> areaDTOs = invalidMap
+                    .getOrDefault(sp.getId().getSysPrin(), List.of())
+                    .stream()
+                    .map(a -> new InvalidDelivAreaDTO(a.getArea(), a.getSysPrin()))
+                    .toList();
+            dto.setInvalidDelivAreas(areaDTOs);
 
-            sysDto.setInvalidDelivAreas(areaDTOs);
-            return sysDto;
-        }).collect(Collectors.toList());
+            Map<String,String> fileSentTovendorNameMap = buildVendorNameMap(allVendorSentTo, "I");
+
+            List<VendorSentToDTO> sentToDTOs = buildVendorSentToDTOs(
+                    vendorMap.getOrDefault(sp.getId().getSysPrin(), List.of()),
+                    fileSentTovendorNameMap
+            );
+            dto.setVendorSentTo(sentToDTOs);
+
+            Map<String,String> receivedFromvendorNameMap = buildVendorNameMap(allVendorSentTo, "O");
+
+            List<VendorRecivedFromDTO> receivedFromDTOs = buildVendorRecivedFromDTOs(
+                    vendorMap.getOrDefault(sp.getId().getSysPrin(), List.of()),
+                    receivedFromvendorNameMap
+            );
+
+            dto.setVendorReceivedFrom(receivedFromDTOs);
+            return dto;
+        }).toList();
+    }
+
+    /**
+     * Load all distinct vendIds, filter by fileIo="I", and
+     * return a vendId→vendName map.
+     */
+    private Map<String,String> buildVendorNameMap(List<VendorSentTo> sentToRecords, String fileIo) {
+        var vendIds = sentToRecords.stream()
+                .map(v -> v.getId().getVendId())
+                .distinct()
+                .toList();
+
+        return vendorRepository.findAllById(vendIds)
+                .stream()
+                .filter(vendor -> fileIo.equalsIgnoreCase(vendor.getFileIo()))
+                .collect(Collectors.toMap(
+                        Vendor::getVendId,
+                        Vendor::getVendName
+                ));
+    }
+
+    /**
+     * Turn a list of VendorSentTo entities into DTOs,
+     * dropping any whose name lookup is missing.
+     */
+    private List<VendorSentToDTO> buildVendorSentToDTOs(
+            List<VendorSentTo> records,
+            Map<String,String> vendorNameMap
+    ) {
+        return records.stream()
+                .filter(v -> vendorNameMap.containsKey(v.getId().getVendId()))
+                .map(v -> {
+                    VendorSentToDTO d = new VendorSentToDTO();
+                    d.setSysPrin(v.getId().getSysPrin());
+                    d.setVendorId(v.getId().getVendId());
+                    d.setVendorName(vendorNameMap.get(v.getId().getVendId()));
+                    d.setQueForMail(v.getQueForMail());
+                    return d;
+                })
+                .toList();
+    }
+
+    private List<VendorRecivedFromDTO> buildVendorRecivedFromDTOs(
+            List<VendorSentTo> records,
+            Map<String,String> vendorNameMap
+    ) {
+        return records.stream()
+                .filter(v -> vendorNameMap.containsKey(v.getId().getVendId()))
+                .map(v -> {
+                    VendorRecivedFromDTO d = new VendorRecivedFromDTO();
+                    d.setSysPrin(v.getId().getSysPrin());
+                    d.setVendorId(v.getId().getVendId());
+                    d.setVendorName(vendorNameMap.get(v.getId().getVendId()));
+                    d.setQueForMail(v.getQueForMail());
+                    return d;
+                })
+                .toList();
     }
 
     private List<ClientEmailDTO> mapClientEmails(Client client) {
@@ -194,4 +285,13 @@ public class ClientService {
         return clients.stream().map(this::mapClientToDto).collect(Collectors.toList());
     }
 
+    private List<VendorSentTo> findVendorSentToInBatches(List<String> sysPrins) {
+        List<VendorSentTo> results = new ArrayList<>();
+        for (int i = 0; i < sysPrins.size(); i += BATCH_SIZE) {
+            int end = Math.min(i + BATCH_SIZE, sysPrins.size());
+            List<String> slice = sysPrins.subList(i, end);
+            results.addAll(vendorSentToRepository.findByIdSysPrinIn(slice));
+        }
+        return results;
+    }
 }

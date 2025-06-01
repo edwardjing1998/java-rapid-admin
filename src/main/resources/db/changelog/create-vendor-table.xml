@@ -6,29 +6,46 @@
           http://www.liquibase.org/xml/ns/dbchangelog
           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
 
-    <changeSet id="create-vendor-table" author="yourname">
+    <changeSet id="20240529-01-create-vendors" author="you">
         <createTable tableName="VENDOR">
-            <column name="VEND_ID" type="BIGINT">
+            <column name="vend_id" type="CHAR(3)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="VEND_NM" type="VARCHAR(255)">
+
+            <column name="vend_nm" type="CHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="VEND_RCVR_CD" type="VARCHAR(50)">
+
+            <column name="vend_actv_cd" type="BIT" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="VEND_FSRV_NM" type="VARCHAR(255)">
+
+            <column name="vend_rcvr_cd" type="BIT" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="VEND_FSRV_IP" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="VEND_ACTV_CD" type="INT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="VEND_FILE_IO" type="VARCHAR(10)">
-                <constraints nullable="false"/>
-            </column>
+
+            <column name="vend_fsrv_nm" type="CHAR(40)"/>
+            <column name="vend_fsrv_ip"  type="CHAR(15)"/>
+            <column name="fsrvr_user_id"  type="CHAR(10)"/>
+            <column name="fsrvr_usr_pwd_tx" type="CHAR(50)"/>
+            <column name="fsrvr_file_name_tx" type="CHAR(50)"/>
+            <column name="fsrvr_unc_share_tx" type="CHAR(255)"/>
+            <column name="fsrvr_path_tx" type="CHAR(50)"/>
+            <column name="fsrvr_file_archive_path_tx" type="CHAR(50)"/>
+
+            <column name="vendor_type_cd" type="CHAR(1)"/>
+            <column name="vend_file_io" type="CHAR(1)"/>
+
+            <column name="vend_client_specific"  type="BIT"/>
+            <column name="vend_schedule" type="CHAR(8)"/>
+            <column name="vend_date_last_worked" type="CHAR(10)"/>
+
+            <column name="vend_filesize" type="INT"/>
+            <column name="vend_filetrans_specs"   type="CHAR(50)"/>
+            <column name="vend_file_type" type="INT"/>
+
+            <column name="ftp_passive"  type="CHAR(5)"/>
+            <column name="ftp_filetype"  type="CHAR(1)"/>
         </createTable>
     </changeSet>
 

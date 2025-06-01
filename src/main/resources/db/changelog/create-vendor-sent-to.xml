@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="create-vendor-sent-to" author="Edward Jing">
+        <createTable tableName="vendor_sent_to">
+            <column name="sys_prin"  type="CHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vend_id"  type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="queformail_cd"   type="BIT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey
+                columnNames="sys_prin, vend_id"
+                constraintName="pk_vendor_sent_to"
+                tableName="vendor_sent_to"/>
+
+        <createIndex
+                indexName="idx_vendor_sent_to_sysprin"
+                tableName="vendor_sent_to">
+            <column name="sys_prin"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

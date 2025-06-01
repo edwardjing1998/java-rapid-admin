@@ -6,6 +6,8 @@ import admin.repository.ClientRepository;
 import admin.repository.InvalidDelivAreaRepository;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import admin.repository.VendorSentToRepository;
+
 
 import java.util.*;
 
@@ -16,6 +18,8 @@ public class ClientDataGenerator {
     private final ClientRepository clientRepository;
     private final AdminQueryListRepository adminQueryListRepository;
     private final InvalidDelivAreaRepository invalidDelivAreaRepository;
+
+    private final VendorSentToRepository vendorSentToRepository;
 
     private final String[] usStates = {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -68,10 +72,12 @@ public class ClientDataGenerator {
 
     public ClientDataGenerator(ClientRepository clientRepository,
                                AdminQueryListRepository adminQueryListRepository,
-                               InvalidDelivAreaRepository invalidDelivAreaRepository) {
+                               InvalidDelivAreaRepository invalidDelivAreaRepository,
+                               VendorSentToRepository vendorSentToRepository) {
         this.clientRepository = clientRepository;
         this.adminQueryListRepository = adminQueryListRepository;
         this.invalidDelivAreaRepository = invalidDelivAreaRepository;
+        this.vendorSentToRepository = vendorSentToRepository;
     }
 
     public void generateClients() {
@@ -101,7 +107,7 @@ public class ClientDataGenerator {
 
         List<Client> clients = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             String clientId = generateClientId(i);
             String billingSp = "B" + (i + 1);
             String city = sampleCities[random.nextInt(sampleCities.length)];
@@ -157,7 +163,7 @@ public class ClientDataGenerator {
                 String sysPrinCode = "SP" + String.format("%010d", s + 1); // "SP0000000001"
                 SysPrinId sysPrinId = new SysPrinId(clientId, sysPrinCode);
                 sysPrin.setId(sysPrinId);
-                sysPrin.setCustType(String.valueOf(0 + random.nextInt(2)));
+                sysPrin.setCustType(String.valueOf(0 + random.nextInt(4)));
                 sysPrin.setUndeliverable(String.valueOf(0 + random.nextInt(5)));
                 sysPrin.setStatA(String.valueOf(0 + random.nextInt(5)));
                 sysPrin.setStatB(String.valueOf(0 + random.nextInt(2)));
@@ -232,6 +238,8 @@ public class ClientDataGenerator {
         }
 
         clientRepository.saveAll(clients);
+
+        generateSampleDataToVendorSentTo(clients);
     }
 
     private String generateClientId(int index) {
@@ -257,5 +265,45 @@ public class ClientDataGenerator {
         while (sb.length() < 8) sb.insert(0, '1'); // pad to 8 characters
         return sb.toString();
     }
+
+    private void generateSampleDataToVendorSentTo(List<Client> clients) {
+
+        // flatten all sys-prins that were just created
+        List<SysPrin> allSysPrins = clients.stream()
+                .flatMap(c -> c.getSysPrins().stream())
+                .toList();
+
+        Random rnd = new Random();
+        List<VendorSentTo> sentToList = new ArrayList<>();
+
+        /* vendor id pool – adjust or generate on-the-fly */
+        String[] vendorPool = {
+                "v01","v02","v03","v04","v05","v06","v07","v08","v09",
+                "v10","v11","v12","v13","v14","v15","v16","v17","v18","v19",
+                "v20","v21","v22","v23","v24","v25","v26","v27","v28","v29",
+                "v30","v31","v32","v33","v34","v35","v36","v37","v38","v39"
+        };
+
+        for (SysPrin sp : allSysPrins) {
+            String sysPrinCode = sp.getId().getSysPrin();
+
+            /* pick 5 distinct vendors for this sysPrin */
+            Set<Integer> chosen = new HashSet<>();
+            while (chosen.size() < 5) {
+                chosen.add(rnd.nextInt(vendorPool.length)); // random index
+            }
+            for (Integer idx : chosen) {
+                String vendId = vendorPool[idx];
+                boolean que   = rnd.nextBoolean();
+
+                VendorSentToId id = new VendorSentToId(vendId, sysPrinCode);
+                VendorSentTo   vst = new VendorSentTo(id, que);
+
+                sentToList.add(vst);
+            }
+        }
+        vendorSentToRepository.saveAll(sentToList);
+    }
+
 
 }
