@@ -1,5 +1,6 @@
 package admin.repository;
 
+import admin.model.FailedTransaction;
 import admin.model.Labels;
 import admin.model.LabelsId;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface LabelsRepository extends JpaRepository<Labels, LabelsId> {
-    // Primary key is text1 (String)
     List<Labels> findByIdType(String type);
+    List<Labels> findByIdCaseNumber(String caseNumber);
+    void deleteAllByIdCaseNumber(String caseNumber);
 }

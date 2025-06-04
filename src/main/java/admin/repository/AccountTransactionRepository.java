@@ -2,6 +2,7 @@ package admin.repository;
 
 import admin.model.AccountTransaction;
 import admin.model.AccountTransactionId;
+import admin.model.Labels;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,8 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
 
     List<AccountTransaction> findByAccount(String account);
 
-    void deleteByAccount(String account);
+    List<AccountTransaction> findByIdCaseNumber(String caseNumber);
 
+    void deleteByAccount(String account);
+    void deleteByIdCaseNumber(String caseNumber);
 }

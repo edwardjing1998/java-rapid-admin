@@ -32,6 +32,8 @@
     <include file="/db/changelog/create-deleted-transactions-table.xml"/>
     <include file="/db/changelog/create-deleted-account-transaction-table.xml"/>
     <include file="/db/changelog/create-vendor-sent-to.xml"/>
+    <include file="/db/changelog/create-failed-trans-table.xml"/>
+    <include file="/db/changelog/create-bulk-card-table.xml"/>
 </databaseChangeLog>
 
 

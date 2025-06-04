@@ -3,12 +3,14 @@ package admin.config.data;
 import admin.model.Labels;
 import admin.model.LabelsId;
 import admin.repository.LabelsRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Profile("dev")
 public class LabelsDataGenerator {
 
     private final LabelsRepository repository;

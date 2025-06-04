@@ -2,21 +2,33 @@ package admin.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
-@Table(name = "labels")
-public class Labels {
+@Table(name = "bulk_card")
+public class BulkCard {
 
     @EmbeddedId
-    private LabelsId id;
+    private BulkCardId id;
 
     @MapsId("caseNumber")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "case_number", nullable = false)
     private Case caseEntity;
 
-    // Getters and Setters for the id
-    public LabelsId getId() { return id; }
-    public void setId(LabelsId id) { this.id = id; }
+    public BulkCard() {
+    }
+
+    public BulkCard(BulkCardId id) {
+        this.id = id;
+    }
+
+    public BulkCardId getId() {
+        return id;
+    }
+
+    public void setId(BulkCardId id) {
+        this.id = id;
+    }
 
     public Case getCaseEntity() {
         return caseEntity;

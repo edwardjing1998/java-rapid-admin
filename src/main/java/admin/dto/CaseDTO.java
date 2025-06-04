@@ -1,5 +1,7 @@
 package admin.dto;
 
+import admin.model.FailedTransaction;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,7 +67,11 @@ public class CaseDTO {
 
     private List<AccountTransactionDTO> accountTransactions;
 
+    private List<BulkCardDTO> bulkCards;
 
+    private List<FailedTransactionDTO> failedTransactions;
+
+    private List<LabelsDTO> labels;
 
     public String getClient() {
         return client;
@@ -135,6 +141,10 @@ public class CaseDTO {
         this.primaryPiIdTokenid = builder.primaryPiIdTokenid;
         this.client = builder.client;
         this.accountTransactions = builder.accountTransactions;
+        this.bulkCards = builder.bulkCards;
+        this.failedTransactions = builder.failedTransactions;
+        this.labels = builder.labels;
+
     }
 
     public static class Builder {
@@ -198,6 +208,13 @@ public class CaseDTO {
         private String client;
         private List<AccountTransactionDTO> accountTransactions;
 
+        private List<BulkCardDTO> bulkCards;
+
+        private List<FailedTransactionDTO> failedTransactions;
+
+        private List<LabelsDTO> labels;
+
+
         public Builder caseNumber(String caseNumber) { this.caseNumber = caseNumber; return this; }
         public Builder piId(String piId) { this.piId = piId; return this; }
         public Builder customerId(String customerId) { this.customerId = customerId; return this; }
@@ -259,6 +276,21 @@ public class CaseDTO {
 
         public Builder accountTransactions(List<AccountTransactionDTO> accountTransactions) {
             this.accountTransactions = accountTransactions;
+            return this;
+        }
+
+        public Builder bulkCards(List<BulkCardDTO> bulkCards) {
+            this.bulkCards = bulkCards;
+            return this;
+        }
+
+        public Builder failedTransactions(List<FailedTransactionDTO> failedTransactions) {
+            this.failedTransactions = failedTransactions;
+            return this;
+        }
+
+        public Builder labels(List<LabelsDTO> labels) {
+            this.labels = labels;
             return this;
         }
 
@@ -723,4 +755,29 @@ public class CaseDTO {
     public void setAccountTransactions(List<AccountTransactionDTO> accountTransactions) {
         this.accountTransactions = accountTransactions;
     }
+
+    public List<BulkCardDTO> getBulkCards() {
+        return bulkCards;
+    }
+
+    public void setBulkCards(List<BulkCardDTO> bulkCards) {
+        this.bulkCards = bulkCards;
+    }
+
+    public List<FailedTransactionDTO> getFailedTransactions() {
+        return failedTransactions;
+    }
+
+    public void setFailedTransactions(List<FailedTransactionDTO> failedTransactions) {
+        this.failedTransactions = failedTransactions;
+    }
+
+    public List<LabelsDTO> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<LabelsDTO> labels) {
+        this.labels = labels;
+    }
+
 }

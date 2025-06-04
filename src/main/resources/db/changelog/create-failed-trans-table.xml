@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+      http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-failed-trans-table" author="Edward Jing">
+        <createTable tableName="failed_trans">
+            <column name="case_number" type="CHAR(12)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="SMALLINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="command_line" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="system_type" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="retry_count" type="SMALLINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date_time" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cycle" type="VARCHAR(1)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="trans_no" type="NUMERIC">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

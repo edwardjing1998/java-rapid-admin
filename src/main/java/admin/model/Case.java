@@ -181,6 +181,28 @@ public class Case {
     @OneToMany(mappedBy = "caseEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AccountTransaction> accountTransactions = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy   = "caseEntity",
+            cascade    = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<BulkCard> bulkCards = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy   = "caseEntity",
+            cascade    = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<FailedTransaction> failedTransactions = new ArrayList<>();
+
+
+    @OneToMany(
+            mappedBy   = "caseEntity",
+            cascade    = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Labels> labels = new ArrayList<>();
+
     public String getCaseNumber() {
         return caseNumber;
     }
@@ -635,5 +657,28 @@ public class Case {
 
     public void setAccountTransactions(List<AccountTransaction> accountTransactions) {
         this.accountTransactions = accountTransactions;
+    }
+
+    public List<BulkCard> getBulkCards() {
+        return bulkCards;
+    }
+
+    public void setBulkCards(List<BulkCard> bulkCards) {
+        this.bulkCards = bulkCards;
+    }
+
+    public List<FailedTransaction> getFailedTransactions() {
+        return failedTransactions;
+    }
+
+    public void setFailedTransactions(List<FailedTransaction> failedTransactions) {
+        this.failedTransactions = failedTransactions;
+    }
+
+    public void setLabels(List<Labels> labels) {
+        this.labels = labels;
+    }
+    public List<Labels> getLabels() {
+        return labels;
     }
 }

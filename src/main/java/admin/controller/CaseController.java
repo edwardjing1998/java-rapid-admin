@@ -1,6 +1,5 @@
 package admin.controller;
 
-import admin.model.Case;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import admin.dto.CaseDTO;

@@ -1,12 +1,14 @@
 package admin.service;
 
 import admin.dto.AccountTransactionDTO;
-import admin.model.AccountTransaction;
-import admin.repository.AccountTransactionRepository;
+import admin.dto.BulkCardDTO;
+import admin.dto.FailedTransactionDTO;
+import admin.dto.LabelsDTO;
+import admin.model.*;
+import admin.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import admin.dto.CaseDTO;
-import admin.repository.CaseRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +24,19 @@ public class CaseService {
 
     private final CaseRepository caseRepository;
     private final AccountTransactionRepository transactionRepository;
+    private final BulkCardRepository bulkCardRepository;
+
+    private final FailedTransactionRepository failedTransactionRepository;
+
+    private final LabelsRepository labelsRepository;
 
 
-    public CaseService(CaseRepository caseRepository, AccountTransactionRepository transactionRepository) {
+    public CaseService(CaseRepository caseRepository, AccountTransactionRepository transactionRepository, BulkCardRepository bulkCardRepository, FailedTransactionRepository failedTransactionRepository, LabelsRepository labelsRepository) {
         this.caseRepository = caseRepository;
         this.transactionRepository = transactionRepository;
+        this.bulkCardRepository = bulkCardRepository;
+        this.failedTransactionRepository = failedTransactionRepository;
+        this.labelsRepository = labelsRepository;
     }
 
     public Map<String, List<CaseDTO>> getCasesByDisposition(List<String> dispositions) {
@@ -46,8 +56,24 @@ public class CaseService {
 
     @Transactional
     public void deleteCasesByAccount(String account) {
+        List<Case> cases = caseRepository.findCaseByAccount(account);
+
+        if (cases == null || cases.isEmpty()) {
+            logger.warn("No cases found for account: {}", account);
+            return;
+        }
+
+        String caseNumber = cases.get(0).getCaseNumber();
+
+        labelsRepository.deleteAllByIdCaseNumber(caseNumber);
+        transactionRepository.deleteByIdCaseNumber(caseNumber);
+        bulkCardRepository.deleteByIdCaseNumber(caseNumber);
+        failedTransactionRepository.deleteByIdCaseNumber(caseNumber);
         caseRepository.deleteByAccount(account);
+
+        logger.info("Deleted case and associated data for account: {}", account);
     }
+
 
     private CaseDTO mapToCaseDTO(Object[] row) {
         return new CaseDTO.Builder()
@@ -86,10 +112,29 @@ public class CaseService {
         admin.model.Case caseEntity = optionalCase.get();
 
         List<AccountTransaction> transactions = transactionRepository.findByCaseEntity_CaseNumber(caseNumber);
+        List<BulkCard> bulkCards = bulkCardRepository.findByIdCaseNumber(caseNumber);
+
+        List<FailedTransaction> failedTransactions = failedTransactionRepository.findByIdCaseNumber(caseNumber);
+        logger.info("failedTransactions size is {}", failedTransactions.size());
+
+        List<Labels> labels = labelsRepository.findByIdCaseNumber(caseNumber);
 
         List<AccountTransactionDTO> transactionDTOs = transactions.stream()
                 .map(this::mapToTransactionDTO)
                 .collect(Collectors.toList());
+
+        List<BulkCardDTO> bulkCardDTOS = bulkCards.stream()
+                .map(this::mapToBulkDTO)
+                .collect(Collectors.toList());
+
+        List<FailedTransactionDTO> failedTransactionDTOS = failedTransactions.stream()
+                .map(this::mapToFailedTransactionDTO)
+                .collect(Collectors.toList());
+
+        List<LabelsDTO> labelsDTOS = labels.stream()
+                .map(this::mapToLabelDTO)
+                .collect(Collectors.toList());
+
 
         return new CaseDTO.Builder()
                 .caseNumber(caseEntity.getCaseNumber())
@@ -112,6 +157,9 @@ public class CaseService {
                 .piId(caseEntity.getPiId())
                 .accountTokenid(caseEntity.getAccountTokenid())
                 .accountTransactions(transactionDTOs)
+                .bulkCards(bulkCardDTOS)
+                .failedTransactions(failedTransactionDTOS)
+                .labels(labelsDTOS)
                 .build();
     }
 
@@ -133,6 +181,46 @@ public class CaseService {
         dto.setPostageCategoryCd(txn.getPostageCategoryCd());
         dto.setAltAcctId(txn.getAltAcctId());
         dto.setMemberSeqId(txn.getMemberSeqId());
+        return dto;
+    }
+
+    private BulkCardDTO mapToBulkDTO(BulkCard bulkCard) {
+        BulkCardDTO dto = new BulkCardDTO();
+        dto.setCaseNumber(bulkCard.getId().getCaseNumber());
+        dto.setBulkPiId(bulkCard.getId().getBulkPiId());
+        dto.setInDate(bulkCard.getId().getInDate());
+        dto.setPiId(bulkCard.getId().getPiId());
+        return dto;
+    }
+
+    private FailedTransactionDTO mapToFailedTransactionDTO(FailedTransaction failedTransaction) {
+        FailedTransactionDTO dto = new FailedTransactionDTO();
+        dto.setCaseNumber(failedTransaction.getId().getCaseNumber());
+        dto.setTransNo(failedTransaction.getId().getTransNo());
+        dto.setCommandLine(failedTransaction.getCommandLine());
+        dto.setCycle(failedTransaction.getCycle());
+        dto.setType(failedTransaction.getType());
+        dto.setDateTime(failedTransaction.getDateTime());
+        dto.setRetryCount(failedTransaction.getRetryCount());
+        dto.setSystemType(failedTransaction.getSystemType());
+
+        return dto;
+    }
+
+    private LabelsDTO mapToLabelDTO(Labels labels) {
+        LabelsDTO dto = new LabelsDTO();
+        dto.setCaseNumber(labels.getId().getCaseNumber());
+        dto.setBarCodeTx(labels.getId().getBarCodeTx());
+        dto.setStatus(labels.getId().getStatus());
+        dto.setCardTypeTx(labels.getId().getCardTypeTx());
+        dto.setType(labels.getId().getText1());
+        dto.setText1(labels.getId().getText1());
+        dto.setText2(labels.getId().getText2());
+        dto.setText3(labels.getId().getText3());
+        dto.setText4(labels.getId().getText4());
+        dto.setText5(labels.getId().getText5());
+        dto.setText3Addr4(labels.getId().getText3Addr4());
+        dto.setType(labels.getId().getType());
         return dto;
     }
 }
